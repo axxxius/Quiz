@@ -8,7 +8,7 @@ const App = () => {
   return (
     <div>
       <button onClick={() => setA((prev) => prev + 1)}>+1</button>
-      <div>{a}</div>
+      <div className='font-bold text-2xl text-lime-500'>{a}</div>
       <Logo />
     </div>
   )
