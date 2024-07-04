@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc && vite build",
     "lint": "eslint src/**/*.{tsx,ts}",
     "lint:fix": "eslint src/**/*.{tsx,ts} --fix",
     "preview": "vite preview",
-    "postinstall": "husky install .husky"
+    "postinstall": "husky install .husky",
+    "prepare": "husky"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.49.2",
