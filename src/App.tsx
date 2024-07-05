@@ -1,17 +1,5 @@
-import { useState } from 'react'
+import { RouterProvider } from 'react-router-dom'
 
-import Logo from './assets/react.svg?react'
+import { appRouter } from './navigation/app.router.tsx'
 
-const App = () => {
-  const [a, setA] = useState(0)
-
-  return (
-    <div>
-      <button onClick={() => setA((prev) => prev + 1)}>+1</button>
-      <div className='font-bold text-2xl text-lime-500'>{a}</div>
-      <Logo />
-    </div>
-  )
-}
-
-export default App
+export const App = () => <RouterProvider router={appRouter} />
