@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Vela-Regular';
+  src: url(../assets/fonts/VelaSans-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Vela-Medium';
+  src: url(../assets/fonts/VelaSans-Medium.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Vela-Bold';
+  src: url(../assets/fonts/VelaSans-Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Vela-ExtraBold';
+  src: url(../assets/fonts/VelaSans-ExtraBold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Onest-Regular';
+  src: url(../assets/fonts/Onest-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Onest-Bold';
+  src: url(../assets/fonts/Onest-Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Hero-Regular';
+  src: url(../assets/fonts/Hero-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Hero-Bold';
+  src: url(../assets/fonts/Hero-Bold.ttf) format('truetype');
+}

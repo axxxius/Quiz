@@ -1,6 +1,8 @@
+import { Loader } from '../../shared'
+
 const Main = () => (
   <div>
-    test
+    <Loader />
   </div>
 )
 
