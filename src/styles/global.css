@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    background: linear-gradient(180deg, rgba(116, 70, 215, 0.4) 0%, rgba(40, 6, 113, 0.3) 100%),
+      radial-gradient(circle at left top, rgba(196, 248, 62, 0.52) 0%, rgba(40, 6, 113, 0.4) 40%),
+      radial-gradient(
+        circle at right center,
+        rgba(40, 6, 113, 0) 0%,
+        rgba(40, 6, 113, 0.5) 100%,
+        rgba(196, 248, 62, 1) 100%
+      ),
+      radial-gradient(circle at left center, rgba(127, 0, 85, 1) 70%, rgba(40, 6, 113, 0.2) 100%),
+      radial-gradient(circle at right top, rgba(127, 0, 85, 1) 20%, rgba(40, 6, 113, 0.2) 80%);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
 @font-face {
   font-family: 'Vela-Regular';
   src: url(../assets/fonts/VelaSans-Regular.ttf) format('truetype');
@@ -19,24 +35,4 @@
 @font-face {
   font-family: 'Vela-ExtraBold';
   src: url(../assets/fonts/VelaSans-ExtraBold.ttf) format('truetype');
-}
-
-@font-face {
-  font-family: 'Onest-Regular';
-  src: url(../assets/fonts/Onest-Regular.ttf) format('truetype');
-}
-
-@font-face {
-  font-family: 'Onest-Bold';
-  src: url(../assets/fonts/Onest-Bold.ttf) format('truetype');
-}
-
-@font-face {
-  font-family: 'Hero-Regular';
-  src: url(../assets/fonts/Hero-Regular.ttf) format('truetype');
-}
-
-@font-face {
-  font-family: 'Hero-Bold';
-  src: url(../assets/fonts/Hero-Bold.ttf) format('truetype');
 }

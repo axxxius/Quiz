@@ -29,11 +29,7 @@ export const theme = {
     'vela-regular': 'Vela-Regular',
     'vela-medium': 'Vela-Medium',
     'vela-bold': 'Vela-Bold',
-    'vela-extra bold': 'Vela-ExtraBold',
-    'onest-regular': 'Onest-Regular',
-    'onest-bold': 'Onest-Bold',
-    'hero-regular': 'Hero-Regular',
-    'hero-bold': 'Hero-Bold'
+    'vela-extra bold': 'Vela-ExtraBold'
   },
   extend: {}
 }

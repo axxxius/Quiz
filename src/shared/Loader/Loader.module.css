@@ -1,8 +1,7 @@
 .loader_container {
-  @apply flex items-center justify-center gap-x-5 h-screen bg-purple-400;
+  @apply flex items-center justify-center gap-x-5 h-screen w-full;
 }
 
-/* HTML: <div class="loader"></div> */
 .loader {
   width: fit-content;
   font-weight: bold;
@@ -16,7 +15,7 @@
 .loader::before {
   content: 'Loading...';
   line-height: 1em;
-  font-family: 'Hero-Bold';
+  font-family: 'Vela-Bold';
   color: #ffdb00;
   background: inherit;
   background-image: radial-gradient(circle closest-side, #fff 94%, #fff);
