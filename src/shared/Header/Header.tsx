@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { Link } from 'react-router-dom'
 
-import Logo from '../../assets/icons/logo.svg?react'
+import Logo from '@assets/icons/logo.svg?react'
 
 import styles from './Header.module.css'
 

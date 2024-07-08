@@ -1,6 +1,6 @@
 import { InputHTMLAttributes } from 'react'
 
-import { classnames } from '../../../utils/helpers/classnames.ts'
+import { classnames } from '@utils'
 
 import styles from './Input.module.css'
 

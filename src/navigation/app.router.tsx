@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 
-import { Layout } from '../shared'
+import { Layout } from '@shared'
 
 import { appRoutes } from './app.routes.tsx'
 
