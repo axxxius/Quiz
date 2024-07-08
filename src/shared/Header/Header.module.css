@@ -1,0 +1,25 @@
+.header_container {
+  padding: 25px 40px;
+}
+
+.header_img,
+.nav_li {
+  @apply transition-transform duration-200 active:scale-105;
+
+  &:hover {
+    margin-bottom: -2px;
+    border-bottom: 2px solid white;
+  }
+}
+
+.nav_wrapper {
+  @apply flex justify-between items-center;
+}
+
+.nav_list {
+  @apply flex items-center gap-x-14;
+}
+
+.nav_li {
+  @apply text-white text-center font-vela-medium text-xl leading-snug;
+}
