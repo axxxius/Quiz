@@ -4,6 +4,7 @@ export const theme = {
   colors: {
     white: '#ffffff',
     black: '#000000',
+    grey: 'rgba(255, 255, 255, 0.44)',
     'purple-standart': '#4312AE',
     'pink-standart': '#C30083',
     'lime-standart': '#AEF100',

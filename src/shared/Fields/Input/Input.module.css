@@ -1,0 +1,40 @@
+.container {
+  @apply flex flex-col gap-[8px];
+}
+
+.label {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 27px;
+}
+
+.input {
+  @apply bg-grey;
+  padding: 13px 24px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  outline: none;
+
+  &:hover,
+  &:focus {
+    border: 2px solid white;
+  }
+}
+
+.input_error {
+  @apply text-pink-200 border-2 border-pink-200;
+  caret-color: rgb(225, 56, 170);
+
+  &:hover,
+  &:focus {
+    @apply border-pink-200;
+  }
+}
+
+.helper_text {
+  @apply text-pink-200;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  margin-top: 6px;
+}
