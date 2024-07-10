@@ -6,6 +6,12 @@ import * as path from 'node:path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), svgr()],
+  preview: {
+    host: true,
+    strictPort: true,
+    port: 3000,
+    cors: false
+  },
   resolve: {
     alias: {
       '@assets': path.resolve(__dirname, './src/assets'),
