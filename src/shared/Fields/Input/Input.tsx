@@ -1,10 +1,10 @@
-import { InputHTMLAttributes } from 'react'
+import { ComponentProps } from 'react'
 
 import { classnames } from '@utils'
 
 import styles from './Input.module.css'
 
-interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'placeholder'> {
+interface InputProps extends Omit<ComponentProps<'input'>, 'placeholder'> {
   label: string
   isError?: boolean
   helperText?: string

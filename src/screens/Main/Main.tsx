@@ -1,6 +1,6 @@
-import { Input, Loader, Typography } from '@shared'
+import { Button, Header, Input, Loader, Typography } from '@shared'
 
-import { Header } from '../../shared/Header/Header'
+import styles from './Main.module.css'
 
 const Main = () => (
   <div>
@@ -11,6 +11,7 @@ const Main = () => (
     <div style={{ width: '424px', margin: '0 auto' }}>
       <Input className='m-auto' label='Email' helperText='ghbdtn' />
     </div>
+    <Button className={styles.but}>TEST</Button>
     <Loader />
   </div>
 )

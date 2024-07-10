@@ -50,6 +50,7 @@ export const Typography = ({
   className
 }: TypographyProps) => {
   const Component = tag
+
   return (
     <Component style={style} onClick={onClick} className={classnames(className, styles[variant])}>
       {children}

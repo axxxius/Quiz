@@ -1,0 +1,106 @@
+.button {
+  @apply text-[20px] font-medium leading-[27px] rounded-[10px] cursor-pointer;
+  padding: 12px 24px;
+  border: 2px solid transparent;
+  width: 100%;
+  outline: none;
+
+  &:disabled {
+    cursor: auto;
+  }
+}
+
+.primary {
+  @apply bg-white text-purple-standart text-[24px] font-bold leading-[33px];
+
+  &:hover {
+   @apply bg-purple-100 text-white;
+  }
+
+  &:active {
+    @apply text-white bg-purple-400;
+  }
+}
+
+.primary_regular {
+  @apply bg-white text-purple-standart text-[20px] font-medium leading-[27px];
+
+  &:hover {
+    @apply bg-purple-100 text-white;
+  }
+
+  &:active {
+    @apply text-white bg-purple-400;
+  }
+}
+
+.secondary {
+  background-color: transparent;
+  border: 2px solid white;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 27px;
+
+  &:hover {
+    @apply bg-purple-100 text-white;
+    border: 2px solid transparent;
+  }
+
+  &:active {
+    @apply text-white bg-purple-400;
+  }
+}
+
+.secondary_small {
+  padding: 8px 24px;
+  background-color: transparent;
+  border: 2px solid white;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+
+  &:hover {
+    @apply bg-purple-100 text-white;
+    border: 2px solid transparent;
+  }
+
+  &:active {
+    @apply text-white bg-purple-400;
+  }
+}
+
+.start_game {
+  @apply bg-lime-200 text-[20px] font-bold leading-[27px] text-black;
+
+  &:hover {
+    @apply bg-lime-100;
+  }
+
+  &:active {
+    @apply bg-lime-400
+  }
+}
+
+.lead {
+  @apply bg-lime-200 text-black text-[36px] font-bold leading-[49px];
+
+  &:hover {
+    @apply bg-lime-100;
+  }
+
+  &:active {
+    @apply bg-lime-400
+  }
+}
+
+.player {
+  @apply bg-pink-200 text-white text-[36px] font-bold leading-[49px];
+
+  &:hover {
+    @apply bg-pink-100;
+  }
+
+  &:active {
+    @apply bg-pink-300
+  }
+}

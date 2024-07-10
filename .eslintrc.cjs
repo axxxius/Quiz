@@ -12,7 +12,7 @@ module.exports = {
   plugins: ['react-refresh', 'prettier', 'simple-import-sort'],
   rules: {
     'react-refresh/only-export-components': 'off',
-
+    '@typescript-eslint/no-explicit-any': 'off',
 
     'import/order': 0,
     'simple-import-sort/exports': 1,
