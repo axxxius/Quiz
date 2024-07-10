@@ -1,10 +1,9 @@
-import { Button, Header, Input, Loader, Typography } from '@shared'
+import { Button, Input, Loader, Typography } from '@shared'
 
 import styles from './Main.module.css'
 
 const Main = () => (
   <div>
-    <Header />
     <Typography tag='h1' variant='text_24_b'>
       Анонсы и новости
     </Typography>
