@@ -44,7 +44,7 @@ export const Header = memo(() => {
         {!isAuth && !isRegisterPage && (
           <div className={styles.buttons_container}>
             <Button variant='secondary_small'>Зарегистрироваться</Button>
-            <Button variant='secondary_small' onClic={() => setIsAuth(true)}>
+            <Button variant='secondary_small' onClick={() => setIsAuth(true)}>
               Войти
             </Button>
           </div>
