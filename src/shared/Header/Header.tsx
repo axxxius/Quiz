@@ -1,9 +1,10 @@
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import Logo from '@assets/icons/logo.svg?react'
 
-import styles from './Header.module.css'
+import { Button } from '@shared/Button/Button.tsx'
+import styles from '@shared/Header/Header.module.css'
 
 const navList = [
   {
@@ -21,6 +22,13 @@ const navList = [
 ]
 
 export const Header = memo(() => {
+  const [isAuth, setIsAuth] = useState(true) //закинуть в менеджер состояний
+  const [isRegisterPage, setIsRegisterPage] = useState(false) // и это тоже
+
+  const userInfo = {
+    name: 'Вадим'
+  }
+
   return (
     <header className={styles.header_container}>
       <nav className={styles.nav_wrapper}>
@@ -34,6 +42,22 @@ export const Header = memo(() => {
             </li>
           ))}
         </ul>
+        {!isAuth && !isRegisterPage && (
+          <div className={styles.buttons_container}>
+            <Button variant='secondary_small'>Зарегистрироваться</Button>
+            <Button variant='secondary_small' onClic={() => setIsAuth(true)}>
+              Войти
+            </Button>
+          </div>
+        )}
+        {isAuth && (
+          <div className={styles.user_container}>
+            <div className={styles.user_name}>{userInfo.name}</div>
+            <Button variant='secondary_small' onClick={() => setIsAuth(false)}>
+              Выйти
+            </Button>
+          </div>
+        )}
       </nav>
     </header>
   )

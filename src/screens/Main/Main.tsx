@@ -1,4 +1,4 @@
-import { Button, Input, Loader, Typography } from '@shared'
+import { Button, Input, Typography } from '@shared'
 
 import styles from './Main.module.css'
 
@@ -11,7 +11,8 @@ const Main = () => (
       <Input className='m-auto' label='Email' helperText='ghbdtn' />
     </div>
     <Button className={styles.but}>TEST</Button>
-    <Loader />
+    {/* <Loader /> */}
+    <Button >Игра</Button>
   </div>
 )
 

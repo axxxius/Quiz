@@ -6,9 +6,9 @@
   width: fit-content;
   font-weight: bold;
   font-family: monospace;
-  border-radius: 40px;
-  padding: 10px 30px;
-  font-size: 5rem;
+  border-radius: 20px;
+  padding: 12px 24px;
+  font-size: 3rem;
   background: radial-gradient(circle closest-side, #280671 94%, #ffdb00) right/calc(200% - 1em) 100%;
   animation: l24 1s infinite alternate linear;
 }
