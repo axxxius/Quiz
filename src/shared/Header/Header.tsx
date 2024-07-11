@@ -2,8 +2,7 @@ import { memo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import Logo from '@assets/icons/logo.svg?react'
-
-import { Button } from '@shared/Button/Button.tsx'
+import { Button } from '@shared'
 import styles from '@shared/Header/Header.module.css'
 
 const navList = [
@@ -23,7 +22,7 @@ const navList = [
 
 export const Header = memo(() => {
   const [isAuth, setIsAuth] = useState(true) //закинуть в менеджер состояний
-  const [isRegisterPage, setIsRegisterPage] = useState(false) // и это тоже
+  const [isRegisterPage] = useState(false) // и это тоже
 
   const userInfo = {
     name: 'Вадим'
