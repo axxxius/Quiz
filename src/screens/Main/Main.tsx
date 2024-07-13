@@ -11,8 +11,7 @@ const Main = () => (
       <Input className='m-auto' label='Email' helperText='ghbdtn' />
     </div>
     <Button className={styles.but}>TEST</Button>
-    {/* <Loader /> */}
-    <Button >Игра</Button>
+    <Button>Игра</Button>
   </div>
 )
 

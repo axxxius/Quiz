@@ -1,5 +1,5 @@
 .button {
-  @apply cursor-pointer rounded-[10px] font-vela-medium text-[20px] leading-[27px];
+  @apply cursor-pointer rounded-[10px];
   padding: 12px 24px;
   border: 2px solid transparent;
   width: 100%;
@@ -11,7 +11,7 @@
 }
 
 .primary {
-  @apply bg-white font-vela-bold text-[24px] leading-[33px] text-purple-standart;
+  @apply bg-white font-vela-bold text-[16px] leading-[22px] text-purple-standart;
 
   &:hover {
     @apply bg-purple-100 text-white;
@@ -23,7 +23,7 @@
 }
 
 .primary_regular {
-  @apply bg-white font-vela-medium text-[20px] leading-[27px] text-purple-standart;
+  @apply bg-white font-vela-medium text-[16px] leading-[22px] text-purple-standart;
 
   &:hover {
     @apply bg-purple-100 text-white;
@@ -37,7 +37,7 @@
 .secondary {
   background-color: transparent;
 
-  @apply border-2 border-white font-vela-medium text-[20px] leading-[1.25];
+  @apply border-2 border-white font-vela-medium text-[16px] leading-[22px];
 
   &:hover {
     @apply bg-purple-100 text-white;
@@ -49,10 +49,10 @@
   }
 }
 
-.secondary_small {
+.secondary_regular {
   background-color: transparent;
 
-  @apply border-2 border-white px-[24px] py-[8px] font-vela-medium text-[16px] leading-snug;
+  @apply border-2 border-white font-vela-medium text-[16px] leading-[22px];
 
   &:hover {
     @apply bg-purple-100 text-white;
@@ -61,41 +61,5 @@
 
   &:active {
     @apply bg-purple-400 text-white;
-  }
-}
-
-.start_game {
-  @apply bg-lime-200 font-vela-bold text-[20px] leading-[27px] text-black;
-
-  &:hover {
-    @apply bg-lime-100;
-  }
-
-  &:active {
-    @apply bg-lime-400;
-  }
-}
-
-.lead {
-  @apply bg-lime-200 font-vela-bold text-[36px] leading-[49px] text-black;
-
-  &:hover {
-    @apply bg-lime-100;
-  }
-
-  &:active {
-    @apply bg-lime-400;
-  }
-}
-
-.player {
-  @apply bg-pink-200 font-vela-bold text-[36px] leading-[49px] text-white;
-
-  &:hover {
-    @apply bg-pink-100;
-  }
-
-  &:active {
-    @apply bg-pink-300;
   }
 }

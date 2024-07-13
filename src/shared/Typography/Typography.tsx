@@ -27,6 +27,8 @@ interface Variants {
   text_24_r: 'text_24_r'
   text_24_m: 'text_24_m'
   text_24_b: 'text_24_b'
+  text_32_b: 'text_32_b'
+  text_36_b: 'text_26_b'
 }
 
 type Tag = keyof Tags

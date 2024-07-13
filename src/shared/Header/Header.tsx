@@ -22,7 +22,7 @@ const navList = [
 
 export const Header = memo(() => {
   const [isAuth, setIsAuth] = useState(true) //закинуть в менеджер состояний
-  const [isRegisterPage] = useState(false) // и это тоже
+  const [isRegisterPage] = useState(false) //и это тоже
 
   const userInfo = {
     name: 'Вадим'
@@ -43,8 +43,8 @@ export const Header = memo(() => {
         </ul>
         {!isAuth && !isRegisterPage && (
           <div className={styles.buttons_container}>
-            <Button variant='secondary_small'>Зарегистрироваться</Button>
-            <Button variant='secondary_small' onClick={() => setIsAuth(true)}>
+            <Button variant='primary_regular'>Зарегистрироваться</Button>
+            <Button variant='secondary_regular' onClick={() => setIsAuth(true)}>
               Войти
             </Button>
           </div>
@@ -52,7 +52,7 @@ export const Header = memo(() => {
         {isAuth && (
           <div className={styles.user_container}>
             <div className={styles.user_name}>{userInfo.name}</div>
-            <Button variant='secondary_small' onClick={() => setIsAuth(false)}>
+            <Button variant='secondary_regular' onClick={() => setIsAuth(false)}>
               Выйти
             </Button>
           </div>
