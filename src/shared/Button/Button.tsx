@@ -4,17 +4,7 @@ import { classnames } from '@utils'
 
 import styles from './Button.module.css'
 
-interface Variants {
-  primary: 'primary'
-  primary_regular: 'primary_regular'
-  secondary: 'secondary'
-  secondary_small: 'secondary_small'
-  lead: 'lead'
-  player: 'player'
-  start_game: 'start_game'
-}
-
-type Variant = keyof Variants
+type Variant = 'primary' | 'primary_regular' | 'secondary' | 'secondary_regular'
 
 interface ButtonProps extends ComponentProps<'button'> {
   variant?: Variant
@@ -22,12 +12,7 @@ interface ButtonProps extends ComponentProps<'button'> {
   className?: string
 }
 
-export const Button = ({
-  variant = 'secondary_small',
-  children,
-  className,
-  ...props
-}: ButtonProps) => (
+export const Button = ({ variant = 'primary', children, className, ...props }: ButtonProps) => (
   <button
     type={props.type ? props.type : 'button'}
     className={classnames(styles.button, styles[variant], className)}
