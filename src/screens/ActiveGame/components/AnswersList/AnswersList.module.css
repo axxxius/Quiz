@@ -1,7 +1,7 @@
 .container {
   @apply flex flex-col;
 
-  overflow-x: scroll;
+  overflow-x: auto;
   max-width: 50vw;
 }
 

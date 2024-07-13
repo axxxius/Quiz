@@ -1,0 +1,31 @@
+.question_container {
+  position: relative;
+}
+
+.question_name {
+  cursor: pointer;
+}
+
+.hover_container {
+  background-color: white;
+  padding: 8px;
+  z-index: 10000;
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s linear;
+}
+
+.question_container:hover .hover_container {
+  visibility: visible;
+  opacity: 1;
+}
+
+.question_question {
+  @apply whitespace-nowrap text-purple-200;
+}
+
+.question_etalon,
+.question_weight {
+  @apply whitespace-nowrap text-black;
+}

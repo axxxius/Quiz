@@ -3,6 +3,8 @@ import CrossMark from '@assets/icons/crossmark.svg?react'
 import { TeamInGame } from '@screens/ActiveGame/ActiveGame'
 import { Typography } from '@shared'
 
+import QuestionNumber from '../QuestionNumber/QuestionNumber'
+
 import styles from './AnswersList.module.css'
 
 interface AnswersListProps {
@@ -24,7 +26,7 @@ const AnswersList = ({ teamList, questions }: AnswersListProps) => {
         style={{ gridTemplateColumns: `repeat(${questions.length}, 24px)` }}
       >
         {questions.map((question) => (
-          <Typography key={question.id}>{question.name}</Typography>
+          <QuestionNumber key={question.id} question={question} />
         ))}
       </ul>
       <div className={styles.answers_list}>

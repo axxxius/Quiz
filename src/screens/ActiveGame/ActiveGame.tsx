@@ -58,6 +58,13 @@ const ActiveGame = memo(() => {
         question: 'Бывают ли тарзанчики у сфинксов?',
         etalon: true,
         weight: 200
+      },
+      {
+        id: 4,
+        name: '1.4',
+        question: 'Как зовут котика?',
+        etalon: 'Мурзик',
+        weight: 3
       }
     ]
   }
@@ -93,6 +100,46 @@ const ActiveGame = memo(() => {
     {
       id: 4,
       name: 'Сфинксы',
+      points: 0
+    },
+    {
+      id: 5,
+      name: 'Котики',
+      points: 0
+    },
+    {
+      id: 6,
+      name: 'Лягушки',
+      points: 0
+    },
+    {
+      id: 7,
+      name: 'Тарзанчики',
+      points: 0
+    },
+    {
+      id: 8,
+      name: 'Жирафы',
+      points: 0
+    },
+    {
+      id: 9,
+      name: 'Пингвины',
+      points: 0
+    },
+    {
+      id: 10,
+      name: 'Зебры',
+      points: 0
+    },
+    {
+      id: 11,
+      name: 'Крокодилы',
+      points: 0
+    },
+    {
+      id: 12,
+      name: 'Попугаи',
       points: 0
     }
   ]
