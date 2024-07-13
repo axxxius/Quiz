@@ -7,18 +7,22 @@
 }
 
 .hover_container {
-  background-color: white;
-  padding: 8px;
-  z-index: 10000;
+  transform: translateY(-140%) translateX(-43%);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: absolute;
-  visibility: hidden;
+  display: flex;
   opacity: 0;
-  transition: opacity 0.5s linear;
+  visibility: hidden;
+  transition:
+    opacity 0.3s linear,
+    visibility 0.3s linear;
 }
 
 .question_container:hover .hover_container {
-  visibility: visible;
   opacity: 1;
+  visibility: visible;
 }
 
 .question_question {

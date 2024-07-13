@@ -49,14 +49,14 @@ const ActiveGame = memo(() => {
         id: 2,
         name: '1.2',
         question: 'Водятся ли лягушки в голове?',
-        etalon: false,
+        etalon: 'Нет',
         weight: 1
       },
       {
         id: 3,
         name: '1.3',
         question: 'Бывают ли тарзанчики у сфинксов?',
-        etalon: true,
+        etalon: 'Да',
         weight: 200
       },
       {
@@ -65,6 +65,118 @@ const ActiveGame = memo(() => {
         question: 'Как зовут котика?',
         etalon: 'Мурзик',
         weight: 3
+      },
+      {
+        id: 5,
+        name: '1.5',
+        question: 'Как зовут пингвина?',
+        etalon: 'Тузик',
+        weight: 5
+      },
+      {
+        id: 6,
+        name: '1.6',
+        question: 'Как зовут зебру?',
+        etalon: 'Полосатик',
+        weight: 5
+      },
+      {
+        id: 7,
+        name: '1.7',
+        question: 'Как зовут крокодила?',
+        etalon: 'Геннадий',
+        weight: 5
+      },
+      {
+        id: 8,
+        name: '1.8',
+        question: 'Как зовут попугая?',
+        etalon: 'Кеша',
+        weight: 5
+      },
+      {
+        id: 9,
+        name: '1.9',
+        question: 'Как зовут муравья?',
+        etalon: 'Коля',
+        weight: 5
+      },
+      {
+        id: 10,
+        name: '1.10',
+        question: 'Как зовут сфинкса?',
+        etalon: 'Сфинкс',
+        weight: 5
+      },
+      {
+        id: 11,
+        name: '1.11',
+        question: 'Как зовут жирафа?',
+        etalon: 'Фридрех',
+        weight: 5
+      },
+      {
+        id: 12,
+        name: '1.12',
+        question: 'Как зовут лягушку?',
+        etalon: 'Лягушка',
+        weight: 5
+      },
+      {
+        id: 13,
+        name: '1.13',
+        question: 'Как зовут тарзанчика?',
+        etalon: 'Тарзанчик',
+        weight: 5
+      },
+      {
+        id: 14,
+        name: '1.14',
+        question: 'Как зовут жирафа?',
+        etalon: 'Фридрех',
+        weight: 5
+      },
+      {
+        id: 15,
+        name: '1.15',
+        question: 'Как зовут жирафа?',
+        etalon: 'Фридрех',
+        weight: 5
+      },
+      {
+        id: 16,
+        name: '1.16',
+        question: 'Как зовут жирафа?',
+        etalon: 'Фридрех',
+        weight: 5
+      },
+      {
+        id: 17,
+        name: '1.17',
+        question: 'Как зовут жирафа?',
+        etalon: 'Фридрех',
+        weight: 5
+      },
+      {
+        id: 18,
+        name: '1.18',
+        question: 'Как зовут жирафа?',
+        etalon: 'Фридрех',
+        weight: 5
+      },
+      {
+        id: 19,
+        name: '1.19',
+        question: 'Как зовут жирафа?',
+        etalon: 'Фридрех',
+        weight: 5
+      },
+      {
+        id: 20,
+        name: '1.20',
+        question: 'Как зовут жирафа?',
+        etalon: 'Фридрех',
+        weight: 5
       }
     ]
   }

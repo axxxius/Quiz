@@ -1,3 +1,4 @@
+import TooltilArrow from '@assets/icons/tooltipArrow.svg?react'
 import { Typography } from '@shared'
 import styles from './QuestionNumber.module.css'
 
@@ -16,17 +17,20 @@ const QuestionNumber = ({ question }: { question: Question }) => {
         {question.name}
       </Typography>
       <div className={styles.hover_container}>
-        <Typography variant='text_12_m' className={styles.question_question}>
-          {question.question}?
-        </Typography>
-        <div className='flex gap-x-3'>
-          <Typography variant='text_12_m' className={styles.question_etalon}>
-            {question.etalon}
+        <div className='rounded-sm bg-white p-2'>
+          <Typography variant='text_12_m' className={styles.question_question}>
+            {question.question}
           </Typography>
-          <Typography variant='text_12_m' className={styles.question_weight}>
-            Баллы: {question.weight}
-          </Typography>
+          <div className='flex justify-between gap-x-2'>
+            <Typography variant='text_12_m' className={styles.question_etalon}>
+              {question.etalon}
+            </Typography>
+            <Typography variant='text_12_m' className={styles.question_weight}>
+              Баллы: {question.weight}
+            </Typography>
+          </div>
         </div>
+        <TooltilArrow className={styles.tooltip_arrow} />
       </div>
     </div>
   )
