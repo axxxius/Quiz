@@ -1,45 +1,45 @@
 .text_12_m {
-  @apply text-[12px] font-medium leading-[16.39px];
+  @apply font-vela-medium text-[12px] leading-[16.39px];
 }
 
 .text_14_m {
-  @apply text-[14px] font-medium leading-[19px];
+  @apply font-vela-medium text-[14px] leading-[19px];
 }
 
 .text_16_r {
-  @apply text-[16px] font-normal leading-[22px];
+  @apply font-vela-regular text-[16px] leading-[22px];
 }
 
 .text_16_m {
-  @apply text-[16px] font-medium leading-[22px];
+  @apply font-vela-medium text-[16px] leading-[22px];
 }
 
 .text_16_b {
-  @apply text-[16px] font-bold leading-[22px];
+  @apply font-vela-bold text-[16px] leading-[22px];
 }
 
 .text_20_r {
-  @apply text-[20px] font-normal leading-[27px];
+  @apply font-vela-regular text-[20px] leading-[27px];
 }
 
 .text_20_m {
-  @apply text-[20px] font-medium leading-[27px];
+  @apply font-vela-medium text-[20px] leading-[27px];
 }
 
 .text_20_b {
-  @apply text-[20px] font-bold leading-[27px];
+  @apply font-vela-bold text-[20px] leading-[27px];
 }
 
 .text_24_r {
-  @apply text-[24px] font-normal leading-[33px];
+  @apply font-vela-regular text-[24px] leading-[33px];
 }
 
 .text_24_m {
-  @apply text-[24px] font-medium leading-[33px];
+  @apply font-vela-medium text-[24px] leading-[33px];
 }
 
 .text_24_b {
-  @apply text-[24px] font-bold leading-[33px];
+  @apply font-vela-bold text-[24px] leading-[33px];
 }
 
 .text_36_b {

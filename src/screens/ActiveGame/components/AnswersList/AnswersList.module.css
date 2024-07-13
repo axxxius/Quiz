@@ -1,0 +1,36 @@
+.container {
+  @apply flex flex-col;
+
+  overflow-x: scroll;
+  max-width: 50vw;
+}
+
+.questions_list {
+  display: grid;
+  column-gap: 16px;
+  padding: 14px 30px;
+  border: 2px solid #7f4bee;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  width: max-content;
+}
+
+.answers_list {
+  @apply flex flex-col;
+}
+
+.team_entry {
+  @apply grid px-[32px] py-[15px];
+
+  column-gap: 16px;
+  border-radius: 0 8px 8px 0;
+  width: max-content;
+}
+
+.team_entry:nth-child(4n-2) {
+  background-color: #8e6dd780;
+}
+
+.team_entry:nth-child(4n) {
+  background-color: #1e067180;
+}
