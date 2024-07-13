@@ -1,0 +1,25 @@
+.input {
+    @apply bg-grey;
+    padding: 13px 24px;
+    padding-left: 58px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    outline: none;
+    width: 100%;
+    background-image: url('@assets/icons/search.svg');
+    background-repeat: no-repeat;
+    background-position: 16px 12px;
+  
+    &:hover,
+    &:focus {
+      border: 2px solid white;
+    }
+}
+
+.input::placeholder {
+    @apply text-white;
+}
+
+.input_lead {
+    width: 684px;
+}
