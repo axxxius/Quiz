@@ -1,3 +1,4 @@
 export const URLS = {
-  MAIN: '/'
+  MAIN: '/',
+  AUTH: '/login'
 }
