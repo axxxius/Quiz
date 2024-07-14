@@ -20,7 +20,7 @@ const QuestionNumber = ({ question }: { question: Question }) => {
       const rect = questionRef.current.getBoundingClientRect()
       // console.log(rect.top, rect.left)
       setTooltipPosition({
-        top: -rect.top * 1.82 - window.scrollY,
+        top: -rect.top * 1.82 - window.scrollY * 1.82,
         left: rect.left + window.scrollX
       })
     }
