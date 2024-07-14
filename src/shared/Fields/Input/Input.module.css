@@ -8,12 +8,19 @@
   line-height: 27px;
 }
 
+.input_wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .input {
   @apply bg-grey;
   padding: 13px 24px;
   border: 2px solid transparent;
   border-radius: 12px;
   outline: none;
+  flex: 1;
 
   &:hover,
   &:focus {
@@ -29,6 +36,16 @@
   &:focus {
     @apply border-pink-200;
   }
+}
+
+.password_toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  outline: none;
 }
 
 .helper_text {
