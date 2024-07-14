@@ -15,7 +15,7 @@
 }
 
 .game_container {
-  @apply flex flex-col gap-y-[40px];
+  @apply flex flex-col gap-y-[60px];
 }
 
 .table_container {

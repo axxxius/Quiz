@@ -1,8 +1,8 @@
-import TooltilArrow from '@assets/icons/tooltipArrow.svg?react'
-import { Typography } from '@shared'
+import { useEffect, useRef, useState } from 'react'
+import ToolTip from '../Tooltip/Tooltip'
 import styles from './QuestionNumber.module.css'
 
-interface Question {
+export interface Question {
   id: number
   name: string
   question: string
@@ -11,27 +11,32 @@ interface Question {
 }
 
 const QuestionNumber = ({ question }: { question: Question }) => {
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false)
+  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 })
+  const questionRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (questionRef.current) {
+      const rect = questionRef.current.getBoundingClientRect()
+      // console.log(rect.top, rect.left)
+      setTooltipPosition({
+        top: -rect.top * 1.82 - window.scrollY,
+        left: rect.left + window.scrollX
+      })
+    }
+  }, [isTooltipVisible])
+
   return (
     <div className={styles.question_container}>
-      <Typography className={styles.question_name} variant='text_16_b'>
+      <div
+        ref={questionRef}
+        className={styles.question_name}
+        onMouseEnter={() => setIsTooltipVisible(true)}
+        onMouseLeave={() => setIsTooltipVisible(false)}
+      >
         {question.name}
-      </Typography>
-      <div className={styles.hover_container}>
-        <div className='rounded-sm bg-white p-2'>
-          <Typography variant='text_12_m' className={styles.question_question}>
-            {question.question}
-          </Typography>
-          <div className='flex justify-between gap-x-2'>
-            <Typography variant='text_12_m' className={styles.question_etalon}>
-              {question.etalon}
-            </Typography>
-            <Typography variant='text_12_m' className={styles.question_weight}>
-              Баллы: {question.weight}
-            </Typography>
-          </div>
-        </div>
-        <TooltilArrow className={styles.tooltip_arrow} />
       </div>
+      <ToolTip question={question} isTooltipVisible={isTooltipVisible} position={tooltipPosition} />
     </div>
   )
 }

@@ -3,33 +3,5 @@
 }
 
 .question_name {
-  cursor: pointer;
-}
-
-.hover_container {
-  transform: translateY(-140%) translateX(-43%);
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  display: flex;
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 0.3s linear,
-    visibility 0.3s linear;
-}
-
-.question_container:hover .hover_container {
-  opacity: 1;
-  visibility: visible;
-}
-
-.question_question {
-  @apply whitespace-nowrap text-purple-200;
-}
-
-.question_etalon,
-.question_weight {
-  @apply whitespace-nowrap text-black;
+  @apply cursor-pointer font-vela-bold text-[16px];
 }

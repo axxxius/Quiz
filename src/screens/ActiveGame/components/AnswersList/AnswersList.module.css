@@ -2,13 +2,14 @@
   @apply flex flex-col;
 
   /* overflow-x: scroll; */
+  /* max-width: max-content; */
   max-width: 50vw;
 }
 
 .questions_list {
   display: grid;
   column-gap: 16px;
-  padding: 14px 30px;
+  padding: 13px 30px;
   border: 2px solid #7f4bee;
   border-radius: 0 8px 8px 0;
   box-shadow: 0px 4px 4px 0px #00000040;

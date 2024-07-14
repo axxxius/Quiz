@@ -20,7 +20,7 @@ interface AnswersListProps {
 
 const AnswersList = ({ teamList, questions }: AnswersListProps) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{ overflow: 'auto' }}>
       <ul
         className={styles.questions_list}
         style={{ gridTemplateColumns: `repeat(${questions.length}, 24px)` }}
