@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import ToolTip from '../Tooltip/Tooltip'
 import styles from './QuestionNumber.module.css'
 
@@ -12,19 +12,18 @@ export interface Question {
 
 const QuestionNumber = ({ question }: { question: Question }) => {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false)
-  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 })
   const questionRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (questionRef.current) {
-      const rect = questionRef.current.getBoundingClientRect()
-      // console.log(rect.top, rect.left)
-      setTooltipPosition({
-        top: -rect.top * 1.82 - window.scrollY * 1.82,
-        left: rect.left + window.scrollX
-      })
+  const tooltipPosition = useMemo(() => {
+    if (!isTooltipVisible || !questionRef.current) {
+      return { top: -100, left: -500 }
     }
-  }, [isTooltipVisible])
+    const rect = questionRef.current.getBoundingClientRect()
+    return {
+      top: -rect.top * 1.82 - window.scrollY * 1.82,
+      left: rect.left + window.scrollX
+    }
+  }, [isTooltipVisible, questionRef.current])
 
   return (
     <div className={styles.question_container}>
