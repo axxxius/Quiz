@@ -19,5 +19,5 @@
 }
 
 .table_container {
-  @apply flex items-center justify-center;
+  @apply flex items-start justify-center;
 }
