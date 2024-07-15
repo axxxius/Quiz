@@ -1,0 +1,6 @@
+services:
+  quiz:
+    build: .
+    restart: on-failure
+    ports:
+      - "80:80"
