@@ -1,9 +1,11 @@
+import { useRef, useState } from 'react';
+
 import { DropdownWhite, Search, Table, TeamModal } from '@screens/Teams/components';
-import styles from './Teams.module.css'
 import { Button, Typography } from '@shared';
 import { classnames } from '@utils';
-import { useRef, useState } from 'react';
+
 import { useOnClickOutside } from './../../hooks/useOnClickOutside';
+import styles from './Teams.module.css'
 
 const Teams = () => {
     const [showModal, setShowModal] = useState(false);

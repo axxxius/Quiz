@@ -1,6 +1,8 @@
 import { useRef, useState } from "react"
+
 import styles from '@screens/Teams/components/DropdownWhite/DropdownWhite.module.css'
 import { classnames } from "@utils";
+
 import { useOnClickOutside } from "./../../../../hooks/useOnClickOutside";
 
 const sortMenu = ['Очкам', 'Играм', 'Дате создания', 'Названию']

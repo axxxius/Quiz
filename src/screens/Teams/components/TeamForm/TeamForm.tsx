@@ -1,6 +1,6 @@
-import { Input } from "@shared"
-import { Textarea } from "@screens/Teams/components/Textarea/Textarea"
 import styles from '@screens/Teams/components/TeamForm/TeamForm.module.css'
+import { Textarea } from "@screens/Teams/components/Textarea/Textarea"
+import { Input } from "@shared"
 
 
 export const TeamForm = () => {

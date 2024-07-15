@@ -1,8 +1,9 @@
-import styles from '@screens/Teams/components/Modals/TeamModal/TeamModal.module.css'
-import { Typography, Button } from '@shared'
-import { Modal, TeamForm } from '@screens/Teams/components'
-import Close from '@assets/icons/close.svg?react'
 import { Dispatch, SetStateAction } from 'react';
+
+import Close from '@assets/icons/close.svg?react'
+import { Modal, TeamForm } from '@screens/Teams/components'
+import styles from '@screens/Teams/components/Modals/TeamModal/TeamModal.module.css'
+import { Button,Typography } from '@shared'
 
 
 interface TeamFormProps {
