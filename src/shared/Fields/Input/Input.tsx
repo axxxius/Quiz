@@ -7,7 +7,7 @@ import { classnames } from '@utils'
 import styles from './Input.module.css'
 
 interface InputProps extends Omit<ComponentProps<'input'>, 'placeholder'> {
-  label: string
+  label?: string
   isError?: boolean
   helperText?: string
   className?: string

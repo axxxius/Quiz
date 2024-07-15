@@ -1,0 +1,41 @@
+.selectContainer {
+  width: 100%;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin-bottom: 3px;
+}
+
+.input {
+  flex-grow: 1;
+}
+
+.arrowToggle {
+  position: absolute;
+  top: 48px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.optionsList {
+  @apply bg-grey;
+  border-radius: 12px;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 200px;
+}
+
+.option {
+  padding: 13px 24px;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.44);
+    border-radius: 12px;
+  }
+}
