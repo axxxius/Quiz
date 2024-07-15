@@ -1,0 +1,8 @@
+.input {
+    width: 454px;
+}
+
+.form {
+    @apply flex flex-col gap-[16px]
+}
+

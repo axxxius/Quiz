@@ -1,1 +1,7 @@
 export * from './Search/Search'
+export * from './DropdownWhite/DropdownWhite'
+export * from './Table/Table'
+export * from './Modals/TeamModal/TeamModal'
+export * from './Textarea/Textarea'
+export * from './TeamForm/TeamForm'
+export * from './Modals/Modal/Modal'
