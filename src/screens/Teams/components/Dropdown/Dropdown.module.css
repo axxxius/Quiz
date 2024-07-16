@@ -19,7 +19,7 @@
 
     &:hover,
     &:active {
-        border: 2px solid white;
+        border: 2px solid rgb(193, 182, 182);
     }
 }
 
@@ -63,6 +63,3 @@
     padding: 4px;
 }
 
-.dropdown_content>ul>li:not(:last-child) {
-    border-bottom: 1px solid #280671;
-}

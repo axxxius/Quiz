@@ -7,7 +7,7 @@ export const TeamForm = () => {
     return (
         <form className={styles.form} action="" >
             <Input className={styles.input} label='Название' />
-            <Textarea />
+            <Textarea label={"Описание"}/>
         </form>
     )
 }

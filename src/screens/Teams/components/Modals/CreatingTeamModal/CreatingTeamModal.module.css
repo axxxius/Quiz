@@ -1,0 +1,25 @@
+.modal_header {
+    @apply flex justify-center;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    left: calc(100% - 40px);
+    top: 0;
+    cursor: pointer;
+}
+
+.modal_body {
+    margin-top: 24px;
+}
+
+.modal_footer {
+    @apply flex justify-end;
+}
+
+.button {
+    width: 190px;
+    align-self: flex-end;
+    margin-top: 32px;
+}

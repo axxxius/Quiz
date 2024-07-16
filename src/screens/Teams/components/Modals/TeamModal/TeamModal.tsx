@@ -1,31 +1,76 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import Close from '@assets/icons/close.svg?react'
-import { Modal, TeamForm } from '@screens/Teams/components'
+import { Modal, NumericData } from '@screens/Teams/components'
 import styles from '@screens/Teams/components/Modals/TeamModal/TeamModal.module.css'
-import { Button,Typography } from '@shared'
+import { MockTeam,ShowModal } from '@screens/Teams/Teams.types';
+import { Button, Typography } from '@shared';
 
 
-interface TeamFormProps {
-    refModal: React.MutableRefObject<null>;
-    setShowModal: Dispatch<SetStateAction<boolean>>;
+interface TeamModalProps {
+    team: MockTeam
+    modalRef: React.MutableRefObject<null>;
+    setShowModal: Dispatch<SetStateAction<ShowModal>>;
 }
 
-export const TeamModal = ({ refModal, setShowModal }: TeamFormProps) => {
+export const TeamModal = ({ modalRef, setShowModal, team }: TeamModalProps) => {
+    const role: string = 'cap';
+    const isMember = true;
+    const handleClick = () => {
+        setShowModal((prev) => ({
+            ...prev,
+            team: false
+        }))
+    }
     return (
-        <>
-            <Modal refModal={refModal}>
-                <div className={styles.modal_header}>
-                    <Typography tag='h2' variant='text_32_b' className={styles.head}>Создать команду</Typography>
-                    <Close className={styles.close} onClick={() => setShowModal(false)} />
+        <Modal modalRef={modalRef} className={styles.modal_container}>
+            <div className={styles.modal_header}>
+                <Typography tag='h2' variant='text_32_b' className={styles.head}>
+                    {team.team_name}
+                </Typography>
+                <Close className={styles.close} onClick={handleClick} />
+            </div>
+            <div className={styles.modal_body}>
+                <div className={styles.numeric_data}>
+                    <NumericData numberData={team.rating} name="Рейтинг" className={styles.rating} />
+                    <NumericData numberData={team.points} name="Баллы" className={styles.points} />
                 </div>
-                <div className={styles.modal_body}>
-                    <TeamForm />
+                <div className={styles.desc_container}>
+                    <Typography tag='h2' variant='text_20_b'>Описание</Typography>
+                    <Typography tag='p' variant='text_16_r' className={styles.desc}>
+                        {team.team_desc}
+                    </Typography>
                 </div>
-                <div className={styles.modal_footer}>
-                    <Button className={styles.button} onClick={() => setShowModal(false)}>Создать команду</Button>
+                <div className={styles.captain}>
+                    <Typography tag='h2' variant='text_20_b'>Капитан</Typography>
+                    <Typography tag='p' variant='text_16_r'>{team.captain_name}</Typography>
                 </div>
-            </Modal>
-        </>
+                <div className={styles.members}>
+                    <Typography tag='p' variant='text_20_b'>Участники</Typography>
+                    <div className={styles.members_list}>
+                        <ul>
+                            {team.team_members?.map((member) => (
+                                <li key={member}>{member}</li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+                {role === 'cap' &&
+                    <div className={styles.invitation}>
+                        <Typography tag='p' variant='text_20_b'>Ссылка-приглашение</Typography>
+                    </div>
+                }
+            </div>
+            <div className={styles.modal_footer}>
+                {role === 'member' && !isMember &&
+                    <Button className={styles.button} onClick={handleClick}>
+                        Вступить в команду
+                    </Button>
+                }
+                {role === 'member' && isMember &&
+                    <Typography tag='h2' variant='text_16_b'>Вы уже состоите в команде</Typography>
+                }
+            </div>
+        </Modal>
     )
 }

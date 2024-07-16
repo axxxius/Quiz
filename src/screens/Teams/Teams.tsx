@@ -1,24 +1,35 @@
 import { useRef, useState } from 'react';
 
-import { DropdownWhite, Search, Table, TeamModal } from '@screens/Teams/components';
+import { CreatingTeamModal,Dropdown, Search, Table } from '@screens/Teams/components';
+import { ShowModal } from '@screens/Teams/Teams.types';
 import { Button, Typography } from '@shared';
 import { classnames } from '@utils';
 
 import { useOnClickOutside } from './../../hooks/useOnClickOutside';
+import { SORT_TEAMS } from './const';
 import styles from './Teams.module.css'
 
 const Teams = () => {
-    const [showModal, setShowModal] = useState(false);
-    const refPopup = useRef(null);
+    const [showModal, setShowModal] = useState<ShowModal>({
+        creatingTeam: false,
+        team: false
+    });
+    const modalRef = useRef(null);
     const role = 'lead';
     const isLead = role == 'lead';
     const stylesCreatingTeam = classnames(styles.creating_team, {
         [styles.creating_team_lead]: isLead
     })
     const handleClick = () => {
-        setShowModal(true);
+        setShowModal((prev) => ({
+            ...prev, 
+            creatingTeam: true
+        }));
     }
-    useOnClickOutside(refPopup, () => setShowModal(false));
+    useOnClickOutside(modalRef, () => setShowModal({
+        creatingTeam: false, 
+        team: false
+    }));
     return (
         <div>
             <Typography tag='h1' variant='text_36_b' className={styles.page_name}>
@@ -33,11 +44,11 @@ const Teams = () => {
                     <Typography tag='h4' variant='text_16_r'>
                         Сортировать по
                     </Typography>
-                    <DropdownWhite />
+                    <Dropdown options={SORT_TEAMS}/>
                 </div>
-                <Table />
+                <Table showModal={showModal} setShowModal={setShowModal} modalRef={modalRef}/>
             </div>
-            {showModal && <TeamModal refModal={refPopup} setShowModal={setShowModal} />}
+            {showModal.creatingTeam && <CreatingTeamModal modalRef={modalRef} setShowModal={setShowModal} />}
         </div>
     )
 }
