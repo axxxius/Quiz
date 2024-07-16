@@ -2,18 +2,6 @@
   @apply flex flex-col px-[64px] py-[24px];
 }
 
-.game_info {
-  @apply flex justify-between;
-}
-
-.right_container {
-  @apply flex flex-col items-center gap-y-[20px];
-}
-
-.question_count {
-  @apply flex max-w-[210px] flex-col items-center rounded-lg border-2 border-orange-standart px-[45px] py-[8px] text-center text-orange-standart;
-}
-
 .game_container {
   @apply flex flex-col gap-y-[60px];
 }

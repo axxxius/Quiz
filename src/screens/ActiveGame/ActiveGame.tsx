@@ -1,42 +1,48 @@
-import { Button, Typography } from '@shared'
-import { memo } from 'react'
+import { Typography } from '@shared'
+import { memo, useState } from 'react'
 import styles from './ActiveGame.module.css'
+import AnswerModal from './components/AnswerModal/AnswerModal'
 import AnswersList from './components/AnswersList/AnswersList'
+import GameInfo from './components/GameTitle/GameInfo'
 import TeamList from './components/TeamList/TeamList'
 
-interface Question {
+export interface Question {
   id: number
   name: string
   question: string
-  etalon?: string | boolean
+  etalon: string
   weight: number //количество баллов за вопрос
 }
 
-interface Game {
+export interface Game {
   id: number
-  status: 'now' | 'finished' | 'planned'
+  status: 'active' | 'finished' | 'planned'
   name: string
   description: string
   questions: Question[]
+}
+
+export interface TeamAnswer {
+  id: number
+  questionId: number
+  answer: string
+  weight: number
 }
 
 export interface TeamInGame {
   id: number
   name: string
   points: number
-  answers?: {
-    id: number
-    questionId: number
-    answer: boolean | string | null
-  }[]
+  answers: TeamAnswer[]
 }
 
 const ActiveGame = memo(() => {
-  const game: Game = {
+  const [game, setGame] = useState<Game>({
     id: 1,
-    status: 'now',
+    status: 'finished',
     name: 'Game 1',
-    description: 'Game 1 description',
+    description:
+      'Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description    Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description  Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description',
     questions: [
       {
         id: 1,
@@ -179,9 +185,9 @@ const ActiveGame = memo(() => {
         weight: 5
       }
     ]
-  }
+  })
 
-  const teamList: TeamInGame[] = [
+  const [teamList, setTeamList] = useState<TeamInGame[]>([
     {
       id: 1,
       name: 'Бездари',
@@ -190,106 +196,169 @@ const ActiveGame = memo(() => {
         {
           id: 1,
           questionId: 1,
-          answer: 'Фридрех'
+          answer: 'Фридрих',
+          weight: 16
         },
         {
           id: 3,
           questionId: 3,
-          answer: true
+          answer: 'Да',
+          weight: 200
+        },
+        {
+          id: 4,
+          questionId: 4,
+          answer: 'Мурзек',
+          weight: 1
         }
       ]
     },
     {
       id: 2,
       name: '2к узники',
-      points: 0
+      points: 0,
+      answers: []
     },
     {
       id: 3,
       name: 'Муравьи',
-      points: 0
+      points: 0,
+      answers: []
     },
     {
       id: 4,
       name: 'Сфинксы',
-      points: 0
+      points: 0,
+      answers: []
     },
     {
       id: 5,
       name: 'Котики',
-      points: 0
+      points: 0,
+      answers: []
     },
     {
       id: 6,
       name: 'Лягушки',
-      points: 0
+      points: 0,
+      answers: []
     },
     {
       id: 7,
       name: 'Тарзанчики',
-      points: 0
+      points: 0,
+      answers: []
     },
     {
       id: 8,
       name: 'Жирафы',
-      points: 0
+      points: 0,
+      answers: []
     },
     {
       id: 9,
-      name: 'Пингвины',
-      points: 0
+      name: 'ПингвиныПингвиныПингвиныПингвиныПингвиныПингвиныПингвиныПингвины',
+      points: 0,
+      answers: []
     },
     {
       id: 10,
       name: 'Зебры',
-      points: 0
+      points: 0,
+      answers: []
     },
     {
       id: 11,
       name: 'Крокодилы',
-      points: 0
+      points: 0,
+      answers: []
     },
     {
       id: 12,
       name: 'Попугаи',
-      points: 0
+      points: 0,
+      answers: []
     }
-  ]
+  ])
+
+  const changeGameStatus = (newStatus: 'active' | 'finished' | 'planned') => {
+    setGame({ ...game, status: newStatus })
+  }
+
+  const changeTeamAnswer = (
+    teamId: number,
+    questionId: number,
+    newAnswer: string,
+    weight: number | undefined
+  ) => {
+    setTeamList((prevTeamList) =>
+      prevTeamList.map((team) => {
+        if (team.id === teamId) {
+          // Проверяем, есть ли уже ответ на этот вопрос
+          const existingAnswerIndex = team.answers?.findIndex(
+            (answer) => answer.questionId === questionId
+          )
+          if (existingAnswerIndex !== undefined && existingAnswerIndex >= 0) {
+            // Если ответ существует, обновляем его
+            const updatedAnswers = [...(team.answers ?? [])]
+            updatedAnswers[existingAnswerIndex] = {
+              ...updatedAnswers[existingAnswerIndex],
+              answer: newAnswer,
+              weight: weight ?? 0
+            }
+            return { ...team, answers: updatedAnswers }
+          } else {
+            // Если ответа нет, добавляем новый
+            const newAnswerObj: TeamAnswer = {
+              id: Math.random(),
+              questionId,
+              answer: newAnswer,
+              weight: weight ?? 0
+            } // Пример генерации ID
+            return { ...team, answers: [...(team.answers ?? []), newAnswerObj] }
+          }
+        }
+        return team
+      })
+    )
+    console.log(teamList)
+  }
+
+  const [openModal, setOpenModal] = useState(false)
+  const [currentValues, setCurrentValues] = useState<{ teamId: number; answer: TeamAnswer }>()
 
   return (
-    <div className={styles.container}>
-      <div className={styles.game_info}>
-        <div className={styles.left_container}>
-          <p className='mb-6 font-vela-bold text-4xl'>{game.name}</p>
+    <>
+      <div className={styles.container}>
+        <GameInfo game={game} changeGameStatus={changeGameStatus} />
+        <div className={styles.game_container}>
           <Typography tag='p' variant='text_24_b'>
-            Описание
+            Игра
           </Typography>
-          <Typography tag='p' variant='text_20_m'>
-            {game.description}
-          </Typography>
-        </div>
-        <div className={styles.right_container}>
-          <div className={styles.question_count}>
-            <Typography tag='p' variant='text_20_b'>
-              Количество вопросов
-            </Typography>
-            <Typography tag='p' variant='text_36_b' className='text-4xl'>
-              {game.questions.length}
-            </Typography>
+          <div className={styles.table_container}>
+            <TeamList teamList={teamList} />
+            <AnswersList
+              teamList={teamList}
+              questions={game.questions}
+              gameStatus={game.status}
+              changeTeamAnswer={changeTeamAnswer}
+              setOpenModal={setOpenModal}
+              setCurrentValues={setCurrentValues}
+            />
           </div>
-          <Button variant='primary_regular'>Завершить игру</Button>
         </div>
       </div>
-      <div className={styles.game_container}>
-        <Typography tag='p' variant='text_24_b'>
-          Игра
-        </Typography>
-        <div className={styles.table_container}>
-          <TeamList teamList={teamList} />
-          <AnswersList teamList={teamList} questions={game.questions} />
-        </div>
-      </div>
-    </div>
+      <AnswerModal
+        visible={openModal}
+        onClose={() => setOpenModal(false)}
+        teamAnswer={currentValues}
+        question={game.questions.find(
+          (question) => currentValues?.answer?.questionId === question.id
+        )}
+        changeTeamAnswer={changeTeamAnswer}
+        gameStatus={game.status}
+      />
+    </>
   )
 })
 

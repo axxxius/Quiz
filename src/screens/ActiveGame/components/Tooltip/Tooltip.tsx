@@ -1,11 +1,10 @@
-import TooltilArrow from '@assets/icons/tooltipArrow.svg?react'
+import { memo } from 'react'
 import ReactDOM from 'react-dom'
 
+import TooltilArrow from '@assets/icons/tooltipArrow.svg?react'
+import { Question } from '@screens/ActiveGame/ActiveGame'
 import { Typography } from '@shared'
 
-import { Question } from '../QuestionNumber/QuestionNumber'
-
-import { memo } from 'react'
 import styles from './Tooltip.module.css'
 
 const ToolTip = memo(

@@ -29,7 +29,7 @@ const TeamList = ({ teamList }: TeamListProps) => {
             <Typography tag='div' variant='text_16_m'>
               {index + 1}
             </Typography>
-            <Typography tag='div' variant='text_16_m'>
+            <Typography tag='div' variant='text_16_m' className='overflow-hidden text-ellipsis'>
               {team.name}
             </Typography>
             <Typography tag='div' variant='text_16_m'>

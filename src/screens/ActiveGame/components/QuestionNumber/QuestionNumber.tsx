@@ -1,14 +1,7 @@
+import { Question } from '@screens/ActiveGame/ActiveGame'
 import { useMemo, useRef, useState } from 'react'
 import ToolTip from '../Tooltip/Tooltip'
 import styles from './QuestionNumber.module.css'
-
-export interface Question {
-  id: number
-  name: string
-  question: string
-  etalon?: string | boolean
-  weight: number //количество баллов за вопрос
-}
 
 const QuestionNumber = ({ question }: { question: Question }) => {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false)

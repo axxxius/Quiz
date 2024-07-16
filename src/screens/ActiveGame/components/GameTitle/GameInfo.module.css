@@ -1,0 +1,19 @@
+.container {
+  @apply flex justify-between;
+}
+
+.right_container {
+  @apply flex items-center;
+}
+
+.question_count {
+  @apply flex max-w-[210px] flex-col items-center rounded-lg border-2 border-orange-standart px-[45px] py-[8px] text-center text-orange-standart;
+}
+
+.game_description {
+  @apply max-h-[108px] max-w-[60vw] overflow-hidden text-ellipsis;
+}
+
+.finished_container {
+  @apply flex max-w-[210px] flex-col items-center rounded-lg border-2 border-lime-standart p-6 text-center text-lime-standart;
+}
