@@ -1,0 +1,25 @@
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 32px;
+  margin-bottom: 100px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 424px;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.button_container {
+  margin-top: 40px;
+  display: flex;
+  gap: 66px;
+}

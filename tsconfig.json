@@ -20,6 +20,7 @@
     "baseUrl": "src",
     "paths": {
       "@assets/*": ["assets/*"],
+      "@hooks": ["./hooks"],
       "@navigation": ["./navigation"],
       "@screens/*": ["screens/*"],
       "@shared": ["./shared"],
