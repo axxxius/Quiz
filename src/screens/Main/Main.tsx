@@ -1,10 +1,16 @@
-import { Typography } from '@shared'
+import { Link } from 'react-router-dom'
+
+import { Button } from '@shared'
+
+import styles from './Main.module.css'
 
 const Main = () => (
-  <div>
-    <Typography tag='h1' variant='text_24_b'>
-      Анонсы и новости
-    </Typography>
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
+    <Link to='/login'>
+      <Button className={styles.but} variant='secondary'>
+        Авторизация
+      </Button>
+    </Link>
   </div>
 )
 

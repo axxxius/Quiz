@@ -11,7 +11,11 @@ export const appRoutes: Route[] = [
     element: <Main />
   },
   {
-    path: URLS.AUTH,
+    path: URLS.AUTH.LOGIN,
+    element: <Auth />
+  },
+  {
+    path: URLS.AUTH.REGISTER,
     element: <Auth />
   }
 ]
