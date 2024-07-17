@@ -1,29 +1,32 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, forwardRef, SetStateAction } from 'react';
 
 import Close from '@assets/icons/close.svg?react'
 import { Modal, NumericData } from '@screens/Teams/components'
 import styles from '@screens/Teams/components/Modals/TeamModal/TeamModal.module.css'
-import { MockTeam,ShowModal } from '@screens/Teams/Teams.types';
+import { FullTeam, ShowModal } from '@screens/Teams/types';
+import { useGetTeamQuery } from '@screens/Teams/utils/api/hooks';
 import { Button, Typography } from '@shared';
 
-
 interface TeamModalProps {
-    team: MockTeam
-    modalRef: React.MutableRefObject<null>;
+    id: number
     setShowModal: Dispatch<SetStateAction<ShowModal>>;
 }
 
-export const TeamModal = ({ modalRef, setShowModal, team }: TeamModalProps) => {
+export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ setShowModal, id }, ref) => {
     const role: string = 'cap';
     const isMember = true;
+    const { data } = useGetTeamQuery(id);
+    const team = data?.data as FullTeam;
+
     const handleClick = () => {
         setShowModal((prev) => ({
             ...prev,
             team: false
         }))
     }
+
     return (
-        <Modal modalRef={modalRef} className={styles.modal_container}>
+        <Modal ref={ref} className={styles.modal_container}>
             <div className={styles.modal_header}>
                 <Typography tag='h2' variant='text_32_b' className={styles.head}>
                     {team.team_name}
@@ -32,8 +35,8 @@ export const TeamModal = ({ modalRef, setShowModal, team }: TeamModalProps) => {
             </div>
             <div className={styles.modal_body}>
                 <div className={styles.numeric_data}>
-                    <NumericData numberData={team.rating} name="Рейтинг" className={styles.rating} />
-                    <NumericData numberData={team.points} name="Баллы" className={styles.points} />
+                    <NumericData numberData={team.team_rating} name="Рейтинг" className={styles.rating} />
+                    <NumericData numberData={team.team_points} name="Баллы" className={styles.points} />
                 </div>
                 <div className={styles.desc_container}>
                     <Typography tag='h2' variant='text_20_b'>Описание</Typography>
@@ -74,3 +77,4 @@ export const TeamModal = ({ modalRef, setShowModal, team }: TeamModalProps) => {
         </Modal>
     )
 }
+)

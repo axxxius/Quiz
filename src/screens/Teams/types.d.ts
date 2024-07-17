@@ -11,7 +11,7 @@ export type MockTeam = {
 }
 
 export type Team = {
-    id: number,
+    team_id: number,
     team_name: string,
     creation_date: string,
     played_games: number,
@@ -21,7 +21,7 @@ export type Team = {
 
 export type FullTeam = {
     team_name: string,
-    team_desc: string,  
+    team_desc: string,
     team_points: number,
     team_rating: number,
     captain_name: string,
@@ -36,4 +36,10 @@ export type ShowModal = {
 export type Option = {
     label: string;
     value: string;
+}
+
+export type TeamValue = {
+    captain_id: number,
+    team_name: string,
+    team_desc: string
 }

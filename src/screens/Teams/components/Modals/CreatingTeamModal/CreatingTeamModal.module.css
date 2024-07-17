@@ -13,13 +13,3 @@
 .modal_body {
     margin-top: 24px;
 }
-
-.modal_footer {
-    @apply flex justify-end;
-}
-
-.button {
-    width: 190px;
-    align-self: flex-end;
-    margin-top: 32px;
-}

@@ -1,10 +1,14 @@
-import { Dispatch, MutableRefObject, SetStateAction, useState } from 'react';
+import { Dispatch, forwardRef, SetStateAction, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
 import styles from '@screens/Teams/components/Table/Table.module.css'
-import { MockTeam,ShowModal } from '@screens/Teams/Teams.types'
+import { MockTeam, ShowModal, Team } from '@screens/Teams/types'
+import { useGetTeamsQuery } from '@screens/Teams/utils/api/hooks';
 import { Typography } from '@shared'
 
 import { TeamModal } from '../Modals/TeamModal/TeamModal';
+
+import { teamsTableAtom } from './Table.atom';
 
 const mockTeams: MockTeam[] = [
     {
@@ -17,8 +21,8 @@ const mockTeams: MockTeam[] = [
         team_desc: "Мы самая лучшая команда, присоединяйся к нам поскорее! Мы самая лучшая команда, присоединяйся к нам поскорее!Мы самая лучшая команда, присоединяйся к нам поскорее!Мы самая лучшая команда, присоединяйся к нам поскорее!Мы самая лучшая команда, присоединяйся к нам поскорее!Мы самая лучшая команда, присоединяйся к нам поскорее!Мы самая лучшая команда, присоединяйся к нам поскорее!",
         captain_name: "Петров Петр Петрович",
         team_members: [
-            "Петров Петр Петрович", 
-            "Плюшкин Плюшка Плюшкович", 
+            "Петров Петр Петрович",
+            "Плюшкин Плюшка Плюшкович",
             "Иванов Иван Иванович",
             "Денисов Денис Денисович"
         ]
@@ -33,8 +37,8 @@ const mockTeams: MockTeam[] = [
         team_desc: "Мы всех порвем, присоединяйся к нам поскорее!",
         captain_name: "Иванов Иван Иванович",
         team_members: [
-            "Петров Петр Петрович", 
-            "Плюшкин Плюшка Плюшкович", 
+            "Петров Петр Петрович",
+            "Плюшкин Плюшка Плюшкович",
             "Иванов Иван Иванович",
             "Денисов Денис Денисович"
         ]
@@ -89,21 +93,28 @@ const mockTeams: MockTeam[] = [
     },
 ]
 
+console.log(mockTeams);
+
 interface TableProps {
     showModal: ShowModal;
     setShowModal: Dispatch<SetStateAction<ShowModal>>;
-    modalRef: MutableRefObject<null>;
 }
 
-export const Table = ({ showModal, setShowModal, modalRef }: TableProps) => {
-    const [activeTeam, setActiveTeam] = useState<MockTeam>({} as MockTeam);
-    const handleClick = (team: MockTeam) => {
-        setActiveTeam(team);
+export const Table = forwardRef<HTMLDivElement, TableProps>(({ showModal, setShowModal }, ref) => {
+    const [activeTeam, setActiveTeam] = useState<number>(-1);
+    const teams = useRecoilValue(teamsTableAtom);
+    const { data } = useGetTeamsQuery();
+
+    console.log(data);
+
+    const handleClick = (team: Team) => {
+        setActiveTeam(team.team_id);
         setShowModal((prev) => ({
             ...prev,
             team: true
         }));
     }
+
     return (
         <>
             <div className={styles.table}>
@@ -124,21 +135,20 @@ export const Table = ({ showModal, setShowModal, modalRef }: TableProps) => {
                         Баллы
                     </Typography>
                 </div>
-                {mockTeams.map((team: MockTeam) => {
+                {teams.map((team: Team) => {
                     return (
-                        <>
-                            <div className={styles.row} key={team.id} onClick={() => handleClick(team)}>
-                                <div className={styles.col}>{team.rating}</div>
-                                <div className={styles.col}>{team.team_name}</div>
-                                <div className={styles.col}>{team.creation_date}</div>
-                                <div className={styles.col}>{team.played_games}</div>
-                                <div className={styles.col}>{team.points}</div>
-                            </div>
-                        </>
+                        <div className={styles.row} key={team.team_id} onClick={() => handleClick(team)}>
+                            <div className={styles.col}>{team.rating}</div>
+                            <div className={styles.col}>{team.team_name}</div>
+                            <div className={styles.col}>{team.creation_date}</div>
+                            <div className={styles.col}>{team.played_games}</div>
+                            <div className={styles.col}>{team.points}</div>
+                        </div>
                     )
                 })}
             </div>
-            {showModal.team && <TeamModal modalRef={modalRef} setShowModal={setShowModal} team={activeTeam} />}
+            {showModal.team && <TeamModal ref={ref} setShowModal={setShowModal} id={activeTeam} />}
         </>
     )
 }
+)

@@ -1,19 +1,22 @@
+import { forwardRef } from 'react';
+
 import styles from '@screens/Teams/components/Modals/Modal/Modal.module.css'
 import { classnames } from '@utils';
 
 interface ModalProps {
-    modalRef: React.MutableRefObject<null>;
-    children:  React.ReactNode;
-    className?: string 
+    children: React.ReactNode;
+    className?: string
 }
 
-export const Modal = ({ modalRef: refModal, children, className }: ModalProps) => {
+export const Modal = forwardRef<HTMLDivElement, ModalProps>(({ children, className }, ref) => {
     const stylesModalContent = classnames(styles.modal_content, className);
+    
     return (
         <div className={styles.modal_backdrop}>
-            <div className={stylesModalContent} ref={refModal}>
+            <div className={stylesModalContent} ref={ref}>
                 {children}
             </div>
         </div>
     )
 }
+)

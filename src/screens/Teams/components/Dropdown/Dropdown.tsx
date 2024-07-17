@@ -1,7 +1,7 @@
 import { useRef, useState } from "react"
 
-import { Option } from "@screens/Teams";
 import styles from '@screens/Teams/components/Dropdown/Dropdown.module.css'
+import { Option } from '@screens/Teams/types'
 import { classnames } from "@utils";
 
 import { useOnClickOutside } from "../../../../hooks/useOnClickOutside";

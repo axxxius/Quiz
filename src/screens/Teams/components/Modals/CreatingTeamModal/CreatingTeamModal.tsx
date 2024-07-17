@@ -1,26 +1,25 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, forwardRef, SetStateAction } from 'react';
 
 import Close from '@assets/icons/close.svg?react'
 import { Modal, TeamForm } from '@screens/Teams/components'
 import styles from '@screens/Teams/components/Modals/CreatingTeamModal/CreatingTeamModal.module.css'
-import { ShowModal } from '@screens/Teams/Teams.types';
-import { Button, Typography } from '@shared'
-
+import { ShowModal } from '@screens/Teams/types';
+import { Typography } from '@shared'
 
 interface CreatingTeamModalProps {
-    modalRef: React.MutableRefObject<null>;
     setShowModal: Dispatch<SetStateAction<ShowModal>>;
 }
 
-export const CreatingTeamModal = ({ modalRef, setShowModal }: CreatingTeamModalProps) => {
+export const CreatingTeamModal = forwardRef<HTMLDivElement, CreatingTeamModalProps>(({ setShowModal }, ref) => {
     const handleClick = () => {
         setShowModal((prev) => ({
             ...prev,
             creatingTeam: false
         }))
     }
+
     return (
-        <Modal modalRef={modalRef}>
+        <Modal ref={ref}>
             <div className={styles.modal_header}>
                 <Typography tag='h2' variant='text_32_b' className={styles.head}>
                     Создать команду
@@ -28,11 +27,8 @@ export const CreatingTeamModal = ({ modalRef, setShowModal }: CreatingTeamModalP
                 <Close className={styles.close} onClick={handleClick} />
             </div>
             <div className={styles.modal_body}>
-                <TeamForm />
-            </div>
-            <div className={styles.modal_footer}>
-                <Button className={styles.button} onClick={handleClick}>Создать команду</Button>
+                <TeamForm handleClick={handleClick}/>
             </div>
         </Modal>
     )
-}
+})

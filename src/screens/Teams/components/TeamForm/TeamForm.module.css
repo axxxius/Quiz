@@ -6,3 +6,12 @@
     @apply flex flex-col gap-[16px]
 }
 
+.button_container {
+    @apply flex justify-end;
+}
+
+.button {
+    width: 190px;
+    align-self: flex-end;
+    margin-top: 32px;
+}
