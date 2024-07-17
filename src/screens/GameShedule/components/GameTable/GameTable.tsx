@@ -1,4 +1,3 @@
-import { Game } from '@screens/GameShedule/GameShedule'
 import GameCard from '../GameCard/GameCard'
 import styles from './GameTable.module.css'
 
