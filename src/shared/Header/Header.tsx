@@ -12,7 +12,7 @@ const navList = [
   },
   {
     name: 'Рейтинг команд',
-    path: '/'
+    path: '/teams'
   },
   {
     name: 'Расписание игр',
