@@ -10,7 +10,8 @@ const ActiveGame = () => {
     id: 1,
     name: 'Game 1',
     date: '2024-07-07T19:00:00+03:00',
-    description: 'Description 1',
+    description:
+      'Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1',
     status: 'active',
     questions: [
       {

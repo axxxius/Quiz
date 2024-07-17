@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import ModalClose from '@assets/icons/modalCross.svg?react'
-import { Typography } from '@shared'
+import { Modal, Typography } from '@shared'
 
 import styles from './AnswerModal.module.css'
 
@@ -38,19 +38,6 @@ export const AnswerModal = ({
   changeTeamAnswer,
   gameStatus
 }: AnswerModalProps) => {
-  const onKeydown = ({ key }: KeyboardEvent) => {
-    switch (key) {
-      case 'Escape':
-        onClose()
-        break
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener('keydown', onKeydown)
-    return () => document.removeEventListener('keydown', onKeydown)
-  })
-
   const { register, handleSubmit, reset } = useForm<AnswerForm>({
     mode: 'onChange'
   })
@@ -72,10 +59,8 @@ export const AnswerModal = ({
     onClose()
   })
 
-  if (!visible) return null
-
   return (
-    <div className={styles.modal_container} onClick={onClose}>
+    <Modal visible={visible} onClose={onClose}>
       <form onSubmit={onSubmit} className={styles.container} onClick={(e) => e.stopPropagation()}>
         {gameStatus === 'active' && (
           <>
@@ -156,6 +141,6 @@ export const AnswerModal = ({
           </>
         )}
       </form>
-    </div>
+    </Modal>
   )
 }

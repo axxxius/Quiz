@@ -50,11 +50,31 @@ const GameCard = ({ game, role }: GameCardProps) => {
   }
 
   return (
-    <div className={styles.card_container} onClick={() => handleNavigate()}>
-      <Typography variant='text_16_r' className={styles.date_container}>
+    <div
+      className={[
+        styles.card_container,
+        game.status === 'finished' ? 'border-white' : 'border-lime-200'
+      ].join(' ')}
+      onClick={() => handleNavigate()}
+    >
+      <Typography
+        variant='text_16_r'
+        className={[
+          styles.date_container,
+          game.status === 'finished' ? 'bg-white' : 'bg-lime-200'
+        ].join(' ')}
+      >
         {date}
       </Typography>
-      <Typography variant='text_16_r' className={styles.time_container}>
+      <Typography
+        variant='text_16_r'
+        className={[
+          styles.time_container,
+          game.status === 'finished'
+            ? 'border-white bg-white text-white'
+            : 'border-lime-200 bg-lime-200 text-lime-200'
+        ].join(' ')}
+      >
         {time}
       </Typography>
       <Typography variant='text_16_r' className={styles.name_container}>
@@ -63,7 +83,7 @@ const GameCard = ({ game, role }: GameCardProps) => {
       <Typography variant='text_16_r' className={styles.description_container}>
         {game.description}
       </Typography>
-      {role === 'admin' && (
+      {role === 'admin' && game.status !== 'finished' && (
         <div className={styles.btn_container}>
           <button className={styles.delete_btn} onClick={(e) => e.stopPropagation()}>
             <EditImage />

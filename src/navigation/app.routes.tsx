@@ -1,4 +1,5 @@
 import { lazy } from 'react'
+
 import { URLS } from './app.urls.ts'
 
 const Main = lazy(() => import('../screens/Main/Main.tsx'))
