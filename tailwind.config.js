@@ -30,7 +30,7 @@ export const theme = {
     'vela-regular': 'Vela-Regular',
     'vela-medium': 'Vela-Medium',
     'vela-bold': 'Vela-Bold',
-    'vela-extra bold': 'Vela-ExtraBold'
+    'vela-extra-bold': 'Vela-ExtraBold'
   },
   extend: {}
 }

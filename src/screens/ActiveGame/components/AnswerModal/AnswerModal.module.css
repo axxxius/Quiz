@@ -1,0 +1,53 @@
+.modal_container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.25);
+  animation-name: appear;
+  animation-duration: 300ms;
+}
+
+.container {
+  @apply border-4 border-purple-100 bg-purple-300;
+
+  position: relative;
+  max-width: 50vw;
+  text-align: center;
+  display: flex;
+  padding: 22px 30px;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 20px;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow:
+    0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slide-in;
+  animation-duration: 0.5s;
+}
+
+.modal_title {
+  @apply flex items-center justify-between gap-x-6;
+}
+
+.input_container {
+  @apply flex flex-col items-start justify-between gap-y-2;
+}
+
+.save_btn {
+  @apply mt-5 self-end rounded-[10px] bg-white px-6 py-3 font-vela-bold text-base text-[#370F71] hover:bg-purple-100 hover:text-white active:bg-[#370F71] active:text-white;
+}
+
+.form_input {
+  @apply rounded-[12px] bg-white bg-opacity-45 p-4 font-vela-bold text-base text-white outline-none focus:outline-2 focus:outline-white;
+}

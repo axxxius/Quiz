@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
+#tooltip-root {
+  position: relative;
+}
+
 @layer base {
   body {
     background: linear-gradient(180deg, rgba(116, 70, 215, 0.4) 0%, rgba(40, 6, 113, 0.3) 100%),

@@ -1,0 +1,31 @@
+.card_container {
+  @apply grid cursor-pointer items-center rounded-lg border-[1px] border-lime-200;
+
+  grid-template-columns: 120px 70px 270px 1fr 100px;
+}
+
+.btn_container {
+  @apply flex items-center gap-x-4;
+}
+
+.date_container {
+  @apply bg-lime-200 px-[16px] py-[13px] text-center text-purple-400;
+  border-radius: 6px 0 0 6px;
+}
+
+.time_container {
+  @apply border-[1px] border-lime-200 bg-lime-200 bg-opacity-20 px-[12px] py-[23px] text-center text-lime-200;
+}
+
+.name_container {
+  @apply px-[16px] py-[24px];
+}
+
+.description_container {
+  @apply overflow-hidden text-ellipsis px-[16px] py-[24px];
+}
+
+.delete_btn,
+.edit_btn {
+  @apply rounded-md p-1 hover:outline hover:outline-1 hover:outline-lime-200;
+}

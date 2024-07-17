@@ -3,5 +3,7 @@ export const URLS = {
   AUTH: {
     LOGIN: '/login',
     REGISTER: '/register'
-  }
+  },
+  ACTIVEGAME: '/activegame/:id',
+  GAMESHEDULE: '/gameshedule'
 }
