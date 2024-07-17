@@ -4,5 +4,7 @@ export const URLS = {
     LOGIN: '/login',
     REGISTER: '/register'
   },
+  ACTIVEGAME: '/activegame/:id',
+  GAMESHEDULE: '/gameshedule',
   TEAMS: '/teams'
 }

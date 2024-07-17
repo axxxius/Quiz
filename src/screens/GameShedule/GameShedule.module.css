@@ -1,0 +1,51 @@
+.container {
+  @apply flex flex-col items-center gap-y-6 px-16 py-8;
+}
+
+.main_container {
+  @apply flex flex-col gap-y-4;
+}
+
+.filter_container,
+.second_filter_container {
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  column-gap: 32px;
+}
+
+.filter_input {
+  @apply w-[60vw] rounded-xl bg-white bg-opacity-45 py-[13px] pl-[58px] pr-6 font-vela-regular text-base text-white outline-none;
+
+  background-image: url('/src/assets/icons/magnifier.svg');
+  background-repeat: no-repeat;
+  background-position: left 16px center;
+}
+
+.filter_input::placeholder {
+  @apply text-white;
+}
+
+.select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  @apply rounded-xl bg-white bg-opacity-45 font-vela-regular text-base text-white outline-none;
+  padding: 13px 58px 13px 16px;
+  background-image: url('/src/assets/icons/selectArrow.svg');
+  background-repeat: no-repeat;
+  background-position:
+    right 16px center,
+    0 0;
+  background-size: 24px, 100%;
+}
+
+.new_game_btn {
+  @apply rounded-[10px] bg-white px-8 py-[13px] text-center font-vela-bold text-base leading-snug text-[#370F71] hover:bg-purple-100 hover:text-white active:bg-[#370F71] active:text-white;
+}
+
+.end_games_btn {
+  text-align: start;
+  padding-left: 32px;
+  background-image: url('/src/assets//icons/endGames.svg');
+  background-repeat: no-repeat;
+  background-position: left center;
+}

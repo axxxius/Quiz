@@ -1,0 +1,7 @@
+.question_container {
+  position: relative;
+}
+
+.question_name {
+  @apply cursor-pointer font-vela-bold text-[16px];
+}

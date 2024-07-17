@@ -1,0 +1,22 @@
+.hover_container {
+  transform: translateX(-42%);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s linear,
+    visibility 0.3s linear;
+}
+
+.question_question {
+  @apply whitespace-nowrap text-purple-200;
+}
+
+.question_etalon,
+.question_weight {
+  @apply whitespace-nowrap text-black;
+}
