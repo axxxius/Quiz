@@ -1,6 +1,5 @@
-import { Game } from '@screens/ActiveGame/ActiveGame'
 import { Button, Typography } from '@shared'
-import { memo } from 'react'
+
 import styles from './GameInfo.module.css'
 
 interface GameInfoProps {
@@ -8,7 +7,7 @@ interface GameInfoProps {
   changeGameStatus: (newStatus: 'active' | 'finished' | 'planned') => void
 }
 
-const GameInfo = ({ game, changeGameStatus }: GameInfoProps) => {
+export const GameInfo = ({ game, changeGameStatus }: GameInfoProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.left_container}>
@@ -52,5 +51,3 @@ const GameInfo = ({ game, changeGameStatus }: GameInfoProps) => {
     </div>
   )
 }
-
-export default memo(GameInfo)

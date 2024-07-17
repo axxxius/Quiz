@@ -1,8 +1,9 @@
+import { useNavigate } from 'react-router-dom'
+
 import DeleteImage from '@assets/icons/deleteGame.svg?react'
 import EditImage from '@assets/icons/editGame.svg?react'
-import { Game } from '@screens/GameShedule/GameShedule'
 import { Typography } from '@shared'
-import { useNavigate } from 'react-router-dom'
+
 import styles from './GameCard.module.css'
 
 interface GameCardProps {

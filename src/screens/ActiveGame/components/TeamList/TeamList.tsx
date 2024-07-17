@@ -1,12 +1,12 @@
-import { TeamInGame } from '@screens/ActiveGame/ActiveGame'
 import { Typography } from '@shared'
+
 import styles from './TeamList.module.css'
 
 interface TeamListProps {
   teamList: TeamInGame[]
 }
 
-const TeamList = ({ teamList }: TeamListProps) => {
+export const TeamList = ({ teamList }: TeamListProps) => {
   return (
     <div className={styles.container}>
       <ul className={styles.game_header}>
@@ -42,5 +42,3 @@ const TeamList = ({ teamList }: TeamListProps) => {
     </div>
   )
 }
-
-export default TeamList

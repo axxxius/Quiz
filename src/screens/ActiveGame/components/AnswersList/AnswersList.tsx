@@ -1,9 +1,7 @@
 import CheckMark from '@assets/icons/checkmark.svg?react'
 import CrossMark from '@assets/icons/crossmark.svg?react'
-import { Question, TeamAnswer, TeamInGame } from '@screens/ActiveGame/ActiveGame'
+import { QuestionNumber } from '@screens/ActiveGame/components'
 import { Typography } from '@shared'
-
-import QuestionNumber from '../QuestionNumber/QuestionNumber'
 
 import styles from './AnswersList.module.css'
 
@@ -29,7 +27,7 @@ interface AnswersListProps {
   >
 }
 
-const AnswersList = ({
+export const AnswersList = ({
   teamList,
   questions,
   gameStatus,
@@ -75,10 +73,10 @@ const AnswersList = ({
             {questions.map((question) => {
               const answer = team.answers?.find((answer) => answer.questionId === question.id)
               if (gameStatus === 'finished') {
-                if (question.etalon === 'Да' || question.etalon === 'Нет') {
+                if (question.correctAnswer === 'Да' || question.correctAnswer === 'Нет') {
                   return (
                     <Typography key={question.id}>
-                      {answer?.answer === question.etalon ? <CheckMark /> : <CrossMark />}
+                      {answer?.answer === question.correctAnswer ? <CheckMark /> : <CrossMark />}
                     </Typography>
                   )
                 } else {
@@ -94,20 +92,25 @@ const AnswersList = ({
                 }
               }
               if (gameStatus === 'active') {
-                if (question.etalon === 'Да' || question.etalon === 'Нет') {
+                if (question.correctAnswer === 'Да' || question.correctAnswer === 'Нет') {
                   return (
                     <button
                       className='outline-none'
                       onClick={() => {
-                        if (answer?.answer !== question.etalon) {
-                          changeTeamAnswer(team.id, question.id, question.etalon, question.weight)
+                        if (answer?.answer !== question.correctAnswer) {
+                          changeTeamAnswer(
+                            team.id,
+                            question.id,
+                            question.correctAnswer,
+                            question.weight
+                          )
                         } else {
                           changeTeamAnswer(team.id, question.id, '', 0)
                         }
                       }}
                       key={question.id}
                     >
-                      {answer?.answer === question.etalon ? <CheckMark /> : <CrossMark />}
+                      {answer?.answer === question.correctAnswer ? <CheckMark /> : <CrossMark />}
                     </button>
                   )
                 } else {
@@ -133,5 +136,3 @@ const AnswersList = ({
     </div>
   )
 }
-
-export default AnswersList

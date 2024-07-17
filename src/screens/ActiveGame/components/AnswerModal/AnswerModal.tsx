@@ -1,8 +1,9 @@
-import ModalClose from '@assets/icons/modalCross.svg?react'
-import { Question, TeamAnswer } from '@screens/ActiveGame/ActiveGame'
-import { Typography } from '@shared'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+
+import ModalClose from '@assets/icons/modalCross.svg?react'
+import { Typography } from '@shared'
+
 import styles from './AnswerModal.module.css'
 
 interface AnswerModalProps {
@@ -29,7 +30,7 @@ interface AnswerForm {
   weight: number
 }
 
-const AnswerModal = ({
+export const AnswerModal = ({
   visible,
   onClose,
   teamAnswer,
@@ -130,7 +131,9 @@ const AnswerModal = ({
             </div>
             <Typography tag='p' variant='text_20_b'>
               Вопрос:{' '}
-              <span className='font-vela-regular'>{question?.question || 'Вопрос не задан'}</span>
+              <span className='font-vela-regular'>
+                {question?.description || 'Вопрос не задан'}
+              </span>
             </Typography>
             <Typography tag='p' variant='text_20_b'>
               Ответ команды:{' '}
@@ -140,7 +143,9 @@ const AnswerModal = ({
             </Typography>
             <Typography tag='p' variant='text_20_b'>
               Правильный ответ:{' '}
-              <span className='font-vela-regular'>{question?.etalon || 'Ответ не задан'}</span>
+              <span className='font-vela-regular'>
+                {question?.correctAnswer || 'Ответ не задан'}
+              </span>
             </Typography>
             <Typography tag='p' variant='text_20_b'>
               Баллы:{' '}
@@ -154,5 +159,3 @@ const AnswerModal = ({
     </div>
   )
 }
-
-export default AnswerModal

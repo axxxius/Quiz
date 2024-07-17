@@ -1,0 +1,6 @@
+export * from './AnswerModal/AnswerModal'
+export * from './AnswersList/AnswersList'
+export * from './GameTitle/GameInfo'
+export * from './QuestionNumber/QuestionNumber'
+export * from './TeamList/TeamList'
+export * from './Tooltip/Tooltip'

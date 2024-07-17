@@ -1,9 +1,10 @@
-import { Question } from '@screens/ActiveGame/ActiveGame'
 import { useMemo, useRef, useState } from 'react'
-import ToolTip from '../Tooltip/Tooltip'
+
+import { ToolTip } from '@screens/ActiveGame/components'
+
 import styles from './QuestionNumber.module.css'
 
-const QuestionNumber = ({ question }: { question: Question }) => {
+export const QuestionNumber = ({ question }: { question: Question }) => {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false)
   const questionRef = useRef<HTMLDivElement>(null)
 
@@ -16,7 +17,7 @@ const QuestionNumber = ({ question }: { question: Question }) => {
       top: -rect.top * 1.82 - window.scrollY * 1.82,
       left: rect.left + window.scrollX
     }
-  }, [isTooltipVisible, questionRef.current])
+  }, [isTooltipVisible])
 
   return (
     <div className={styles.question_container}>
@@ -32,5 +33,3 @@ const QuestionNumber = ({ question }: { question: Question }) => {
     </div>
   )
 }
-
-export default QuestionNumber

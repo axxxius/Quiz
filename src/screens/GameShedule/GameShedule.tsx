@@ -3,27 +3,8 @@ import { useState } from 'react'
 import styles from './GameShedule.module.css'
 import GameTable from './components/GameTable/GameTable'
 
-export interface Game {
-  id: number
-  name: string
-  description: string
-  date: string
-  status: 'active' | 'finished' | 'planned'
-  questions:
-    | [
-        {
-          id: number
-          name: string //тут вопрос число, для вывода в таблицу,
-          description: string //пусть это будет сам вопрос
-          correctAnswer: string //правильный ответ
-          weight: number //вес вопроса
-        }
-      ]
-    | []
-}
-
 const GameShedule = () => {
-  const role = 'user'
+  const role = 'admin'
 
   const games: Game[] = [
     {
@@ -32,7 +13,22 @@ const GameShedule = () => {
       date: '2024-07-07T19:00:00+03:00',
       description: 'Description 1',
       status: 'active',
-      questions: []
+      questions: [
+        {
+          id: 1,
+          name: '1.1',
+          description: 'Как зовут жирафа?',
+          correctAnswer: 'Фридрeх',
+          weight: 16
+        },
+        {
+          id: 2,
+          name: '1.2',
+          description: 'Сколько ног у паука?',
+          correctAnswer: 'кто напишет 8 тот лох',
+          weight: 21
+        }
+      ]
     },
     {
       id: 2,

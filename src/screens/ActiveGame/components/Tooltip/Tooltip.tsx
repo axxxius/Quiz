@@ -2,12 +2,11 @@ import { memo } from 'react'
 import ReactDOM from 'react-dom'
 
 import TooltilArrow from '@assets/icons/tooltipArrow.svg?react'
-import { Question } from '@screens/ActiveGame/ActiveGame'
 import { Typography } from '@shared'
 
 import styles from './Tooltip.module.css'
 
-const ToolTip = memo(
+export const ToolTip = memo(
   ({
     question,
     isTooltipVisible,
@@ -31,11 +30,11 @@ const ToolTip = memo(
       >
         <div className='rounded-sm bg-white p-2'>
           <Typography variant='text_12_m' className={styles.question_question}>
-            {question.question}
+            {question.description}
           </Typography>
           <div className='flex justify-between gap-x-2'>
             <Typography variant='text_12_m' className={styles.question_etalon}>
-              {question.etalon}
+              {question.correctAnswer}
             </Typography>
             <Typography variant='text_12_m' className={styles.question_weight}>
               Баллы: {question.weight}
@@ -48,5 +47,3 @@ const ToolTip = memo(
     )
   }
 )
-
-export default ToolTip
