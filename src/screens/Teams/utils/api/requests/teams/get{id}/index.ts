@@ -1,7 +1,7 @@
-import { FullTeam } from "@screens/Teams/types";
+import { FullTeam } from '@screens/Teams/types'
 
-import { api } from "./../../../../../../../utils/api/instance"
+import { api } from './../../../../../../../utils/api/instance'
 
 export const getTeam = async (id: number) => {
-    return await api.get<FullTeam>(`/teams/${id}/`);
+  return await api.get<FullTeam>(`/teams/${id}/`)
 }

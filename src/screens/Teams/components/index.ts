@@ -1,6 +1,5 @@
 export * from './Dropdown/Dropdown'
 export * from './Modals/CreatingTeamModal/CreatingTeamModal'
-export * from './Modals/Modal/Modal'
 export * from './Modals/TeamModal/TeamModal'
 export * from './NumericData/NumericData'
 export * from './Search/Search'

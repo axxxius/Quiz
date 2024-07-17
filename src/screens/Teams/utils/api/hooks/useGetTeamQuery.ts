@@ -1,10 +1,10 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from '@tanstack/react-query'
 
-import { getTeam } from "../requests/teams/get{id}"
+import { getTeam } from '../requests/teams/get{id}'
 
 export const useGetTeamQuery = (id: number) => {
-    return useQuery({
-        queryKey: ['getTeam', id],
-        queryFn: () => getTeam(id)
-    })
+  return useQuery({
+    queryKey: ['getTeam', id],
+    queryFn: () => getTeam(id)
+  })
 }

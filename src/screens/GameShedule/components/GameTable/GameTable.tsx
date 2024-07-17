@@ -1,4 +1,5 @@
 import GameCard from '../GameCard/GameCard'
+
 import styles from './GameTable.module.css'
 
 interface GameTableProps {

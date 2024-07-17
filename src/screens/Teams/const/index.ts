@@ -1,1 +1,1 @@
-export * from './Teams.const' 
+export * from './Teams.const'

@@ -43,7 +43,7 @@
 }
 
 .text_32_b {
-  @apply font-vela-bold text-[32px] leading-[44px]
+  @apply font-vela-bold text-[32px] leading-[44px];
 }
 
 .text_36_b {
