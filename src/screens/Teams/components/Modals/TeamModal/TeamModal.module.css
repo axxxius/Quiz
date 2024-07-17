@@ -1,0 +1,88 @@
+.modal_container {
+    width: 480px;
+}
+
+.modal_header {
+    @apply flex justify-between;
+}
+
+.modal_body {
+    margin-top: 24px;
+}
+
+.points {
+    @apply bg-pink-standart;
+}
+
+.rating {
+    @apply bg-lime-standart;
+}
+
+.numeric_data {
+    @apply flex gap-[32px];
+}
+
+.desc_container,
+.captain,
+.members,
+.invitation {
+    @apply flex flex-col gap-[8px];
+    margin-top: 16px;
+}
+
+.members_list ul {
+    height: 100px; 
+    width: 100%;
+    font-size: 12px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.members_list ul::-webkit-scrollbar {
+    width: 10px;
+    padding-right: 10px;
+}
+
+.members_list ul::-webkit-scrollbar-track {
+    @apply bg-grey;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    margin-block: 3px;
+    padding-right: 10px;
+}
+
+.members_list ul::-webkit-scrollbar-thumb {
+    @apply bg-white;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+}
+
+.members_list>ul>li {
+    padding: 8px 16px;
+}
+
+.members_list {
+    border: 2px solid white;
+    border-radius: 8px;
+    padding-right: 4px;
+}
+
+.button {
+    width: 214px;
+    align-self: flex-end;
+}
+
+.modal_footer {
+    @apply flex justify-end;
+    margin-top: 32px;
+}
+
+.desc {
+    line-height: 1.5;
+}
+
+.close {
+    cursor: pointer;
+}
