@@ -1,3 +1,4 @@
+import ModalClose from '@assets/icons/modalCross.svg?react'
 import { Question, TeamAnswer } from '@screens/ActiveGame/ActiveGame'
 import { Typography } from '@shared'
 import { useEffect } from 'react'
@@ -64,8 +65,8 @@ const AnswerModal = ({
     changeTeamAnswer(
       teamAnswer?.teamId ?? 0,
       teamAnswer?.answer?.questionId ?? 0,
-      data.answer,
-      data.weight
+      data.answer ? data.answer : '',
+      data.weight ? data.weight : 0
     )
     onClose()
   })
@@ -77,30 +78,41 @@ const AnswerModal = ({
       <form onSubmit={onSubmit} className={styles.container} onClick={(e) => e.stopPropagation()}>
         {gameStatus === 'active' && (
           <>
-            <Typography tag='p' variant='text_36_b' style={{ whiteSpace: 'nowrap' }}>
-              Оцените ответ команды
-            </Typography>
-            <Typography tag='p' variant='text_24_b'>
-              Введите ответ команды
-            </Typography>
-            <input
-              {...register('answer')}
-              id='answer'
-              defaultValue={teamAnswer?.answer?.answer}
-              className={styles.form_input}
-            />
-            <Typography tag='p' variant='text_24_b'>
-              Введите количество баллов{' '}
-            </Typography>
-            <input
-              {...register('weight')}
-              id='weight'
-              type='number'
-              defaultValue={teamAnswer?.answer?.weight}
-              max={question?.weight}
-              className={styles.form_input}
-            />
-            <span className='self-end'>Максимум: {question?.weight}</span>
+            <div className={styles.modal_title}>
+              <Typography tag='p' variant='text_36_b' style={{ whiteSpace: 'nowrap' }}>
+                Оцените ответ команды
+              </Typography>
+              <button onClick={onClose}>
+                <ModalClose />
+              </button>
+            </div>
+            <div className={styles.input_container}>
+              <Typography tag='p' variant='text_20_r'>
+                Введите ответ команды
+              </Typography>
+              <input
+                {...register('answer')}
+                id='answer'
+                defaultValue={teamAnswer?.answer?.answer}
+                className={styles.form_input}
+              />
+            </div>
+            <div className={styles.input_container}>
+              <Typography tag='p' variant='text_20_r'>
+                Введите количество баллов{' '}
+              </Typography>
+              <input
+                {...register('weight')}
+                id='weight'
+                type='number'
+                defaultValue={teamAnswer?.answer?.weight}
+                max={question?.weight}
+                className={styles.form_input}
+              />
+              <Typography variant='text_16_r' className='self-start'>
+                Максимум: {question?.weight}
+              </Typography>
+            </div>
             <button type='submit' className={styles.save_btn}>
               Сохранить
             </button>
@@ -108,18 +120,34 @@ const AnswerModal = ({
         )}
         {gameStatus === 'finished' && (
           <>
-            <Typography tag='p' variant='text_36_b'>
-              Оценка ответа команды
+            <div className={styles.modal_title}>
+              <Typography tag='p' variant='text_36_b'>
+                Ответ команды
+              </Typography>
+              <button onClick={onClose}>
+                <ModalClose />
+              </button>
+            </div>
+            <Typography tag='p' variant='text_20_b'>
+              Вопрос:{' '}
+              <span className='font-vela-regular'>{question?.question || 'Вопрос не задан'}</span>
             </Typography>
-            <Typography tag='p' variant='text_24_b'>
-              Ответ команды: {teamAnswer?.answer?.answer || 'Ответ не дан'}
+            <Typography tag='p' variant='text_20_b'>
+              Ответ команды:{' '}
+              <span className='font-vela-regular'>
+                {teamAnswer?.answer?.answer || 'Ответ не дан'}
+              </span>
             </Typography>
-            <Typography tag='p' variant='text_24_b'>
-              Оценка: {teamAnswer?.answer?.weight || 'Оценка не выставлена'}
+            <Typography tag='p' variant='text_20_b'>
+              Правильный ответ:{' '}
+              <span className='font-vela-regular'>{question?.etalon || 'Ответ не задан'}</span>
             </Typography>
-            <button onClick={onClose} type='button' className={styles.save_btn}>
-              Закрыть
-            </button>
+            <Typography tag='p' variant='text_20_b'>
+              Баллы:{' '}
+              <span className='font-vela-regular'>
+                {teamAnswer?.answer?.weight || 'Оценка не выставлена'}
+              </span>
+            </Typography>
           </>
         )}
       </form>

@@ -27,10 +27,6 @@
   width: max-content;
 }
 
-.team_entry:nth-child(4n-2) {
+.team_entry:nth-child(2n) {
   background-color: #8e6dd780;
-}
-
-.team_entry:nth-child(4n) {
-  background-color: #1e067180;
 }

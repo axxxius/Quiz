@@ -13,14 +13,11 @@ const TeamList = ({ teamList }: TeamListProps) => {
         <Typography tag='div' variant='text_16_b'>
           Место
         </Typography>
-        <Typography tag='div' variant='text_16_b'>
+        <Typography tag='div' variant='text_16_b' className='ml-8 text-start'>
           Команда
         </Typography>
         <Typography tag='div' variant='text_16_b'>
           Баллы
-        </Typography>
-        <Typography tag='div' variant='text_16_b' className='text-end'>
-          Вопросы
         </Typography>
       </ul>
       <div className={styles.teams_list}>
@@ -29,13 +26,16 @@ const TeamList = ({ teamList }: TeamListProps) => {
             <Typography tag='div' variant='text_16_m'>
               {index + 1}
             </Typography>
-            <Typography tag='div' variant='text_16_m' className='overflow-hidden text-ellipsis'>
+            <Typography
+              tag='div'
+              variant='text_16_m'
+              className='ml-8 overflow-hidden text-ellipsis text-start'
+            >
               {team.name}
             </Typography>
             <Typography tag='div' variant='text_16_m'>
               {team.points}
             </Typography>
-            <div />
           </div>
         ))}
       </div>

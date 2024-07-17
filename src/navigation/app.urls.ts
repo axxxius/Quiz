@@ -1,4 +1,5 @@
 export const URLS = {
   MAIN: '/',
-  ACTIVEGAME: '/activegame'
+  ACTIVEGAME: '/activegame/:id',
+  GAMESHEDULE: '/gameshedule'
 }

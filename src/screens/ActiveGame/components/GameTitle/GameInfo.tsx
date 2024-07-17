@@ -13,7 +13,7 @@ const GameInfo = ({ game, changeGameStatus }: GameInfoProps) => {
     <div className={styles.container}>
       <div className={styles.left_container}>
         <p className='mb-6 font-vela-bold text-4xl'>{game.name}</p>
-        <Typography tag='p' variant='text_24_b'>
+        <Typography tag='p' variant='text_24_b' className='mb-2'>
           Описание
         </Typography>
         <Typography tag='p' variant='text_20_m' className={styles.game_description}>

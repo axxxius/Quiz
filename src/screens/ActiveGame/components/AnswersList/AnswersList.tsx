@@ -37,7 +37,7 @@ const AnswersList = ({
   setOpenModal,
   setCurrentValues
 }: AnswersListProps) => {
-  const openModal = async (answer: TeamAnswer | undefined, teamId: number, questionId: number) => {
+  const openModal = (answer: TeamAnswer | undefined, teamId: number, questionId: number) => {
     if (!answer) {
       const question = questions.find((q) => q.id === questionId)
       if (question) {
@@ -45,7 +45,7 @@ const AnswersList = ({
           id: Date.now(),
           questionId: question.id,
           answer: '',
-          weight: question.weight
+          weight: 0
         }
         setCurrentValues({ teamId, answer: newAnswer })
       }

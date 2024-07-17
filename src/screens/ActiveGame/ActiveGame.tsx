@@ -17,6 +17,7 @@ export interface Question {
 export interface Game {
   id: number
   status: 'active' | 'finished' | 'planned'
+  date?: string
   name: string
   description: string
   questions: Question[]
@@ -39,10 +40,10 @@ export interface TeamInGame {
 const ActiveGame = memo(() => {
   const [game, setGame] = useState<Game>({
     id: 1,
-    status: 'finished',
+    status: 'active',
     name: 'Game 1',
     description:
-      'Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description    Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description  Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description',
+      'Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description Game 1 description ',
     questions: [
       {
         id: 1,
