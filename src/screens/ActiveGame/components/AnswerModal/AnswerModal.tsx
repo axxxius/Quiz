@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import ModalClose from '@assets/icons/modalCross.svg?react'
-import { Modal, Typography } from '@shared'
+import { Modal2, Typography } from '@shared'
 
 import styles from './AnswerModal.module.css'
 
@@ -60,7 +60,7 @@ export const AnswerModal = ({
   })
 
   return (
-    <Modal visible={visible} onClose={onClose}>
+    <Modal2 visible={visible} onClose={onClose}>
       <form onSubmit={onSubmit}>
         {gameStatus === 'active' && (
           <div className={styles.main_container}>
@@ -141,6 +141,6 @@ export const AnswerModal = ({
           </div>
         )}
       </form>
-    </Modal>
+    </Modal2>
   )
 }

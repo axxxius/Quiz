@@ -1,4 +1,4 @@
-declare interface Question {
+interface Question {
   readonly id: number
   name: string //число типо 1.1
   description: string //сам вопрос

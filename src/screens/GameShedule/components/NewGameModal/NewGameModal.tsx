@@ -3,7 +3,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 
 import ModalCross from '@assets/icons/modalCross.svg?react'
 import { FirstStep, SecondStep } from '@screens/GameShedule/components'
-import { Modal, Typography } from '@shared'
+import { Modal2, Typography } from '@shared'
 
 import styles from './NewGameModal.module.css'
 
@@ -30,9 +30,11 @@ export const NewGameModal = ({ onClose, visible }: NewGameModalProps) => {
     console.log(data)
   }
 
+  if (!visible) return null
+
   return (
     <FormProvider {...methods}>
-      <Modal visible={visible} onClose={onClose}>
+      <Modal2 visible={visible} onClose={onClose}>
         <div className={styles.main_container}>
           <div className={styles.modal_title}>
             <Typography variant='text_32_b'>Создать игру</Typography>
@@ -48,7 +50,7 @@ export const NewGameModal = ({ onClose, visible }: NewGameModalProps) => {
             )}
           </form>
         </div>
-      </Modal>
+      </Modal2>
     </FormProvider>
   )
 }

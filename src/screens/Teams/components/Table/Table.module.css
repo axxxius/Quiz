@@ -1,0 +1,47 @@
+.table {
+  display: table;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.head,
+.row {
+  @apply bg-purple-200;
+  display: grid;
+  grid-template-columns: 160px 1fr 200px 160px 160px;
+  border-radius: 12px;
+}
+
+.head {
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.row {
+  background: transparent;
+
+  &:hover,
+  &:active {
+    cursor: pointer;
+    background-color: rgba(30, 6, 113, 0.5);
+  }
+}
+
+.row:nth-child(odd) {
+  background-color: rgba(142, 109, 215, 0.5);
+
+  &:hover,
+  &:active {
+    cursor: pointer;
+    background-color: rgba(30, 6, 113, 0.5);
+  }
+}
+
+.col {
+  float: left;
+  display: table-column;
+  padding-block: 16px;
+}
+
+.col:not(:nth-child(2)) {
+  text-align: center;
+}

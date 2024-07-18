@@ -1,0 +1,15 @@
+.modal_header {
+  @apply flex justify-center;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  left: calc(100% - 40px);
+  top: 0;
+  cursor: pointer;
+}
+
+.modal_body {
+  margin-top: 24px;
+}

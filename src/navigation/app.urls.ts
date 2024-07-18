@@ -1,9 +1,10 @@
 export const URLS = {
-  MAIN: '/',
+  NEWS: '/',
   AUTH: {
     LOGIN: '/login',
     REGISTER: '/register'
   },
   ACTIVEGAME: '/activegame/:id',
-  GAMESHEDULE: '/gameshedule'
+  GAMESHEDULE: '/gameshedule',
+  TEAMS: '/teams'
 }

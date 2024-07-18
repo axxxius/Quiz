@@ -8,6 +8,8 @@
 
 .modal_title {
   @apply flex items-center justify-between gap-x-6;
+
+  width: 100%;
 }
 
 .input_container {

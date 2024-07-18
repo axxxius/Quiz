@@ -1,0 +1,26 @@
+.page_name {
+  @apply text-center font-vela-medium text-[36px] leading-snug text-white;
+}
+
+.main {
+  margin-top: 24px;
+  margin-bottom: 40px;
+  padding-inline: calc(100% / 1200 * 144);
+}
+
+.creating_team {
+}
+
+.creating_team_lead {
+  @apply flex justify-between;
+}
+
+.button {
+  width: 230px;
+  margin-left: 32px;
+}
+
+.sorting {
+  @apply flex items-center;
+  margin-top: 16px;
+}

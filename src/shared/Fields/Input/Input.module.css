@@ -41,8 +41,7 @@
 }
 
 .input_error {
-  @apply border-2 border-pink-200 text-pink-200;
-  caret-color: rgb(225, 56, 170);
+  @apply border-2 border-pink-200;
 
   &:hover,
   &:focus {

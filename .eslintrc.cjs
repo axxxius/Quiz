@@ -13,6 +13,7 @@ module.exports = {
   rules: {
     'react-refresh/only-export-components': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'react-hooks/exhaustive-deps': 'off',
 
     'import/order': 0,
     'simple-import-sort/exports': 1,
