@@ -6,9 +6,9 @@ import { Button, Input, Typography } from '@shared'
 
 import { GameFormValues } from '../NewGameModal/NewGameModal'
 
-import styles from './SecodStep.module.css'
+import styles from './SecondForm.module.css'
 
-interface SecodStepProps {
+interface SecondFormProps {
   goBack: () => void
 }
 
@@ -19,7 +19,7 @@ interface QuestionFormValues {
   weight: number
 }
 
-export const SecondStep = ({ goBack }: SecodStepProps) => {
+export const SecondForm = ({ goBack }: SecondFormProps) => {
   const methods = useFormContext<GameFormValues>()
   const { register, handleSubmit } = useForm<QuestionFormValues>()
   const [questions, setQuestions] = useState<Question[]>([])

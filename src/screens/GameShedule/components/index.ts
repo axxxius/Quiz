@@ -1,5 +1,5 @@
-export * from './FirstStep/FirstStep'
+export * from './FirstForm/FirstForm'
 export * from './GameCard/GameCard'
 export * from './GameTable/GameTable'
 export * from './NewGameModal/NewGameModal'
-export * from './SecondStep/SecondStep'
+export * from './SecondForm/SecondForm'

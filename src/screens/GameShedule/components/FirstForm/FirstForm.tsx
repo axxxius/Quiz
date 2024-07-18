@@ -4,13 +4,13 @@ import CheckboxFalse from '@assets/icons/checkbox_false.svg?react'
 import CheckboxTrue from '@assets/icons/checkbox_true.svg?react'
 import { Button, Input, Typography } from '@shared'
 
-import styles from './FirstStep.module.css'
+import styles from './FirstForm.module.css'
 
-interface FirstStepProps {
+interface FirstFormProps {
   goNext: () => void
 }
 
-export const FirstStep = ({ goNext }: FirstStepProps) => {
+export const FirstForm = ({ goNext }: FirstFormProps) => {
   const methods = useFormContext()
 
   return (

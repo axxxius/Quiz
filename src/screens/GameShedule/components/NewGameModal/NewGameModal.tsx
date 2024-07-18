@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 
 import ModalCross from '@assets/icons/modalCross.svg?react'
-import { FirstStep, SecondStep } from '@screens/GameShedule/components'
+import { FirstForm, SecondForm } from '@screens/GameShedule/components'
 import { Modal2, Typography } from '@shared'
 
 import styles from './NewGameModal.module.css'
@@ -44,9 +44,9 @@ export const NewGameModal = ({ onClose, visible }: NewGameModalProps) => {
           </div>
           <form onSubmit={methods.handleSubmit(onSubmit)}>
             {!isNextStep ? (
-              <FirstStep goNext={() => setIsNextStep(true)} />
+              <FirstForm goNext={() => setIsNextStep(true)} />
             ) : (
-              <SecondStep goBack={() => setIsNextStep(false)} />
+              <SecondForm goBack={() => setIsNextStep(false)} />
             )}
           </form>
         </div>
