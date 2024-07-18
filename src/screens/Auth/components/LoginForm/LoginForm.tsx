@@ -5,15 +5,26 @@ import { emailSchema, passwordSchema } from '@screens/Auth/constants'
 import { Button, Input, Typography } from '@shared'
 
 import styles from '../../Auth.module.css'
+import { api } from '../../../../utils/api/instance.ts'
+import { useQuery } from '@tanstack/react-query'
 
 interface LoginFormValues {
   email: string
   password: string
 }
 
+const teams = async () => await api.get('/teams')
+
 export const LoginForm = () => {
   const { register, handleSubmit, formState } = useForm<LoginFormValues>({ mode: 'onSubmit' })
   const { errors } = formState
+
+  const { data } = useQuery({
+    queryKey: ['teams'],
+    queryFn: () => teams
+  })
+
+  console.log('@@@data', data)
 
   const onSubmit = (data: LoginFormValues) => {
     console.log('@@@Login', data)
