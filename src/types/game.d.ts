@@ -1,4 +1,4 @@
-declare interface Game {
+interface Game {
   readonly id: number
   name: string
   description: string

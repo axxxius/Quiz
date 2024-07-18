@@ -1,5 +1,5 @@
 export const URLS = {
-  MAIN: '/',
+  NEWS: '/',
   AUTH: {
     LOGIN: '/login',
     REGISTER: '/register'

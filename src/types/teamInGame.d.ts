@@ -1,4 +1,4 @@
-declare interface TeamInGame {
+interface TeamInGame {
   readonly id: number
   name: string
   points: number

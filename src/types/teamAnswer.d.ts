@@ -1,4 +1,4 @@
-declare interface TeamAnswer {
+interface TeamAnswer {
   readonly id: number
   questionId: number
   answer: string
