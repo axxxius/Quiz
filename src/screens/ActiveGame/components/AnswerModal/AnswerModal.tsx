@@ -61,9 +61,9 @@ export const AnswerModal = ({
 
   return (
     <Modal visible={visible} onClose={onClose}>
-      <form onSubmit={onSubmit} className={styles.container} onClick={(e) => e.stopPropagation()}>
+      <form onSubmit={onSubmit}>
         {gameStatus === 'active' && (
-          <>
+          <div className={styles.main_container}>
             <div className={styles.modal_title}>
               <Typography tag='p' variant='text_36_b' style={{ whiteSpace: 'nowrap' }}>
                 Оцените ответ команды
@@ -102,10 +102,10 @@ export const AnswerModal = ({
             <button type='submit' className={styles.save_btn}>
               Сохранить
             </button>
-          </>
+          </div>
         )}
         {gameStatus === 'finished' && (
-          <>
+          <div className={styles.main_container}>
             <div className={styles.modal_title}>
               <Typography tag='p' variant='text_36_b'>
                 Ответ команды
@@ -138,7 +138,7 @@ export const AnswerModal = ({
                 {teamAnswer?.answer?.weight || 'Оценка не выставлена'}
               </span>
             </Typography>
-          </>
+          </div>
         )}
       </form>
     </Modal>

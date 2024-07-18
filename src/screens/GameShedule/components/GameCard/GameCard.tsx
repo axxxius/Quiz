@@ -34,7 +34,7 @@ const formatDate = (dateString: string) => {
   return `${formattedDay} ${formattedMonth} ${year}`
 }
 
-const GameCard = ({ game, role }: GameCardProps) => {
+export const GameCard = ({ game, role }: GameCardProps) => {
   const initialDate = game.date?.split('T')[0]?.split('-').reverse().join(' ')
   const date = formatDate(initialDate)
   const time = game.date?.split('T')[1].split('+')[0].slice(0, 5)
@@ -83,8 +83,8 @@ const GameCard = ({ game, role }: GameCardProps) => {
       <Typography variant='text_16_r' className={styles.description_container}>
         {game.description}
       </Typography>
-      {role === 'admin' && game.status !== 'finished' && (
-        <div className={styles.btn_container}>
+      {role === 'admin' && game.status !== 'finished' ? (
+        <div className={[styles.btn_container, 'py-[19px]'].join(' ')}>
           <button className={styles.delete_btn} onClick={(e) => e.stopPropagation()}>
             <EditImage />
           </button>
@@ -92,9 +92,9 @@ const GameCard = ({ game, role }: GameCardProps) => {
             <DeleteImage />
           </button>
         </div>
+      ) : (
+        <div className={[styles.btn_container, 'py-[35px]'].join(' ')} />
       )}
     </div>
   )
 }
-
-export default GameCard

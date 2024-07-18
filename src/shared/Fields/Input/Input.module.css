@@ -28,8 +28,20 @@
   }
 }
 
+.input[type='date']::-webkit-calendar-picker-indicator {
+  background-image: url('@assets/icons/input_calendar.svg');
+  background-size: 24px 24px;
+  background-position: center center;
+}
+
+.input[type='time']::-webkit-calendar-picker-indicator {
+  background-image: url('@assets/icons/input_time.svg');
+  background-size: 24px 24px;
+  background-position: center center;
+}
+
 .input_error {
-  @apply text-pink-200 border-2 border-pink-200;
+  @apply border-2 border-pink-200 text-pink-200;
   caret-color: rgb(225, 56, 170);
 
   &:hover,

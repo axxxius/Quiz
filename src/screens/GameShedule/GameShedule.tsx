@@ -1,8 +1,9 @@
-import { Typography } from '@shared'
 import { useState } from 'react'
+
+import { GameTable, NewGameModal } from '@screens/GameShedule/components'
+import { Typography } from '@shared'
+
 import styles from './GameShedule.module.css'
-import GameTable from './components/GameTable/GameTable'
-import { NewGameModal } from './components/NewGameModal/NewGameModal'
 
 const GameShedule = () => {
   const role = 'admin'
@@ -12,8 +13,7 @@ const GameShedule = () => {
       id: 1,
       name: 'Game 1',
       date: '2024-07-07T19:00:00+03:00',
-      description:
-        'Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1',
+      description: 'Description 1',
       status: 'active',
       questions: [
         {
@@ -61,7 +61,7 @@ const GameShedule = () => {
           </div>
           <div className={styles.second_filter_container}>
             <Typography tag='div' variant='text_16_r'>
-              <span className='mr-2'>Сортировать по</span>
+              <span className='mr-6'>Сортировать по</span>
               <select className={styles.select}>
                 <option value='date'>Дате создания</option>
                 <option value='status'>Статусу</option>

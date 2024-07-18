@@ -27,7 +27,9 @@ export const Modal = ({ children, onClose, visible }: ModalProps) => {
   // обязательно прописывать e.stopPropagation() в каждом дочернем элементе
   return (
     <div className={styles.modal_container} onClick={onClose}>
-      {children}
+      <div className={styles.container} onClick={(e) => e.stopPropagation()}>
+        {children}
+      </div>
     </div>
   )
 }

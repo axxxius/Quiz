@@ -1,4 +1,10 @@
-import { Modal } from '@shared'
+import { useState } from 'react'
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+
+import ModalCross from '@assets/icons/modalCross.svg?react'
+import { FirstStep, SecondStep } from '@screens/GameShedule/components'
+import { Modal, Typography } from '@shared'
+
 import styles from './NewGameModal.module.css'
 
 interface NewGameModalProps {
@@ -6,10 +12,43 @@ interface NewGameModalProps {
   visible: boolean
 }
 
+export interface GameFormValues {
+  name: string
+  date: string
+  time: string
+  description: string
+  createAnnouncement: boolean
+  questions: Question[]
+}
+
 export const NewGameModal = ({ onClose, visible }: NewGameModalProps) => {
+  const [isNextStep, setIsNextStep] = useState(false)
+
+  const methods = useForm<GameFormValues>()
+
+  const onSubmit: SubmitHandler<GameFormValues> = (data) => {
+    console.log(data)
+  }
+
   return (
-    <Modal visible={visible} onClose={onClose}>
-      <div className={styles.modal_content}></div>
-    </Modal>
+    <FormProvider {...methods}>
+      <Modal visible={visible} onClose={onClose}>
+        <div className={styles.main_container}>
+          <div className={styles.modal_title}>
+            <Typography variant='text_32_b'>Создать игру</Typography>
+            <button onClick={onClose} className={styles.close_btn}>
+              <ModalCross />
+            </button>
+          </div>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            {!isNextStep ? (
+              <FirstStep goNext={() => setIsNextStep(true)} />
+            ) : (
+              <SecondStep goBack={() => setIsNextStep(false)} />
+            )}
+          </form>
+        </div>
+      </Modal>
+    </FormProvider>
   )
 }

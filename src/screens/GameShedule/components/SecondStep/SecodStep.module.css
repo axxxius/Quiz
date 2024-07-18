@@ -1,0 +1,17 @@
+.container {
+  @apply flex flex-col gap-[16px];
+}
+
+.create_question {
+  @apply flex flex-col gap-y-4;
+}
+
+.create_question_btn {
+  @apply w-[176px] self-end whitespace-nowrap;
+}
+
+.input_container {
+  @apply grid gap-x-8 gap-y-4;
+
+  grid-template-columns: 232px 232px;
+}

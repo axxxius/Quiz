@@ -16,7 +16,7 @@ const ActiveGame = () => {
     questions: [
       {
         id: 1,
-        name: '1.1',
+        name: '1.111111111',
         description: 'Как зовут жирафа?',
         correctAnswer: 'Фридрeх',
         weight: 16
