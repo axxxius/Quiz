@@ -1,10 +1,10 @@
 import { Dispatch, forwardRef, SetStateAction } from 'react'
 
 import Close from '@assets/icons/close.svg?react'
-import { Modal, TeamForm } from '@screens/Teams/components'
+import { TeamForm } from '@screens/Teams/components'
 import styles from '@screens/Teams/components/Modals/CreatingTeamModal/CreatingTeamModal.module.css'
 import { ShowModal } from '@screens/Teams/types'
-import { Typography } from '@shared'
+import { Modal, Typography } from '@shared'
 
 interface CreatingTeamModalProps {
   setShowModal: Dispatch<SetStateAction<ShowModal>>

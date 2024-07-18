@@ -1,11 +1,11 @@
 import { useRef, useState } from 'react'
 
+import { useOnClickOutside } from '@hooks'
 import { CreatingTeamModal, Dropdown, Search, Table } from '@screens/Teams/components'
 import { ShowModal } from '@screens/Teams/types'
 import { Button, Typography } from '@shared'
 import { classnames } from '@utils'
 
-import { useOnClickOutside } from './../../hooks/useOnClickOutside'
 import { SORT_TEAMS } from './const'
 import styles from './Teams.module.css'
 

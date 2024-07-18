@@ -10,6 +10,7 @@
     "lint:fix": "eslint src/**/*.{tsx,ts} --fix",
     "preview": "vite preview",
     "postinstall": "husky install .husky",
+    "format": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "prepare": "husky"
   },
   "dependencies": {

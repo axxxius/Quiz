@@ -1,7 +1,8 @@
 import { forwardRef } from 'react'
 
-import styles from '@screens/Teams/components/Modals/Modal/Modal.module.css'
 import { classnames } from '@utils'
+
+import styles from './Modal.module.css'
 
 interface ModalProps {
   children: React.ReactNode
@@ -19,4 +20,3 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(({ children, classNa
     </div>
   )
 })
-

@@ -1,11 +1,11 @@
 import { Dispatch, forwardRef, SetStateAction } from 'react'
 
 import Close from '@assets/icons/close.svg?react'
-import { Modal, NumericData } from '@screens/Teams/components'
+import { NumericData } from '@screens/Teams/components'
 import styles from '@screens/Teams/components/Modals/TeamModal/TeamModal.module.css'
 import { FullTeam, ShowModal } from '@screens/Teams/types'
 import { useGetTeamQuery } from '@screens/Teams/utils/api/hooks'
-import { Button, Typography } from '@shared'
+import { Button, Modal, Typography } from '@shared'
 
 interface TeamModalProps {
   id: number

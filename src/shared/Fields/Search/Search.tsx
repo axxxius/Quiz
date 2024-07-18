@@ -1,5 +1,6 @@
-import styles from '@screens/Teams/components/Search/Search.module.css'
 import { classnames } from '@utils'
+
+import styles from './Search.module.css'
 
 interface SearchProps {
   isLead: boolean

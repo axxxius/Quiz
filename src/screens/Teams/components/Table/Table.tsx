@@ -5,9 +5,7 @@ import styles from '@screens/Teams/components/Table/Table.module.css'
 import { MockTeam, ShowModal, Team } from '@screens/Teams/types'
 import { useGetTeamsQuery } from '@screens/Teams/utils/api/hooks'
 import { Typography } from '@shared'
-
 import { TeamModal } from '../Modals/TeamModal/TeamModal'
-
 import { teamsTableAtom } from './Table.atom'
 
 const mockTeams: MockTeam[] = [
@@ -94,7 +92,7 @@ const mockTeams: MockTeam[] = [
   }
 ]
 
-console.log(mockTeams);
+console.log(mockTeams)
 
 interface TableProps {
   showModal: ShowModal
