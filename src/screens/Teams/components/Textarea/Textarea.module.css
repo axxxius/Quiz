@@ -1,43 +1,43 @@
 .container {
-    @apply flex flex-col gap-[8px];
+  @apply flex flex-col gap-[8px];
 }
 
 .label {
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 27px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 27px;
 }
 
 .textarea {
-    @apply bg-grey;
-    padding: 13px 24px;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    outline: none;
-    resize: none;
+  @apply bg-grey;
+  padding: 13px 24px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  outline: none;
+  resize: none;
 
-    &:hover,
-    &:focus {
-        border: 2px solid white;
-    }
+  &:hover,
+  &:focus {
+    border: 2px solid white;
+  }
 }
 
 .textarea::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
 
 .textarea::-webkit-scrollbar-track {
-    @apply bg-grey;
-    -webkit-border-radius: 8px;
-    border-radius: 8px;
-    margin-block: 4px;
-    padding-right: 10px;
+  @apply bg-grey;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  margin-block: 4px;
+  padding-right: 10px;
 }
 
 .textarea::-webkit-scrollbar-thumb {
-    @apply bg-white;
-    -webkit-border-radius: 8px;
-    border-radius: 8px;
-    border: 3px solid transparent;
-    background-clip: content-box;
+  @apply bg-white;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: content-box;
 }

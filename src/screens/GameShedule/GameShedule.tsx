@@ -1,7 +1,9 @@
-import { Typography } from '@shared'
 import { useState } from 'react'
-import styles from './GameShedule.module.css'
+
+import { Typography } from '@shared'
+
 import GameTable from './components/GameTable/GameTable'
+import styles from './GameShedule.module.css'
 
 const GameShedule = () => {
   const role = 'admin'

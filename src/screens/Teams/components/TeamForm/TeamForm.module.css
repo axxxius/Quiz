@@ -1,17 +1,17 @@
 .input {
-    width: 454px;
+  width: 454px;
 }
 
 .form {
-    @apply flex flex-col gap-[16px]
+  @apply flex flex-col gap-[16px];
 }
 
 .button_container {
-    @apply flex justify-end;
+  @apply flex justify-end;
 }
 
 .button {
-    width: 190px;
-    align-self: flex-end;
-    margin-top: 32px;
+  width: 190px;
+  align-self: flex-end;
+  margin-top: 32px;
 }
