@@ -2,14 +2,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
 import { Select } from '@screens/Auth/components'
-import {
-  emailSchema,
-  genderSchema,
-  nameSchema,
-  passwordSchema,
-  roleSchema
-} from '@screens/Auth/constants'
-import { GENDER, ROLE } from '@screens/Auth/constants/const.ts'
+import { GENDER, ROLE, schema } from '@screens/Auth/constants'
 import { Button, Input, Typography } from '@shared'
 
 import styles from '../../Auth.module.css'
@@ -44,12 +37,12 @@ export const RegisterForm = () => {
           label='Имя'
           isError={!!errors.name}
           helperText={errors.name?.message}
-          {...register('name', nameSchema)}
+          {...register('name', schema.nameSchema)}
         />
         <Controller
           name='role'
           control={control}
-          rules={roleSchema}
+          rules={schema.roleSchema}
           render={({ field }) => (
             <Select
               options={ROLE}
@@ -64,26 +57,26 @@ export const RegisterForm = () => {
           label='Email'
           isError={!!errors.email}
           helperText={errors.email?.message}
-          {...register('email', emailSchema)}
+          {...register('email', schema.emailSchema)}
         />
         <Input
           label='Пароль'
           type='password'
           isError={!!errors.password}
           helperText={errors.password?.message}
-          {...register('password', passwordSchema)}
+          {...register('password', schema.passwordSchema)}
         />
         <Input
           label='Подтвердите пароль'
           type='password'
           isError={!!errors.confirmedPassword}
           helperText={errors.confirmedPassword?.message}
-          {...register('confirmedPassword', passwordSchema)}
+          {...register('confirmedPassword', schema.passwordSchema)}
         />
         <Controller
           name='gender'
           control={control}
-          rules={genderSchema}
+          rules={schema.genderSchema}
           render={({ field }) => (
             <Select
               options={GENDER}

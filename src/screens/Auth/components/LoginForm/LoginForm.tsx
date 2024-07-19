@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import { emailSchema, passwordSchema } from '@screens/Auth/constants'
+import { schema } from '@screens/Auth/constants'
 import { Button, Input, Typography } from '@shared'
 
 import styles from '../../Auth.module.css'
@@ -29,14 +29,14 @@ export const LoginForm = () => {
           label='Email'
           isError={!!errors.email}
           helperText={errors.email?.message}
-          {...register('email', emailSchema)}
+          {...register('email', schema.emailSchema)}
         />
         <Input
           label='Пароль'
           type='password'
           isError={!!errors.password}
           helperText={errors.password?.message}
-          {...register('password', passwordSchema)}
+          {...register('password', schema.passwordSchema)}
         />
         <div className={styles.button_container}>
           <Link to='/register'>
