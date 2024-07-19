@@ -1,10 +1,13 @@
 import { forwardRef, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
+
 import styles from '@screens/Teams/components/Table/Table.module.css'
 import { Team } from '@screens/Teams/types'
 import { Typography } from '@shared'
+
 import { modalAtom } from '../Modals/Modal.atom'
 import { TeamModal } from '../Modals/TeamModal/TeamModal'
+
 import { teamsTableAtom } from './Table.atom'
 
 export const Table = forwardRef<HTMLDivElement>((_, ref) => {

@@ -4,7 +4,7 @@ import { TeamFormValues } from '@screens/Teams/types'
 
 const initialState: TeamFormValues = {
   team_name: '',
-  team_desc: '',
+  team_desc: ''
 }
 
 export const teamFormAtom = atom<TeamFormValues>({

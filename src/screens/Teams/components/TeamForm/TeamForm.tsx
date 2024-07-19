@@ -17,7 +17,7 @@ interface TeamFormProps {
 }
 
 export const TeamForm = ({ handleClick }: TeamFormProps) => {
-  const [teamFormValues, setTeamFormValues] = useRecoilState(teamFormAtom);
+  const [teamFormValues, setTeamFormValues] = useRecoilState(teamFormAtom)
   const {
     register,
     handleSubmit,
