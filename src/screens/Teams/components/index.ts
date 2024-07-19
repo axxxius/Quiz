@@ -1,4 +1,3 @@
-export * from '../../../shared/Fields/Search/Search'
 export * from './Dropdown/Dropdown'
 export * from './Modals/CreatingTeamModal/CreatingTeamModal'
 export * from './Modals/TeamModal/TeamModal'

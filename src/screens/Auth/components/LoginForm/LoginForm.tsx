@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 import { emailSchema, passwordSchema } from '@screens/Auth/constants'
 import { Button, Input, Typography } from '@shared'
-
-import styles from '../../Auth.module.css'
-import { api } from '../../../../utils/api/instance.ts'
 import { useQuery } from '@tanstack/react-query'
+
+import { api } from '../../../../utils/api/instance.ts'
+import styles from '../../Auth.module.css'
 
 interface LoginFormValues {
   email: string

@@ -1,53 +1,55 @@
 import { useForm } from 'react-hook-form'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 
 import styles from '@screens/Teams/components/TeamForm/TeamForm.module.css'
 import { Textarea } from '@screens/Teams/components/Textarea/Textarea'
 import { descriptionSchema, nameSchema } from '@screens/Teams/const/schemas'
+import { TeamFormValues } from '@screens/Teams/types'
 import { usePostTeamMutation } from '@screens/Teams/utils/api/hooks'
 import { Button, Input, Typography } from '@shared'
 
 import { teamsTableAtom } from '../Table/Table.atom'
 
-interface TeamFormValues {
-  name: string
-  description: string
-}
+import { teamFormAtom } from './TeamForm.atom'
 
 interface TeamFormProps {
   handleClick: () => void
 }
 
 export const TeamForm = ({ handleClick }: TeamFormProps) => {
+  const [teamFormValues, setTeamFormValues] = useRecoilState(teamFormAtom);
   const {
     register,
     handleSubmit,
-    formState: { errors }
-  } = useForm<TeamFormValues>({ mode: 'onSubmit' })
+    formState: { errors },
+    getValues
+  } = useForm<TeamFormValues>({ mode: 'onSubmit', defaultValues: teamFormValues })
   const { mutateAsync } = usePostTeamMutation()
   const setTeams = useSetRecoilState(teamsTableAtom)
 
-  const onSubmit = async ({ name, description }: TeamFormValues) => {
+  const onSubmit = async (values: TeamFormValues) => {
     const { data } = await mutateAsync({
-      team_name: name,
-      team_desc: description,
-      captain_id: 0
+      ...values,
+      captain_id: 4
     })
     setTeams((prev) => [...prev, data])
-    console.log('Форма отправилась', data)
     handleClick()
   }
 
+  const handleChange = () => {
+    setTeamFormValues(getValues())
+  }
+
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <Input className={styles.input} label='Название' {...register('name', nameSchema)} />
-      <Textarea label='Описание' {...register('description', descriptionSchema)} />
-      {errors.description && (
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)} onChange={handleChange}>
+      <Input className={styles.input} label='Название' {...register('team_name', nameSchema)} />
+      <Textarea label='Описание' {...register('team_desc', descriptionSchema)} />
+      {errors.team_desc && (
         <Typography variant='text_16_r' className=''>
-          {errors.description.message}
+          {errors.team_desc.message}
         </Typography>
       )}
-      {errors.name && <Typography variant='text_16_r'>{errors.name.message}</Typography>}
+      {errors.team_name && <Typography variant='text_16_r'>{errors.team_name.message}</Typography>}
       <div className={styles.button_container}>
         <Button className={styles.button} type='submit'>
           Создать команду

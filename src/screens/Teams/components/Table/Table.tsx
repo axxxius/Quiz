@@ -1,122 +1,24 @@
-import { Dispatch, forwardRef, SetStateAction, useEffect, useState } from 'react'
-import { useRecoilState } from 'recoil'
-
+import { forwardRef, useState } from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import styles from '@screens/Teams/components/Table/Table.module.css'
-import { MockTeam, ShowModal, Team } from '@screens/Teams/types'
-import { useGetTeamsQuery } from '@screens/Teams/utils/api/hooks'
+import { Team } from '@screens/Teams/types'
 import { Typography } from '@shared'
+import { modalAtom } from '../Modals/Modal.atom'
 import { TeamModal } from '../Modals/TeamModal/TeamModal'
 import { teamsTableAtom } from './Table.atom'
 
-const mockTeams: MockTeam[] = [
-  {
-    id: 1,
-    team_name: 'Смешарики',
-    creation_date: '11.01.2023',
-    played_games: 200,
-    points: 10000,
-    rating: 1,
-    team_desc:
-      'Мы самая лучшая команда, присоединяйся к нам поскорее! Мы самая лучшая команда, присоединяйся к нам поскорее!Мы самая лучшая команда, присоединяйся к нам поскорее!Мы самая лучшая команда, присоединяйся к нам поскорее!Мы самая лучшая команда, присоединяйся к нам поскорее!Мы самая лучшая команда, присоединяйся к нам поскорее!Мы самая лучшая команда, присоединяйся к нам поскорее!',
-    captain_name: 'Петров Петр Петрович',
-    team_members: [
-      'Петров Петр Петрович',
-      'Плюшкин Плюшка Плюшкович',
-      'Иванов Иван Иванович',
-      'Денисов Денис Денисович'
-    ]
-  },
-  {
-    id: 2,
-    team_name: 'Лютики',
-    creation_date: '11.01.2023',
-    played_games: 200,
-    points: 100,
-    rating: 2,
-    team_desc: 'Мы всех порвем, присоединяйся к нам поскорее!',
-    captain_name: 'Иванов Иван Иванович',
-    team_members: [
-      'Петров Петр Петрович',
-      'Плюшкин Плюшка Плюшкович',
-      'Иванов Иван Иванович',
-      'Денисов Денис Денисович'
-    ]
-  },
-  {
-    id: 3,
-    team_name: 'Ромашки',
-    creation_date: '11.01.2023',
-    played_games: 200,
-    points: 100,
-    rating: 3
-  },
-  {
-    id: 4,
-    team_name: 'Тюльпаны',
-    creation_date: '11.01.2023',
-    played_games: 200,
-    points: 100,
-    rating: 4
-  },
-  {
-    id: 5,
-    team_name: 'Одуванчики',
-    creation_date: '11.01.2023',
-    played_games: 200,
-    points: 100,
-    rating: 5
-  },
-  {
-    id: 6,
-    team_name: 'Маки',
-    creation_date: '11.01.2023',
-    played_games: 200,
-    points: 100,
-    rating: 6
-  },
-  {
-    id: 7,
-    team_name: 'Розы',
-    creation_date: '11.01.2023',
-    played_games: 200,
-    points: 100,
-    rating: 7
-  },
-  {
-    id: 8,
-    team_name: 'Незабудки',
-    creation_date: '11.01.2023',
-    played_games: 200,
-    points: 100,
-    rating: 8
-  }
-]
-
-console.log(mockTeams)
-
-interface TableProps {
-  showModal: ShowModal
-  setShowModal: Dispatch<SetStateAction<ShowModal>>
-}
-
-export const Table = forwardRef<HTMLDivElement, TableProps>(({ showModal, setShowModal }, ref) => {
+export const Table = forwardRef<HTMLDivElement>((_, ref) => {
   const [activeTeam, setActiveTeam] = useState<number>(-1)
-  const [teams, setTeams] = useRecoilState(teamsTableAtom)
-  const { data, isSuccess } = useGetTeamsQuery()
+  const teams = useRecoilValue(teamsTableAtom)
+  const [showModal, setShowModal] = useRecoilState(modalAtom)
 
   const handleClick = (team: Team) => {
     setActiveTeam(team.team_id)
     setShowModal((prev) => ({
       ...prev,
-      team: true
+      showTeam: true
     }))
   }
-
-  useEffect(() => {
-    if (isSuccess) setTeams(data.data.teams)
-  })
-
-  console.log(teams)
 
   return (
     <>
@@ -148,7 +50,7 @@ export const Table = forwardRef<HTMLDivElement, TableProps>(({ showModal, setSho
           </div>
         ))}
       </div>
-      {showModal.team && <TeamModal ref={ref} setShowModal={setShowModal} id={activeTeam} />}
+      {showModal.showTeam && <TeamModal ref={ref} id={activeTeam} />}
     </>
   )
 })

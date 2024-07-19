@@ -1,21 +1,21 @@
-import { Dispatch, forwardRef, SetStateAction } from 'react'
+import { forwardRef } from 'react'
+import { useSetRecoilState } from 'recoil'
 
 import Close from '@assets/icons/close.svg?react'
 import { TeamForm } from '@screens/Teams/components'
 import styles from '@screens/Teams/components/Modals/CreatingTeamModal/CreatingTeamModal.module.css'
-import { ShowModal } from '@screens/Teams/types'
 import { Modal, Typography } from '@shared'
 
-interface CreatingTeamModalProps {
-  setShowModal: Dispatch<SetStateAction<ShowModal>>
-}
+import { modalAtom, ShowModal } from '../Modal.atom'
 
-export const CreatingTeamModal = forwardRef<HTMLDivElement, CreatingTeamModalProps>(
-  ({ setShowModal }, ref) => {
+export const CreatingTeamModal = forwardRef<HTMLDivElement>(
+  (_, ref) => {
+    const setShowModal = useSetRecoilState<ShowModal>(modalAtom)
+
     const handleClick = () => {
       setShowModal((prev) => ({
         ...prev,
-        creatingTeam: false
+        showCreatingTeam: false
       }))
     }
 
