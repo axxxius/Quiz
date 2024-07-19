@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { emailSchema, passwordSchema } from '@screens/Auth/constants'
 import { Button, Input, Typography } from '@shared'
-import { useQuery } from '@tanstack/react-query'
 
-import { api } from '../../../../utils/api/instance.ts'
 import styles from '../../Auth.module.css'
 
 interface LoginFormValues {
@@ -13,18 +11,9 @@ interface LoginFormValues {
   password: string
 }
 
-const teams = async () => await api.get('/teams')
-
 export const LoginForm = () => {
   const { register, handleSubmit, formState } = useForm<LoginFormValues>({ mode: 'onSubmit' })
   const { errors } = formState
-
-  const { data } = useQuery({
-    queryKey: ['teams'],
-    queryFn: () => teams
-  })
-
-  console.log('@@@data', data)
 
   const onSubmit = (data: LoginFormValues) => {
     console.log('@@@Login', data)
