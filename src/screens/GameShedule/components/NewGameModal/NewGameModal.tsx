@@ -24,11 +24,15 @@ export interface GameFormValues {
 export const NewGameModal = ({ onClose, visible }: NewGameModalProps) => {
   const [isNextStep, setIsNextStep] = useState(false)
 
-  const methods = useForm<GameFormValues>()
+  const methods = useForm<GameFormValues>({
+    mode: 'onChange'
+  })
 
   const onSubmit: SubmitHandler<GameFormValues> = (data) => {
     console.log(data)
   }
+
+  const [questions, setQuestions] = useState<Question[]>([])
 
   if (!visible) return null
 
@@ -46,7 +50,12 @@ export const NewGameModal = ({ onClose, visible }: NewGameModalProps) => {
             {!isNextStep ? (
               <FirstForm goNext={() => setIsNextStep(true)} />
             ) : (
-              <SecondForm goBack={() => setIsNextStep(false)} />
+              <SecondForm
+                questions={questions}
+                setQuestions={setQuestions}
+                goBack={() => setIsNextStep(false)}
+                onSubmitGame={onSubmit}
+              />
             )}
           </form>
         </div>
