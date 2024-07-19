@@ -9,6 +9,7 @@ import { modalAtom } from '../Modals/Modal.atom'
 import { TeamModal } from '../Modals/TeamModal/TeamModal'
 
 import { teamsTableAtom } from './Table.atom'
+import { getDate } from '@screens/Teams/utils'
 
 export const Table = forwardRef<HTMLDivElement>((_, ref) => {
   const [activeTeam, setActiveTeam] = useState<number>(-1)
@@ -47,7 +48,7 @@ export const Table = forwardRef<HTMLDivElement>((_, ref) => {
           <div className={styles.row} key={team.team_id} onClick={() => handleClick(team)}>
             <div className={styles.col}>{team.rating}</div>
             <div className={styles.col}>{team.team_name}</div>
-            <div className={styles.col}>{team.creation_date}</div>
+            <div className={styles.col}>{getDate(team.creation_date)}</div>
             <div className={styles.col}>{team.played_games}</div>
             <div className={styles.col}>{team.points}</div>
           </div>

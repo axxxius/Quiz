@@ -39,6 +39,11 @@ export type TeamValue = {
   team_desc: string
 }
 
+interface TeamJoin {
+  team_id: number
+  user_id: number
+}
+
 interface TeamFormValues {
   team_name: string
   team_desc: string

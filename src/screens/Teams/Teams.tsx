@@ -1,27 +1,25 @@
 import { useEffect, useRef } from 'react'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useOnClickOutside } from '@hooks'
 import { CreatingTeamModal, Dropdown, Table } from '@screens/Teams/components'
 import { Button, Search, Typography } from '@shared'
 import { classnames } from '@utils'
-
-import { modalAtom } from './components/Modals/Modal.atom'
+import { modalAtom, ShowModal } from './components/Modals/Modal.atom'
 import { teamsTableAtom } from './components/Table/Table.atom'
 import { useGetTeamsQuery } from './utils/api/hooks'
 import { SORT_TEAMS } from './const'
 import styles from './Teams.module.css'
+import { roleAtom } from './Teams.atom'
 
 const Teams = () => {
   const setTeams = useSetRecoilState(teamsTableAtom)
   const { data, isSuccess, isLoading, isError } = useGetTeamsQuery()
-  const [showModal, setShowModal] = useRecoilState(modalAtom)
-  const modalRef = useRef(null)
-  const role = 'lead'
-  const isLead = role == 'lead'
+  const [showModal, setShowModal] = useRecoilState<ShowModal>(modalAtom)
+  const modalRef = useRef<HTMLDivElement>(null)
+  const role = useRecoilValue(roleAtom)
 
   const stylesCreatingTeam = classnames(styles.creating_team, {
-    [styles.creating_team_lead]: isLead
+    [styles.creating_team_lead]: role.isMember
   })
 
   const handleClick = () => {
@@ -42,8 +40,6 @@ const Teams = () => {
     if (isSuccess) setTeams(data.data.teams)
   }, [isLoading])
 
-  console.log(showModal)
-
   return (
     <>
       {isSuccess && (
@@ -53,8 +49,8 @@ const Teams = () => {
           </Typography>
           <div className={styles.main}>
             <div className={stylesCreatingTeam}>
-              <Search isLead={isLead} />
-              {isLead && (
+              <Search isLead={role.isMember} />
+              {role.isMember && (
                 <Button className={styles.button} onClick={handleClick}>
                   Создать команду
                 </Button>

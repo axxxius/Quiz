@@ -1,4 +1,4 @@
-import { api } from './../../../../../../../utils/api/instance'
+import { api } from '@services/http'
 
 export const deleteTeamById = async (id: number) => {
   return await api.delete(`/teams/${id}/`)
