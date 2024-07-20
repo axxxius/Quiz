@@ -5,8 +5,8 @@ import { Typography } from '@shared'
 import { classnames } from '@utils'
 
 interface ErrorMessageProps {
-  error?: AxiosError<AxiosErrorData, any> | null,
-  isError?: boolean,
+  error?: AxiosError<AxiosErrorData, any> | null
+  isError?: boolean
   className?: string
 }
 
@@ -16,7 +16,7 @@ export interface AxiosErrorData {
 
 export const ErrorMessage = ({ error, isError, className }: ErrorMessageProps) => {
   const data = error?.response?.data
-  const stylesMessage= classnames(styles.message, className)
+  const stylesMessage = classnames(styles.message, className)
   return (
     <>
       {error && data?.detail && (
@@ -24,11 +24,11 @@ export const ErrorMessage = ({ error, isError, className }: ErrorMessageProps) =
           {data.detail}
         </Typography>
       )}
-      {isError &&
+      {isError && (
         <Typography className={stylesMessage} variant='text_16_b'>
           Ошибка загрузки
         </Typography>
-      }
+      )}
     </>
   )
 }

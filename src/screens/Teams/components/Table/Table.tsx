@@ -39,8 +39,8 @@ export const Table = forwardRef<HTMLDivElement>((_, ref) => {
             </Typography>
           ))}
         </div>
-        <ErrorMessage isError={isError} className={styles.error}/>
-        <LoaderTeam isLoading={isLoading}/>
+        <ErrorMessage isError={isError} className={styles.error} />
+        <LoaderTeam isLoading={isLoading} />
         {teams.map((team: Team) => (
           <div className={styles.row} key={team.team_id} onClick={() => handleClick(team)}>
             <div className={styles.col}>{team.rating}</div>

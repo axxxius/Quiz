@@ -75,7 +75,7 @@ export const TeamForm = ({ handleClose }: TeamFormProps) => {
         label='Описание'
         {...register('team_desc', descriptionSchema)}
       />
-      <ErrorMessage error={error}/>
+      <ErrorMessage error={error} />
       <div className={styles.button_container}>
         <Button className={styles.button} type='submit'>
           Создать команду

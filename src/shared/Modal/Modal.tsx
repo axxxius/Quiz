@@ -8,7 +8,7 @@ import styles from './Modal.module.css'
 interface ModalProps {
   children: React.ReactNode
   className?: string
-  isError?: boolean,
+  isError?: boolean
   isLoading?: boolean
 }
 

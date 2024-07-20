@@ -2,11 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
 import { useOnClickOutside } from '@hooks'
-import {
-  CreatingTeamModal,
-  Dropdown,
-  Table
-} from '@screens/Teams/components'
+import { CreatingTeamModal, Dropdown, Table } from '@screens/Teams/components'
 import { Button, Search, Typography } from '@shared'
 import { classnames } from '@utils'
 
