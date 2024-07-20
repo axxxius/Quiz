@@ -19,7 +19,7 @@
 
   &:hover,
   &:active {
-    border: 2px solid rgb(193, 182, 182);
+    border: 2px solid white;
   }
 }
 

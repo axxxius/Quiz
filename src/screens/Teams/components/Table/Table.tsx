@@ -3,18 +3,23 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 
 import styles from '@screens/Teams/components/Table/Table.module.css'
 import { Team } from '@screens/Teams/types'
+import { getDate, useGetTeamsQuery } from '@screens/Teams/utils'
 import { Typography } from '@shared'
 
+import { ErrorMessage } from '../ErrorMessage/ErrorMessage'
+import { LoaderTeam } from '../LoaderTeam/LoaderTeam'
 import { modalAtom } from '../Modals/Modal.atom'
 import { TeamModal } from '../Modals/TeamModal/TeamModal'
 
 import { teamsTableAtom } from './Table.atom'
-import { getDate } from '@screens/Teams/utils'
+
+const headerTable = ['Место', 'Команда', 'Дата создания', 'Игры', 'Баллы']
 
 export const Table = forwardRef<HTMLDivElement>((_, ref) => {
   const [activeTeam, setActiveTeam] = useState<number>(-1)
   const teams = useRecoilValue(teamsTableAtom)
   const [showModal, setShowModal] = useRecoilState(modalAtom)
+  const { isLoading, isError } = useGetTeamsQuery()
 
   const handleClick = (team: Team) => {
     setActiveTeam(team.team_id)
@@ -28,22 +33,14 @@ export const Table = forwardRef<HTMLDivElement>((_, ref) => {
     <>
       <div className={styles.table}>
         <div className={styles.head}>
-          <Typography tag='div' variant='text_16_b' className={styles.col}>
-            Место
-          </Typography>
-          <Typography tag='div' variant='text_16_b' className={styles.col}>
-            Команда
-          </Typography>
-          <Typography tag='div' variant='text_16_b' className={styles.col}>
-            Дата создания
-          </Typography>
-          <Typography tag='div' variant='text_16_b' className={styles.col}>
-            Игры
-          </Typography>
-          <Typography tag='div' variant='text_16_b' className={styles.col}>
-            Баллы
-          </Typography>
+          {headerTable.map((value) => (
+            <Typography key={value} tag='div' variant='text_16_b' className={styles.col}>
+              {value}
+            </Typography>
+          ))}
         </div>
+        <ErrorMessage isError={isError} className={styles.error}/>
+        <LoaderTeam isLoading={isLoading}/>
         {teams.map((team: Team) => (
           <div className={styles.row} key={team.team_id} onClick={() => handleClick(team)}>
             <div className={styles.col}>{team.rating}</div>

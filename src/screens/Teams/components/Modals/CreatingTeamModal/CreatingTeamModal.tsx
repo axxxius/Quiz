@@ -27,7 +27,7 @@ export const CreatingTeamModal = forwardRef<HTMLDivElement>((_, ref) => {
         <Close className={styles.close} onClick={handleClick} />
       </div>
       <div className={styles.modal_body}>
-        <TeamForm handleClick={handleClick} />
+        <TeamForm handleClose={handleClick} />
       </div>
     </Modal>
   )

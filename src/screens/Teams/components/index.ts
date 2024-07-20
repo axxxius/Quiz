@@ -1,4 +1,6 @@
 export * from './Dropdown/Dropdown'
+export * from './ErrorMessage/ErrorMessage'
+export * from './LoaderTeam/LoaderTeam'
 export * from './Modals/CreatingTeamModal/CreatingTeamModal'
 export * from './Modals/TeamModal/TeamModal'
 export * from './NumericData/NumericData'

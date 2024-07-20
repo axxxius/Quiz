@@ -41,3 +41,21 @@
   border: 3px solid transparent;
   background-clip: content-box;
 }
+
+.helper_text {
+  @apply text-pink-200;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  margin-top: 6px;
+}
+
+.textarea_error {
+  @apply border-2 border-pink-200;
+
+  &:hover,
+  &:focus {
+    @apply border-pink-200;
+  }
+}
+
