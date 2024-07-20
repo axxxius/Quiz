@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import ModalClose from '@assets/icons/modalCross.svg?react'
-import { Typography } from '@shared'
+import { Modal2, Typography } from '@shared'
 
 import styles from './AnswerModal.module.css'
 
@@ -38,19 +38,6 @@ export const AnswerModal = ({
   changeTeamAnswer,
   gameStatus
 }: AnswerModalProps) => {
-  const onKeydown = ({ key }: KeyboardEvent) => {
-    switch (key) {
-      case 'Escape':
-        onClose()
-        break
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener('keydown', onKeydown)
-    return () => document.removeEventListener('keydown', onKeydown)
-  })
-
   const { register, handleSubmit, reset } = useForm<AnswerForm>({
     mode: 'onChange'
   })
@@ -72,13 +59,11 @@ export const AnswerModal = ({
     onClose()
   })
 
-  if (!visible) return null
-
   return (
-    <div className={styles.modal_container} onClick={onClose}>
-      <form onSubmit={onSubmit} className={styles.container} onClick={(e) => e.stopPropagation()}>
+    <Modal2 visible={visible} onClose={onClose}>
+      <form onSubmit={onSubmit}>
         {gameStatus === 'active' && (
-          <>
+          <div className={styles.main_container}>
             <div className={styles.modal_title}>
               <Typography tag='p' variant='text_36_b' style={{ whiteSpace: 'nowrap' }}>
                 Оцените ответ команды
@@ -117,10 +102,10 @@ export const AnswerModal = ({
             <button type='submit' className={styles.save_btn}>
               Сохранить
             </button>
-          </>
+          </div>
         )}
         {gameStatus === 'finished' && (
-          <>
+          <div className={styles.main_container}>
             <div className={styles.modal_title}>
               <Typography tag='p' variant='text_36_b'>
                 Ответ команды
@@ -153,9 +138,9 @@ export const AnswerModal = ({
                 {teamAnswer?.answer?.weight || 'Оценка не выставлена'}
               </span>
             </Typography>
-          </>
+          </div>
         )}
       </form>
-    </div>
+    </Modal2>
   )
 }
