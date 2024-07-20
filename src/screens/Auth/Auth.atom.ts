@@ -4,12 +4,13 @@ const initialAuthState: AuthState = {
   accessToken: '',
   user: {
     id: '',
-    name: '',
-    email: ''
+    username: '',
+    email: '',
+    gender: ''
   }
 }
 
 export const authAtom = atom<AuthState>({
-  key: 'authAtom',
+  key: 'auth',
   default: initialAuthState
 })

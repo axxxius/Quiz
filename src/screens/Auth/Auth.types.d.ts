@@ -1,10 +1,11 @@
 interface AuthState {
-  accessToken: string | undefined
+  accessToken: string
   user: User
 }
 
 interface User {
   id: string
-  name: string
+  username: string
   email: string
+  gender: string
 }
