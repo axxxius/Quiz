@@ -3,5 +3,5 @@
 }
 
 .question_name {
-  @apply cursor-pointer font-vela-bold text-[16px];
+  @apply cursor-pointer overflow-hidden text-ellipsis font-vela-bold text-[16px];
 }

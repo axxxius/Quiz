@@ -34,7 +34,7 @@ const formatDate = (dateString: string) => {
   return `${formattedDay} ${formattedMonth} ${year}`
 }
 
-const GameCard = ({ game, role }: GameCardProps) => {
+export const GameCard = ({ game, role }: GameCardProps) => {
   const initialDate = game.date?.split('T')[0]?.split('-').reverse().join(' ')
   const date = formatDate(initialDate)
   const time = game.date?.split('T')[1].split('+')[0].slice(0, 5)
@@ -50,11 +50,31 @@ const GameCard = ({ game, role }: GameCardProps) => {
   }
 
   return (
-    <div className={styles.card_container} onClick={() => handleNavigate()}>
-      <Typography variant='text_16_r' className={styles.date_container}>
+    <div
+      className={[
+        styles.card_container,
+        game.status === 'finished' ? 'border-white' : 'border-lime-200'
+      ].join(' ')}
+      onClick={() => handleNavigate()}
+    >
+      <Typography
+        variant='text_16_r'
+        className={[
+          styles.date_container,
+          game.status === 'finished' ? 'bg-white' : 'bg-lime-200'
+        ].join(' ')}
+      >
         {date}
       </Typography>
-      <Typography variant='text_16_r' className={styles.time_container}>
+      <Typography
+        variant='text_16_r'
+        className={[
+          styles.time_container,
+          game.status === 'finished'
+            ? 'border-white bg-white text-white'
+            : 'border-lime-200 bg-lime-200 text-lime-200'
+        ].join(' ')}
+      >
         {time}
       </Typography>
       <Typography variant='text_16_r' className={styles.name_container}>
@@ -63,8 +83,8 @@ const GameCard = ({ game, role }: GameCardProps) => {
       <Typography variant='text_16_r' className={styles.description_container}>
         {game.description}
       </Typography>
-      {role === 'admin' && (
-        <div className={styles.btn_container}>
+      {role === 'admin' && game.status !== 'finished' ? (
+        <div className={[styles.btn_container, 'py-[19px]'].join(' ')}>
           <button className={styles.delete_btn} onClick={(e) => e.stopPropagation()}>
             <EditImage />
           </button>
@@ -72,9 +92,9 @@ const GameCard = ({ game, role }: GameCardProps) => {
             <DeleteImage />
           </button>
         </div>
+      ) : (
+        <div className={[styles.btn_container, 'py-[35px]'].join(' ')} />
       )}
     </div>
   )
 }
-
-export default GameCard

@@ -1,0 +1,11 @@
+.modal_title {
+  @apply flex flex-grow items-center justify-center;
+}
+
+.close_btn {
+  @apply ml-auto;
+}
+
+.main_container {
+  @apply flex flex-col gap-[16px];
+}
