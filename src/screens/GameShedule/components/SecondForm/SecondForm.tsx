@@ -111,7 +111,7 @@ export const SecondForm = ({ goBack, onSubmitGame, questions, setQuestions }: Se
           Создать вопрос
         </Button>
       </div>
-      <div className={styles.question_list}>
+      <div className={styles.questions_list}>
         <Typography variant='text_20_r'>Список вопросов</Typography>
         <div className={styles.questions_container}>
           {questions.length > 0 ? (

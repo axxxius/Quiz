@@ -16,6 +16,10 @@
   grid-template-columns: 232px 232px;
 }
 
+.questions_list {
+  @apply flex flex-col gap-y-4;
+}
+
 .questions_container {
   @apply flex max-h-[100px] flex-col items-center gap-y-4 overflow-auto rounded-[8px] border-[1px] border-white py-2 pl-4 pr-[26px];
 
