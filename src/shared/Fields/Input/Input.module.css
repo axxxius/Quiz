@@ -28,6 +28,18 @@
   }
 }
 
+.input[type='date']::-webkit-calendar-picker-indicator {
+  background-image: url('@assets/icons/input_calendar.svg');
+  background-size: 24px 24px;
+  background-position: center center;
+}
+
+.input[type='time']::-webkit-calendar-picker-indicator {
+  background-image: url('@assets/icons/input_time.svg');
+  background-size: 24px 24px;
+  background-position: center center;
+}
+
 .input_error {
   @apply border-2 border-pink-200;
 

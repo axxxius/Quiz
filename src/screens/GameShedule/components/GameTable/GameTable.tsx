@@ -1,4 +1,4 @@
-import GameCard from '../GameCard/GameCard'
+import { GameCard } from '@screens/GameShedule/components'
 
 import styles from './GameTable.module.css'
 
@@ -7,7 +7,7 @@ interface GameTableProps {
   role: 'admin' | 'user'
 }
 
-const GameTable = ({ games, role }: GameTableProps) => {
+export const GameTable = ({ games, role }: GameTableProps) => {
   return (
     <div className={styles.container}>
       {games.map((game) => (
@@ -16,5 +16,3 @@ const GameTable = ({ games, role }: GameTableProps) => {
     </div>
   )
 }
-
-export default GameTable

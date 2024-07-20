@@ -1,0 +1,49 @@
+.container {
+  @apply flex flex-col gap-[16px];
+}
+
+.create_question {
+  @apply flex flex-col gap-y-4;
+}
+
+.create_question_btn {
+  @apply w-[176px] self-end whitespace-nowrap;
+}
+
+.input_container {
+  @apply grid gap-x-8 gap-y-4;
+
+  grid-template-columns: 232px 232px;
+}
+
+.questions_container {
+  @apply flex max-h-[100px] flex-col items-center gap-y-4 overflow-auto rounded-[8px] border-[1px] border-white py-2 pl-4 pr-[26px];
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 8px;
+
+    @apply bg-white bg-opacity-45;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 8px;
+  }
+}
+
+.question_card {
+  @apply flex w-full items-center justify-between gap-x-4;
+}
+
+.buttons_container {
+  @apply ml-auto flex gap-x-6;
+}
+
+.back_btn {
+  @apply w-[100px];
+}
+
+.create_btn {
+  @apply w-[115px];
+}

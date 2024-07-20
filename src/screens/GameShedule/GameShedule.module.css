@@ -9,12 +9,16 @@
 .filter_container,
 .second_filter_container {
   display: grid;
-  grid-template-columns: 7fr 3fr;
+  grid-template-columns: 1fr 180px;
   column-gap: 32px;
 }
 
+.second_filter_container {
+  @apply flex justify-between;
+}
+
 .filter_input {
-  @apply w-[60vw] rounded-xl bg-white bg-opacity-45 py-[13px] pl-[58px] pr-6 font-vela-regular text-base text-white outline-none;
+  @apply rounded-xl bg-white bg-opacity-45 py-[13px] pl-[58px] pr-6 font-vela-regular text-base text-white outline-none;
 
   background-image: url('/src/assets/icons/magnifier.svg');
   background-repeat: no-repeat;
@@ -44,6 +48,7 @@
 
 .end_games_btn {
   text-align: start;
+  justify-self: flex-end;
   padding-left: 32px;
   background-image: url('/src/assets//icons/endGames.svg');
   background-repeat: no-repeat;
