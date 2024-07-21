@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 
-
 import styles from '@screens/Teams/components/TeamForm/TeamForm.module.css'
 import { Textarea } from '@screens/Teams/components/Textarea/Textarea'
 import { descriptionSchema, nameSchema } from '@screens/Teams/const/schemas'
@@ -12,7 +11,6 @@ import { Button, Input } from '@shared'
 
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage'
 import { teamsTableAtom } from '../Table/Table.atom'
-
 
 import { teamFormAtom } from './TeamForm.atom'
 
