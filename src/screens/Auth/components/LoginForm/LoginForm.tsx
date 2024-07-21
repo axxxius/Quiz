@@ -1,34 +1,56 @@
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useSetRecoilState } from 'recoil'
 
+import { URLS } from '@navigation'
+import { authAtom } from '@screens/Auth/Auth.atom.ts'
+import { AuthButtonGroup } from '@screens/Auth/components'
 import { schema } from '@screens/Auth/constants'
-import { Button, Input, Typography } from '@shared'
+import { Input, Typography } from '@shared'
+import { usePostLoginMutation } from '@utils'
 
 import styles from '../../Auth.module.css'
 
-interface LoginFormValues {
+export interface LoginFormValues {
   email: string
   password: string
 }
 
 export const LoginForm = () => {
+  const navigate = useNavigate()
+  const setAuthState = useSetRecoilState(authAtom)
   const { register, handleSubmit, formState } = useForm<LoginFormValues>({ mode: 'onSubmit' })
-  const { errors } = formState
 
-  const onSubmit = (data: LoginFormValues) => {
-    console.log('@@@Login', data)
-  }
+  const loginForm = usePostLoginMutation({
+    options: {
+      onSuccess: (response) => {
+        setAuthState(response.data)
+        navigate(URLS.NEWS)
+      }
+    }
+  })
+
+  const { errors, isSubmitting } = formState
+  const loading = isSubmitting || loginForm.isPending
 
   return (
     <div className={styles.page}>
       <Typography className={styles.header} variant='text_36_b'>
         Авторизация
       </Typography>
-      <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={styles.container}
+        onSubmit={handleSubmit(async (formValues) => {
+          loginForm.mutate({
+            params: formValues
+          })
+        })}
+      >
         <Input
           label='Email'
           isError={!!errors.email}
           helperText={errors.email?.message}
+          disabled={loading}
           {...register('email', schema.emailSchema)}
         />
         <Input
@@ -36,18 +58,10 @@ export const LoginForm = () => {
           type='password'
           isError={!!errors.password}
           helperText={errors.password?.message}
+          disabled={loading}
           {...register('password', schema.passwordSchema)}
         />
-        <div className={styles.button_container}>
-          <Link to='/register'>
-            <Button type='button' variant='secondary_regular'>
-              Зарегистрироваться
-            </Button>
-          </Link>
-          <Button type='submit' variant='primary_regular'>
-            Войти
-          </Button>
-        </div>
+        <AuthButtonGroup isLogin={true} />
       </form>
     </div>
   )

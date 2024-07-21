@@ -1,5 +1,5 @@
 interface AuthState {
-  accessToken: string
+  access_token: string
   user: User
 }
 

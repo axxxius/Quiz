@@ -1,10 +1,10 @@
 import { Controller, useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { URLS } from '@navigation'
-import { Select } from '@screens/Auth/components'
+import { AuthButtonGroup, Select } from '@screens/Auth/components'
 import { GENDER, ROLE, schema } from '@screens/Auth/constants'
-import { Button, Input, Typography } from '@shared'
+import { Input, Typography } from '@shared'
 import { usePostRegisterMutation } from '@utils'
 
 import styles from '../../Auth.module.css'
@@ -22,7 +22,6 @@ export const RegisterForm = () => {
   const { control, register, handleSubmit, formState } = useForm<RegisterFormValues>({
     mode: 'onSubmit'
   })
-  const { errors } = formState
 
   const registerForm = usePostRegisterMutation({
     options: {
@@ -31,6 +30,9 @@ export const RegisterForm = () => {
       }
     }
   })
+
+  const { errors, isSubmitting } = formState
+  const loading = isSubmitting || registerForm.isPending
 
   return (
     <div className={styles.page}>
@@ -49,6 +51,7 @@ export const RegisterForm = () => {
           label='Имя'
           isError={!!errors.username}
           helperText={errors.username?.message}
+          disabled={loading}
           {...register('username', schema.nameSchema)}
         />
         <Controller
@@ -69,6 +72,7 @@ export const RegisterForm = () => {
           label='Email'
           isError={!!errors.email}
           helperText={errors.email?.message}
+          disabled={loading}
           {...register('email', schema.emailSchema)}
         />
         <Input
@@ -76,6 +80,7 @@ export const RegisterForm = () => {
           type='password'
           isError={!!errors.password}
           helperText={errors.password?.message}
+          disabled={loading}
           {...register('password', schema.passwordSchema)}
         />
         <Controller
@@ -92,16 +97,7 @@ export const RegisterForm = () => {
             />
           )}
         />
-        <div className={styles.button_container}>
-          <Link to='/login'>
-            <Button type='button' variant='secondary_regular'>
-              Войти
-            </Button>
-          </Link>
-          <Button type='submit' variant='primary_regular'>
-            Зарегистрироваться
-          </Button>
-        </div>
+        <AuthButtonGroup isLogin={false} />
       </form>
     </div>
   )

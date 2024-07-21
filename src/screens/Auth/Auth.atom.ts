@@ -1,7 +1,7 @@
 import { atom } from 'recoil'
 
 const initialAuthState: AuthState = {
-  accessToken: '',
+  access_token: '',
   user: {
     id: 0,
     username: '',

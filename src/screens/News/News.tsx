@@ -1,3 +1,6 @@
+import { useRecoilValue } from 'recoil'
+
+import { authAtom } from '@screens/Auth/Auth.atom.ts'
 import { CardList } from '@screens/News/components/CardList/CardList.tsx'
 import { Button, Search, Typography } from '@shared'
 
@@ -35,6 +38,9 @@ const news = [
 ]
 
 const News = () => {
+  const authState = useRecoilValue(authAtom)
+  console.log('@@@auth', authState)
+
   return (
     <div className={styles.container}>
       <div className='mb-[26px] flex justify-between'>
