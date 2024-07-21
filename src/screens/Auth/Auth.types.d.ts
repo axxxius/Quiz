@@ -4,8 +4,9 @@ interface AuthState {
 }
 
 interface User {
-  id: string
+  id: number
   username: string
   email: string
   gender: string
+  description: string
 }
