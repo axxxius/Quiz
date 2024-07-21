@@ -2,6 +2,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 
 import CheckboxFalse from '@assets/icons/checkbox_false.svg?react'
 import CheckboxTrue from '@assets/icons/checkbox_true.svg?react'
+import { dateSchema, descrGameSchema, requiredSchema } from '@screens/GameSсhedule/constants'
 import { Button, Input, Typography } from '@shared'
 
 import styles from './FirstForm.module.css'
@@ -23,9 +24,7 @@ export const FirstForm = ({ goNext }: FirstFormProps) => {
           <div>
             <Input
               label='Название'
-              {...methods.register('name', {
-                required: 'Обязательное поле!'
-              })}
+              {...methods.register('name', requiredSchema)}
               isError={!!methods.formState.errors.name}
               helperText={methods.formState.errors.name?.message}
             />
@@ -33,12 +32,7 @@ export const FirstForm = ({ goNext }: FirstFormProps) => {
           <div>
             <Input
               label='Описание'
-              {...methods.register('description', {
-                maxLength: {
-                  value: 1000,
-                  message: 'Максимальная длинна - 1000 символов!'
-                }
-              })}
+              {...methods.register('description', descrGameSchema)}
               isError={!!methods.formState.errors.description}
               helperText={methods.formState.errors.description?.message}
             />
@@ -53,13 +47,7 @@ export const FirstForm = ({ goNext }: FirstFormProps) => {
               label='Дата'
               min={today}
               type='date'
-              {...methods.register('date', {
-                min: {
-                  value: today,
-                  message: 'Дата не может быть раньше текущей!'
-                },
-                required: 'Обязательное поле!'
-              })}
+              {...methods.register('date', dateSchema)}
               isError={!!methods.formState.errors.date}
               helperText={methods.formState.errors.date?.message}
             />
@@ -68,7 +56,7 @@ export const FirstForm = ({ goNext }: FirstFormProps) => {
             <Input
               label='Время'
               type='time'
-              {...methods.register('time', { required: 'Обязательное поле!' })}
+              {...methods.register('time', requiredSchema)}
               isError={!!methods.formState.errors.time}
               helperText={methods.formState.errors.time?.message}
             />

@@ -1,4 +1,5 @@
 export * from './maxLength'
 export * from './minDate'
+export * from './minValue'
 export * from './patternQuestionName'
 export * from './required'

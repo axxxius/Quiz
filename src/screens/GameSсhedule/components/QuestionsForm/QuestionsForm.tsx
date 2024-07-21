@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import TrashIcon from '@assets/icons/trash.svg?react'
+import { descrQuestionSchema, requiredSchema, weightSchema } from '@screens/GameSсhedule/constants'
 import { Button, Input, Typography } from '@shared'
 
 import styles from './QuestionsForm.module.css'
@@ -29,7 +30,7 @@ export const QuestionsForm = ({ onSubmit, questions, onDeleteQuestion }: Questio
           <div title='Формат названия вопроса: 1.1'>
             <Input
               label='Название вопроса'
-              {...register('name', { required: 'Это поле является обязательным!' })}
+              {...register('name', requiredSchema)}
               isError={!!formState.errors.name}
               helperText={formState.errors.name?.message}
             />
@@ -37,13 +38,7 @@ export const QuestionsForm = ({ onSubmit, questions, onDeleteQuestion }: Questio
           <div>
             <Input
               label='Описание'
-              {...register('description', {
-                maxLength: {
-                  value: 100,
-                  message: 'Максимальная длинна - 100 символов!'
-                },
-                required: 'Это поле является обязательным!'
-              })}
+              {...register('description', descrQuestionSchema)}
               isError={!!formState.errors.description}
               helperText={formState.errors.description?.message}
             />
@@ -51,13 +46,7 @@ export const QuestionsForm = ({ onSubmit, questions, onDeleteQuestion }: Questio
           <div>
             <Input
               label='Эталон ответа'
-              {...register('correctAnswer', {
-                required: 'Это поле является обязательным!',
-                maxLength: {
-                  value: 100,
-                  message: 'Максимальная длинна - 100 символов!'
-                }
-              })}
+              {...register('correctAnswer', descrQuestionSchema)}
               isError={!!formState.errors.correctAnswer}
               helperText={formState.errors.correctAnswer?.message}
             />
@@ -66,10 +55,7 @@ export const QuestionsForm = ({ onSubmit, questions, onDeleteQuestion }: Questio
             <Input
               label='Баллы'
               type='number'
-              {...register('weight', {
-                required: 'Это поле является обязательным!',
-                min: { value: 1, message: 'Минимальное значение - 1' }
-              })}
+              {...register('weight', weightSchema)}
               isError={!!formState.errors.weight}
               helperText={formState.errors.weight?.message}
             />
