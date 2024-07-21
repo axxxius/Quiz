@@ -26,7 +26,7 @@ export const QuestionsForm = ({ onSubmit, questions, onDeleteQuestion }: Questio
       <div className={styles.create_question}>
         <Typography variant='text_20_r'>Создать вопрос</Typography>
         <div className={styles.input_container}>
-          <div>
+          <div title='Формат названия вопроса: 1.1'>
             <Input
               label='Название вопроса'
               {...register('name', { required: 'Это поле является обязательным!' })}
