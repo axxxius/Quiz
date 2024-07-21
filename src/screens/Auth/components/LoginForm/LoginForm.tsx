@@ -6,7 +6,7 @@ import { URLS } from '@navigation'
 import { authAtom } from '@screens/Auth/Auth.atom.ts'
 import { AuthButtonGroup } from '@screens/Auth/components'
 import { schema } from '@screens/Auth/constants'
-import { Input, Typography } from '@shared'
+import { Input, Loader, Typography } from '@shared'
 import { usePostLoginMutation } from '@utils'
 
 import styles from '../../Auth.module.css'
@@ -32,6 +32,7 @@ export const LoginForm = () => {
 
   const { errors, isSubmitting } = formState
   const loading = isSubmitting || loginForm.isPending
+  if (loading) return <Loader />
 
   return (
     <div className={styles.page}>

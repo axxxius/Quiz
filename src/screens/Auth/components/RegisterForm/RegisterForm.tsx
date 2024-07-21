@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { URLS } from '@navigation'
 import { AuthButtonGroup, Select } from '@screens/Auth/components'
 import { GENDER, ROLE, schema } from '@screens/Auth/constants'
-import { Input, Typography } from '@shared'
+import { Input, Loader, Typography } from '@shared'
 import { usePostRegisterMutation } from '@utils'
 
 import styles from '../../Auth.module.css'
@@ -33,6 +33,7 @@ export const RegisterForm = () => {
 
   const { errors, isSubmitting } = formState
   const loading = isSubmitting || registerForm.isPending
+  if (loading) return <Loader />
 
   return (
     <div className={styles.page}>

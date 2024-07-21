@@ -1,5 +1,6 @@
 import { useRecoilValue } from 'recoil'
 
+import { useRole } from '@hooks'
 import { authAtom } from '@screens/Auth/Auth.atom.ts'
 import { CardList } from '@screens/News/components/CardList/CardList.tsx'
 import { Button, Search, Typography } from '@shared'
@@ -39,7 +40,10 @@ const news = [
 
 const News = () => {
   const authState = useRecoilValue(authAtom)
-  console.log('@@@auth', authState)
+  console.log('@@@authState', authState)
+
+  const { role } = useRole()
+  console.log('@@@role', role)
 
   return (
     <div className={styles.container}>
