@@ -14,17 +14,21 @@ export const Dropdown = ({ options }: DropdownProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null)
   const [selectedValue, setSelectedValue] = useState(options[0].label)
   const [isOpen, setIsOpen] = useState(false)
+  const stylesButton = classnames(styles.dropbtn, {
+    [styles.dropbtn_open]: isOpen
+  })
+
   const handleClickToggleDropdown = () => {
     setIsOpen(!isOpen)
   }
+
   const handleClickSelectedSort = (sortItem: string) => {
     setSelectedValue(sortItem)
     setIsOpen(!isOpen)
   }
-  const stylesButton = classnames(styles.dropbtn, {
-    [styles.dropbtn_open]: isOpen
-  })
+
   useOnClickOutside(dropdownRef, () => setIsOpen(false))
+
   return (
     <>
       <div className={styles.dropdown} ref={dropdownRef}>

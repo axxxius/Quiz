@@ -25,12 +25,7 @@ export type FullTeam = {
   team_points: number
   team_rating: number
   captain_name: string
-  team_members: string[]
-}
-
-export type ShowModal = {
-  creatingTeam: boolean
-  team: boolean
+  team_members: UserMember[]
 }
 
 export type Option = {
@@ -42,4 +37,18 @@ export type TeamValue = {
   captain_id: number
   team_name: string
   team_desc: string
+}
+
+interface TeamJoin {
+  team_id: number
+  user_id: number
+}
+
+interface TeamFormValues {
+  team_name: string
+  team_desc: string
+}
+
+interface UserMember {
+  username: string
 }

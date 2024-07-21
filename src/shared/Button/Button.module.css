@@ -40,12 +40,12 @@
   @apply border-2 border-white font-vela-medium text-[16px] leading-[22px];
 
   &:hover {
-    @apply bg-purple-100 text-white;
+    @apply bg-white text-purple-standart;
     border: 2px solid transparent;
   }
 
   &:active {
-    @apply bg-purple-400 text-white;
+    @apply bg-purple-100 text-white;
   }
 }
 
@@ -55,11 +55,11 @@
   @apply border-2 border-white font-vela-medium text-[16px] leading-[22px];
 
   &:hover {
-    @apply bg-purple-100 text-white;
+    @apply bg-white text-purple-standart;
     border: 2px solid transparent;
   }
 
   &:active {
-    @apply bg-purple-400 text-white;
+    @apply bg-purple-100 text-white;
   }
 }

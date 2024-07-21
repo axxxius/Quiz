@@ -42,6 +42,10 @@
   padding-block: 16px;
 }
 
+.load {
+  text-align: center;
+}
+
 .col:not(:nth-child(2)) {
   text-align: center;
 }
