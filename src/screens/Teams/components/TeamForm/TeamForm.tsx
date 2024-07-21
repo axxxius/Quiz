@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 
+
 import styles from '@screens/Teams/components/TeamForm/TeamForm.module.css'
 import { Textarea } from '@screens/Teams/components/Textarea/Textarea'
 import { descriptionSchema, nameSchema } from '@screens/Teams/const/schemas'
@@ -11,6 +12,7 @@ import { Button, Input } from '@shared'
 
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage'
 import { teamsTableAtom } from '../Table/Table.atom'
+
 
 import { teamFormAtom } from './TeamForm.atom'
 
@@ -36,6 +38,17 @@ export const TeamForm = ({ handleClose }: TeamFormProps) => {
       ...values,
       captain_id: 4
     })
+    setTeams((prev) => [
+      ...prev,
+      {
+        team_id: data.team_id,
+        team_name: data.team_name,
+        creation_date: '2024-07-19',
+        played_games: 0,
+        points: 0,
+        rating: 0
+      }
+    ])
     setTeams((prev) => [
       ...prev,
       {
