@@ -5,4 +5,9 @@ interface Game {
   date: string
   status: 'active' | 'finished' | 'planned'
   questions: Question[]
+  leading?: string
+  teams?: {
+    readonly id: number
+    name: string
+  }[]
 }

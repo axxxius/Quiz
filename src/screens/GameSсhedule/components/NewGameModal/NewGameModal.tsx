@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 
 import ModalCross from '@assets/icons/modalCross.svg?react'
-import { FirstForm, SecondForm } from '@screens/GameShedule/components'
+import { FirstForm, SecondForm } from '@screens/GameSсhedule/components'
 import { Modal2, Typography } from '@shared'
 
 import styles from './NewGameModal.module.css'
@@ -10,31 +10,34 @@ import styles from './NewGameModal.module.css'
 interface NewGameModalProps {
   onClose: () => void
   visible: boolean
+  setGames: React.Dispatch<React.SetStateAction<Game[]>>
 }
 
-export interface GameFormValues {
-  name: string
-  date: string
-  time: string
-  description: string
-  createAnnouncement: boolean
-  questions: Question[]
-}
-
-export const NewGameModal = ({ onClose, visible }: NewGameModalProps) => {
+export const NewGameModal = ({ onClose, visible, setGames }: NewGameModalProps) => {
   const [isNextStep, setIsNextStep] = useState(false)
 
-  const methods = useForm<GameFormValues>({
+  const methods = useForm<GameForm>({
     mode: 'onChange'
   })
 
-  const onSubmit: SubmitHandler<GameFormValues> = (data) => {
-    console.log(data)
+  const onSubmit: SubmitHandler<GameForm> = (data) => {
+    setGames((prev) => [
+      ...prev,
+      {
+        id: prev.length + 1,
+        name: data.name,
+        date: `${data.date}T${data.time}:00+03:00`,
+        description: data.description,
+        status: 'planned',
+        questions: questions,
+        teams: []
+      }
+    ])
+    onClose()
+    methods.reset()
   }
 
   const [questions, setQuestions] = useState<Question[]>([])
-
-  if (!visible) return null
 
   return (
     <FormProvider {...methods}>

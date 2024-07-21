@@ -1,20 +1,21 @@
 import { useState } from 'react'
 
-import { GameTable, NewGameModal } from '@screens/GameShedule/components'
+import { GameTable, NewGameModal } from '@screens/GameSсhedule/components'
 import { Typography } from '@shared'
 
-import styles from './GameShedule.module.css'
+import styles from './GameSсhedule.module.css'
 
 const GameShedule = () => {
-  const role = 'admin'
+  const role: TRole = 'admin'
 
-  const games: Game[] = [
+  const [games, setGames] = useState<Game[]>([
     {
       id: 1,
-      name: 'Game 1',
+      name: 'Game 1 Game 1 Game 1 Game 1 Game 1 Game 1 Game 1 Game 1 Game 1 Game 1',
       date: '2024-07-07T19:00:00+03:00',
-      description: 'Description 1',
-      status: 'active',
+      description:
+        'Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 ',
+      status: 'planned',
       questions: [
         {
           id: 1,
@@ -30,6 +31,24 @@ const GameShedule = () => {
           correctAnswer: 'кто напишет 8 тот лох',
           weight: 21
         }
+      ],
+      teams: [
+        {
+          id: 1,
+          name: 'Team 1'
+        },
+        {
+          id: 2,
+          name: 'Team 2'
+        },
+        {
+          id: 3,
+          name: 'Team 3'
+        },
+        {
+          id: 4,
+          name: 'Team 4'
+        }
       ]
     },
     {
@@ -40,7 +59,7 @@ const GameShedule = () => {
       description: 'Description 2',
       questions: []
     }
-  ]
+  ])
 
   const [currentStatus, setCurrentStatus] = useState(false) // true - finished, false - planned and active
 
@@ -81,10 +100,15 @@ const GameShedule = () => {
                 : game.status === 'active' || game.status === 'planned'
             )}
             role={role}
+            setGames={setGames}
           />
         </div>
       </div>
-      <NewGameModal visible={newGameModalOpen} onClose={() => setNewGameModalOpen(false)} />
+      <NewGameModal
+        visible={newGameModalOpen}
+        onClose={() => setNewGameModalOpen(false)}
+        setGames={setGames}
+      />
     </>
   )
 }

@@ -1,5 +1,3 @@
-import { useNavigate } from 'react-router-dom'
-
 import DeleteImage from '@assets/icons/deleteGame.svg?react'
 import EditImage from '@assets/icons/editGame.svg?react'
 import { Typography } from '@shared'
@@ -8,10 +6,12 @@ import styles from './GameCard.module.css'
 
 interface GameCardProps {
   game: Game
-  role: 'admin' | 'user'
+  role: TRole
+  onClick: () => void
+  setGames: React.Dispatch<React.SetStateAction<Game[]>>
 }
 
-const formatDate = (dateString: string) => {
+export const formatDate = (dateString: string) => {
   const months: { [key: string]: string } = {
     '01': 'Января',
     '02': 'Февраля',
@@ -34,19 +34,14 @@ const formatDate = (dateString: string) => {
   return `${formattedDay} ${formattedMonth} ${year}`
 }
 
-export const GameCard = ({ game, role }: GameCardProps) => {
+export const GameCard = ({ game, role, onClick, setGames }: GameCardProps) => {
   const initialDate = game.date?.split('T')[0]?.split('-').reverse().join(' ')
   const date = formatDate(initialDate)
   const time = game.date?.split('T')[1].split('+')[0].slice(0, 5)
 
-  const navigate = useNavigate()
-
-  const handleNavigate = () => {
-    if ((role === 'admin' && game.status === 'active') || game.status === 'finished') {
-      navigate(`/activegame/${game.id}`)
-    } else {
-      alert('Игра уже идет еще не началась!')
-    }
+  const deleteGame = (gameId: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation()
+    setGames((prev) => prev.filter((game) => game.id !== gameId))
   }
 
   return (
@@ -55,7 +50,7 @@ export const GameCard = ({ game, role }: GameCardProps) => {
         styles.card_container,
         game.status === 'finished' ? 'border-white' : 'border-lime-200'
       ].join(' ')}
-      onClick={() => handleNavigate()}
+      onClick={onClick}
     >
       <Typography
         variant='text_16_r'
@@ -64,7 +59,7 @@ export const GameCard = ({ game, role }: GameCardProps) => {
           game.status === 'finished' ? 'bg-white' : 'bg-lime-200'
         ].join(' ')}
       >
-        {date}
+        {date ? date : 'Без даты'}
       </Typography>
       <Typography
         variant='text_16_r'
@@ -75,20 +70,20 @@ export const GameCard = ({ game, role }: GameCardProps) => {
             : 'border-lime-200 bg-lime-200 text-lime-200'
         ].join(' ')}
       >
-        {time}
+        {time ? time : 'Без времени'}
       </Typography>
       <Typography variant='text_16_r' className={styles.name_container}>
-        {game.name}
+        {game.name ? game.name : 'Без названия'}
       </Typography>
       <Typography variant='text_16_r' className={styles.description_container}>
-        {game.description}
+        {game.description ? game.description : 'Без описания'}
       </Typography>
       {role === 'admin' && game.status !== 'finished' ? (
         <div className={[styles.btn_container, 'py-[19px]'].join(' ')}>
           <button className={styles.delete_btn} onClick={(e) => e.stopPropagation()}>
             <EditImage />
           </button>
-          <button className={styles.edit_btn} onClick={(e) => e.stopPropagation()}>
+          <button className={styles.edit_btn} onClick={(e) => deleteGame(game.id, e)}>
             <DeleteImage />
           </button>
         </div>

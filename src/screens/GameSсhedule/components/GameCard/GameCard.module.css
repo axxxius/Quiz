@@ -19,7 +19,7 @@
 }
 
 .name_container {
-  @apply px-[16px] py-[24px];
+  @apply max-h-[70px] overflow-hidden text-ellipsis whitespace-nowrap px-[16px] py-[24px];
 }
 
 .description_container {
