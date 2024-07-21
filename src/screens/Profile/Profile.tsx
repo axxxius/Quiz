@@ -1,10 +1,12 @@
+import { useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+
+import { Select } from '@screens/Auth/components'
+import { GENDER } from '@screens/Auth/constants/const'
 import styles from '@screens/Profile/Profile.module.css'
 import { Button, Input, Typography } from '@shared'
-import { Controller, useForm } from 'react-hook-form'
+
 import { nameSchema } from './const'
-import { GENDER } from '@screens/Auth/constants/const'
-import { Select } from '@screens/Auth/components'
-import { useState } from 'react'
 
 interface ProfileValues {
   username: string
