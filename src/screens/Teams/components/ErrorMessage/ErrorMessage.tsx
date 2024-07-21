@@ -2,16 +2,12 @@ import { AxiosError } from 'axios'
 
 import styles from '@screens/Teams/components/ErrorMessage/ErrorMessage.module.css'
 import { Typography } from '@shared'
-import { classnames } from '@utils'
+import { AxiosErrorData, classnames } from '@utils'
 
 interface ErrorMessageProps {
   error?: AxiosError<AxiosErrorData, any> | null
   isError?: boolean
   className?: string
-}
-
-export interface AxiosErrorData {
-  detail: string
 }
 
 export const ErrorMessage = ({ error, isError, className }: ErrorMessageProps) => {

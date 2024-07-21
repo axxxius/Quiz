@@ -1,0 +1,5 @@
+export * from './delete{id}'
+export * from './get'
+export * from './get{id}'
+export * from './patch{id}'
+export * from './post'

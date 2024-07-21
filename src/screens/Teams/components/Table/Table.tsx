@@ -3,8 +3,8 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 
 import styles from '@screens/Teams/components/Table/Table.module.css'
 import { Team } from '@screens/Teams/types'
-import { getDate, useGetTeamsQuery } from '@screens/Teams/utils'
 import { Typography } from '@shared'
+import { getDate, useGetTeamsQuery } from '@utils'
 
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage'
 import { LoaderTeam } from '../LoaderTeam/LoaderTeam'

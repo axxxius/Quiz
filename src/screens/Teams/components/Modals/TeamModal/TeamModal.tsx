@@ -6,12 +6,8 @@ import { NumericData } from '@screens/Teams/components'
 import styles from '@screens/Teams/components/Modals/TeamModal/TeamModal.module.css'
 import { roleAtom } from '@screens/Teams/Teams.atom'
 import { FullTeam, Team } from '@screens/Teams/types'
-import {
-  useDeleteTeamMutation,
-  useGetTeamQuery,
-  useJoinTeamMutation
-} from '@screens/Teams/utils/api/hooks'
 import { Button, Modal, Typography } from '@shared'
+import { useDeleteTeamMutation, useGetTeamQuery, useJoinTeamMutation } from '@utils'
 
 import { teamsTableAtom } from '../../Table/Table.atom'
 import { modalAtom, ShowModal } from '../Modal.atom'
