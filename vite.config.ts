@@ -16,7 +16,6 @@ export default defineConfig({
       '@hooks': path.resolve(__dirname, './src/hooks'),
       '@navigation': path.resolve(__dirname, '/.src/navigation'),
       '@screens': path.resolve(__dirname, './src/screens'),
-      '@services': path.resolve(__dirname, './src/services'),
       '@shared': path.resolve(__dirname, './src/shared'),
       '@styles': path.resolve(__dirname, './src/styles'),
       '@types': path.resolve(__dirname, './src/types'),

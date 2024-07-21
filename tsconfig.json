@@ -23,7 +23,6 @@
       "@hooks": ["./hooks"],
       "@navigation": ["./navigation"],
       "@screens/*": ["screens/*"],
-      "@services/*": ["services/*"],
       "@shared": ["./shared"],
       "@styles/*": ["./styles/*"],
       "@types": ["./types"],

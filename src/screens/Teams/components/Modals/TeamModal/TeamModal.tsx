@@ -1,8 +1,10 @@
 import { forwardRef, useEffect } from 'react'
 import { useRecoilState, useSetRecoilState } from 'recoil'
+
 import Close from '@assets/icons/close.svg?react'
 import { NumericData } from '@screens/Teams/components'
 import styles from '@screens/Teams/components/Modals/TeamModal/TeamModal.module.css'
+import { roleAtom } from '@screens/Teams/Teams.atom'
 import { FullTeam, Team } from '@screens/Teams/types'
 import {
   useDeleteTeamMutation,
@@ -10,10 +12,11 @@ import {
   useJoinTeamMutation
 } from '@screens/Teams/utils/api/hooks'
 import { Button, Modal, Typography } from '@shared'
+
 import { teamsTableAtom } from '../../Table/Table.atom'
 import { modalAtom, ShowModal } from '../Modal.atom'
+
 import { teamAtom } from './Team.atom'
-import { roleAtom } from '@screens/Teams/Teams.atom'
 
 interface TeamModalProps {
   id: number

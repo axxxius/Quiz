@@ -3,13 +3,13 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 
 import styles from '@screens/Teams/components/Table/Table.module.css'
 import { Team } from '@screens/Teams/types'
+import { getDate } from '@screens/Teams/utils'
 import { Typography } from '@shared'
 
 import { modalAtom } from '../Modals/Modal.atom'
 import { TeamModal } from '../Modals/TeamModal/TeamModal'
 
 import { teamsTableAtom } from './Table.atom'
-import { getDate } from '@screens/Teams/utils'
 
 export const Table = forwardRef<HTMLDivElement>((_, ref) => {
   const [activeTeam, setActiveTeam] = useState<number>(-1)

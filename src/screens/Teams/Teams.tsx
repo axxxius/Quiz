@@ -1,15 +1,17 @@
 import { useEffect, useRef } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+
 import { useOnClickOutside } from '@hooks'
 import { CreatingTeamModal, Dropdown, Table } from '@screens/Teams/components'
 import { Button, Search, Typography } from '@shared'
 import { classnames } from '@utils'
+
 import { modalAtom, ShowModal } from './components/Modals/Modal.atom'
 import { teamsTableAtom } from './components/Table/Table.atom'
 import { useGetTeamsQuery } from './utils/api/hooks'
 import { SORT_TEAMS } from './const'
-import styles from './Teams.module.css'
 import { roleAtom } from './Teams.atom'
+import styles from './Teams.module.css'
 
 const Teams = () => {
   const setTeams = useSetRecoilState(teamsTableAtom)
