@@ -1,0 +1,36 @@
+.page_name {
+  @apply text-center leading-snug text-white;
+}
+
+.container {
+  @apply flex items-center;
+  flex-direction: column;
+  margin-top: 32px;
+}
+
+.form, 
+.info,
+.buttons {
+  width: 424px;
+}
+
+.info p {
+  margin-top: 16px;
+  word-wrap: break-word;
+}
+
+.input {
+  margin-bottom: 16px;
+}
+
+.buttons {
+  display: flex;
+  gap: 70px;
+  margin-top: 48px;
+}
+
+.button {
+  width: 212px;
+  white-space: nowrap;
+}
+
