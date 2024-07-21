@@ -1,4 +1,4 @@
-export const minLength = (length: number, field: string) => ({
+export const minLength = (length: number) => ({
   value: length,
-  message: `Минимальная длина поля ${field} равна ${length}`
+  message: `Минимальная длина равна ${length}`
 })

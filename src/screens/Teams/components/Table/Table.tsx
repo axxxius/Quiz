@@ -2,6 +2,7 @@ import { forwardRef, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 import styles from '@screens/Teams/components/Table/Table.module.css'
+import { HEADER_TABLE } from '@screens/Teams/const'
 import { Team } from '@screens/Teams/types'
 import { Typography } from '@shared'
 import { getDate, useGetTeamsQuery } from '@utils'
@@ -12,8 +13,6 @@ import { modalAtom } from '../Modals/Modal.atom'
 import { TeamModal } from '../Modals/TeamModal/TeamModal'
 
 import { teamsTableAtom } from './Table.atom'
-
-const headerTable = ['Место', 'Команда', 'Дата создания', 'Игры', 'Баллы']
 
 export const Table = forwardRef<HTMLDivElement>((_, ref) => {
   const [activeTeam, setActiveTeam] = useState<number>(-1)
@@ -33,7 +32,7 @@ export const Table = forwardRef<HTMLDivElement>((_, ref) => {
     <>
       <div className={styles.table}>
         <div className={styles.head}>
-          {headerTable.map((value) => (
+          {HEADER_TABLE.map((value) => (
             <Typography key={value} tag='div' variant='text_16_b' className={styles.col}>
               {value}
             </Typography>

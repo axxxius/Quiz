@@ -16,3 +16,5 @@ export const SORT_TEAMS = [
     value: 'name'
   }
 ]
+
+export const HEADER_TABLE = ['Место', 'Команда', 'Дата создания', 'Игры', 'Баллы']
