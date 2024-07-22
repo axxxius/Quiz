@@ -1,9 +1,13 @@
 import { memo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
 
 import Logo from '@assets/icons/logo.svg?react'
+import { authAtom } from '@screens/Auth/Auth.atom.ts'
 import { Button } from '@shared'
 import styles from '@shared/Header/Header.module.css'
+
+import { usePostLogoutMutation } from '../../utils/api/hooks/auth/usePostLogoutMutation.ts'
 
 const navList = [
   {
@@ -23,9 +27,22 @@ const navList = [
 export const Header = memo(() => {
   const [isAuth, setIsAuth] = useState(true) //закинуть в менеджер состояний
   const [isRegisterPage] = useState(false) //и это тоже
+  const authState = useRecoilValue(authAtom)
 
-  const userInfo = {
-    name: 'Вадим'
+  const navigate = useNavigate()
+
+  const { mutate: logout } = usePostLogoutMutation({
+    options: {
+      onSuccess: () => {
+        navigate('/login')
+        localStorage.removeItem('access_token')
+      }
+    }
+  })
+
+  const onClick = () => {
+    logout(undefined!)
+    setIsAuth(false)
   }
 
   return (
@@ -55,9 +72,9 @@ export const Header = memo(() => {
         )}
         {isAuth && (
           <div className={styles.user_container}>
-            <div className={styles.user_name}>{userInfo.name}</div>
+            <div className={styles.user_name}>{authState.user.username}</div>
             <Link to='/login'>
-              <Button variant='secondary_regular' onClick={() => setIsAuth(false)}>
+              <Button variant='secondary_regular' onClick={onClick}>
                 Выйти
               </Button>
             </Link>
