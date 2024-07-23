@@ -11,13 +11,15 @@ import styles from './GameSсhedule.module.css'
 const GameShedule = () => {
   const role: TRole = 'admin'
 
-  const { data } = useGetGamesQuery()
+  const [page, setPage] = useState(1)
+  const { data } = useGetGamesQuery({ page: page })
   const [games, setGames] = useRecoilState(gameScheduleState)
   useEffect(() => {
     if (data !== undefined) {
       setGames(data)
     }
   }, [data])
+  console.log(games)
 
   const [currentStatus, setCurrentStatus] = useState(false) // true - finished, false - planned and active
 
@@ -61,6 +63,13 @@ const GameShedule = () => {
             }
             role={role}
           />
+        </div>
+        <div>
+          <button onClick={() => setPage(page - 1)} disabled={page === 1}>
+            Предыдущая страница
+          </button>
+          <Typography variant='text_20_b'>Страница {page}</Typography>
+          <button onClick={() => setPage(page + 1)}>Следующая страница</button>
         </div>
       </div>
       <NewGameModal visible={newGameModalOpen} onClose={() => setNewGameModalOpen(false)} />
