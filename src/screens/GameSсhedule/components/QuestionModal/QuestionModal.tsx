@@ -49,20 +49,34 @@ export const QuestionModal = ({ gameId, isVisible, onClose, goBack }: QuestionMo
       }
     ]
 
-    mutate({
-      gameId: gameId,
-      question: newQuestion
-    })
-    queryClient.invalidateQueries({ queryKey: ['games'] })
-    queryClient.invalidateQueries({ queryKey: ['game', gameId] })
+    mutate(
+      {
+        gameId: gameId,
+        question: newQuestion
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['games'] })
+          queryClient.invalidateQueries({ queryKey: ['game', gameId] })
+        }
+      }
+    )
   }
 
   const { deleteQuestion } = useDeleteQuestionMutation()
   const onDeleteQuestion = (id: number) => {
-    deleteQuestion({
-      gameId: gameId,
-      quesId: { ques_id: id }
-    })
+    deleteQuestion(
+      {
+        gameId: gameId,
+        quesId: { ques_id: id }
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['games'] })
+          queryClient.invalidateQueries({ queryKey: ['game', gameId] })
+        }
+      }
+    )
   }
 
   const navigate = useNavigate()

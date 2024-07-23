@@ -95,10 +95,7 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
         <div className={styles.main_container}>
           <div className={styles.description_container}>
             <Typography variant='text_20_b'>Описание</Typography>
-            <Typography
-              variant='text_16_m'
-              className='max-h-[88px] max-w-[450px] overflow-hidden text-ellipsis'
-            >
+            <Typography variant='text_16_m' className='max-w-[450px] overflow-hidden text-ellipsis'>
               {game.game_description ? game.game_description : 'Нет описания'}
             </Typography>
           </div>

@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { dateSchema, descrGameSchema, requiredSchema } from '@screens/GameSсhedule/constants'
 import { Button, Input, Modal2, Typography } from '@shared'
-import { usePutGameMutation } from '@utils'
+import { addTimeOffset, timeZone, usePutGameMutation } from '@utils'
 
 import { formatDate } from '../GameCard/GameCard'
 
@@ -47,13 +47,32 @@ export const EditGameModal = ({ visible, onClose, game }: EditGameProps) => {
   const initialDate = game.game_date.split('T')[0]?.split('-').reverse().join(' ')
   const date = formatDate(initialDate)
   const timeParts = game.game_date.split('T')[1]
-  const time = timeParts ? timeParts.split('+')[0].slice(0, 5) : '00:00'
+  const timeZoneOffset = timeZone()
+  const time = timeParts
+    ? addTimeOffset(timeParts.split('+')[0].slice(0, 5), timeZoneOffset)
+    : '00:00'
 
   const { mutate } = usePutGameMutation()
   const queryClient = useQueryClient()
   const onSubmit: SubmitHandler<StandartGameInSchedule> = (data) => {
-    mutate({ game: data, gameId: game.id })
-    queryClient.invalidateQueries({ queryKey: ['games'] })
+    const dateTimeString = `${data.game_date}T${data.game_time}`
+    const dateTime = new Date(dateTimeString)
+    const isoString = dateTime.toISOString()
+    const finalDateTimeString = `${isoString.slice(0, isoString.length - 1)}${timeZone()}`
+    const updatedData: Omit<GameInSchedule, 'id'> = {
+      game_name: data.game_name,
+      game_description: data.game_description,
+      game_status: game.game_status,
+      game_date: finalDateTimeString
+    }
+    mutate(
+      { game: updatedData, gameId: game.id },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['games'] })
+        }
+      }
+    )
     onClose()
   }
 

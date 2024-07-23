@@ -44,14 +44,20 @@ export const NewGameModal = ({ onClose, visible }: NewGameModalProps) => {
     }
     const newGameResponse = await addGame(newGameData)
     const newGameId = newGameResponse.data.id
-    queryClient.invalidateQueries({ queryKey: ['games'] })
-    queryClient.invalidateQueries({ queryKey: ['game', newGameId] })
     //вот тут нужен id новой игры
-    mutate({
-      gameId: newGameId,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      question: questions.map(({ id, ...rest }) => rest)
-    })
+    mutate(
+      {
+        gameId: newGameId,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        question: questions.map(({ id, ...rest }) => rest)
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['games'] })
+          queryClient.invalidateQueries({ queryKey: ['game', newGameId] })
+        }
+      }
+    )
     onClose()
     methods.reset()
   }
