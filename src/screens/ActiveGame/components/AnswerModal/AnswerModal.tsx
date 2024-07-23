@@ -44,15 +44,15 @@ export const AnswerModal = ({
 
   useEffect(() => {
     reset({
-      answer: teamAnswer?.answer?.answer || '',
-      weight: teamAnswer?.answer?.weight || question?.weight || 0
+      answer: teamAnswer?.answer?.answer_team_answer || '',
+      weight: teamAnswer?.answer?.answer_score || question?.question_weight || 0
     })
   }, [teamAnswer, question, reset])
 
   const onSubmit = handleSubmit((data) => {
     changeTeamAnswer(
       teamAnswer?.teamId ?? 0,
-      teamAnswer?.answer?.questionId ?? 0,
+      teamAnswer?.answer?.question_id ?? 0,
       data.answer ? data.answer : '',
       data.weight ? data.weight : 0
     )
@@ -79,7 +79,7 @@ export const AnswerModal = ({
               <input
                 {...register('answer')}
                 id='answer'
-                defaultValue={teamAnswer?.answer?.answer}
+                defaultValue={teamAnswer?.answer?.answer_team_answer}
                 className={styles.form_input}
               />
             </div>
@@ -91,12 +91,12 @@ export const AnswerModal = ({
                 {...register('weight')}
                 id='weight'
                 type='number'
-                defaultValue={teamAnswer?.answer?.weight}
-                max={question?.weight}
+                defaultValue={teamAnswer?.answer?.answer_score}
+                max={question?.question_weight}
                 className={styles.form_input}
               />
               <Typography variant='text_16_r' className='self-start'>
-                Максимум: {question?.weight}
+                Максимум: {question?.question_weight}
               </Typography>
             </div>
             <button type='submit' className={styles.save_btn}>
@@ -117,25 +117,25 @@ export const AnswerModal = ({
             <Typography tag='p' variant='text_20_b'>
               Вопрос:{' '}
               <span className='font-vela-regular'>
-                {question?.description || 'Вопрос не задан'}
+                {question?.question_description || 'Вопрос не задан'}
               </span>
             </Typography>
             <Typography tag='p' variant='text_20_b'>
               Ответ команды:{' '}
               <span className='font-vela-regular'>
-                {teamAnswer?.answer?.answer || 'Ответ не дан'}
+                {teamAnswer?.answer?.answer_team_answer || 'Ответ не дан'}
               </span>
             </Typography>
             <Typography tag='p' variant='text_20_b'>
               Правильный ответ:{' '}
               <span className='font-vela-regular'>
-                {question?.correctAnswer || 'Ответ не задан'}
+                {question?.question_correct_answer || 'Ответ не задан'}
               </span>
             </Typography>
             <Typography tag='p' variant='text_20_b'>
               Баллы:{' '}
               <span className='font-vela-regular'>
-                {teamAnswer?.answer?.weight || 'Оценка не выставлена'}
+                {teamAnswer?.answer?.answer_score || 'Оценка не выставлена'}
               </span>
             </Typography>
           </div>
