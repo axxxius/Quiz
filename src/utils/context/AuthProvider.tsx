@@ -1,17 +1,16 @@
-import { PropsWithChildren, useEffect } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { useSetRecoilState } from 'recoil'
 
 import { authAtom } from '@screens/Auth/Auth.atom.ts'
 import { useGetRefreshQuery } from '@utils'
 
-const AuthProvider = (props: PropsWithChildren) => {
-  const { data, isSuccess } = useGetRefreshQuery({
-    config: {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`
-      }
-    }
-  })
+interface AuthProviderProps {
+  children: ReactNode
+}
+
+const AuthProvider = ({ children }: AuthProviderProps) => {
+  const refreshToken = localStorage.getItem('refresh_token')
+  const { data, isSuccess } = useGetRefreshQuery(refreshToken!)
 
   const setAuthState = useSetRecoilState(authAtom)
 
@@ -19,14 +18,15 @@ const AuthProvider = (props: PropsWithChildren) => {
     if (isSuccess) {
       setAuthState((prev) => ({
         ...prev,
-        access_token: data.data.access_token,
+        tokens: data.data.tokens,
         user: data.data.user
       }))
-      localStorage.setItem('access_token', data.data.access_token ?? '')
+      localStorage.setItem('access_token', data.data.tokens.access_token)
+      localStorage.setItem('refresh_token', data.data.tokens.refresh_token)
     }
   }, [isSuccess])
 
-  return <>{props.children}</>
+  return <>{children}</>
 }
 
 export default AuthProvider

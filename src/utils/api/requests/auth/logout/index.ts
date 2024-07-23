@@ -1,3 +1,8 @@
-import { api } from '@utils'
+import { api, RequestConfig } from '@utils'
 
-export const logout = async () => await api.post('/auth/logout/')
+type Token = Pick<Tokens, 'refresh_token'>
+
+export type LogoutConfig = RequestConfig<Token>
+
+export const logout = async ({ params, config }: LogoutConfig) =>
+  await api.post('/auth/logout/', params, config)

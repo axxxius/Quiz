@@ -3,11 +3,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 
 import Logo from '@assets/icons/logo.svg?react'
+import { URLS } from '@navigation'
 import { authAtom } from '@screens/Auth/Auth.atom.ts'
 import { Button } from '@shared'
 import styles from '@shared/Header/Header.module.css'
-
-import { usePostLogoutMutation } from '../../utils/api/hooks/auth/usePostLogoutMutation.ts'
+import { usePostLogoutMutation } from '@utils'
 
 const navList = [
   {
@@ -30,18 +30,25 @@ export const Header = memo(() => {
   const authState = useRecoilValue(authAtom)
 
   const navigate = useNavigate()
+  const refreshToken = localStorage.getItem('refresh_token')
 
-  const { mutate: logout } = usePostLogoutMutation({
+  const logout = usePostLogoutMutation({
     options: {
       onSuccess: () => {
-        navigate('/login')
+        navigate(URLS.AUTH.LOGIN)
         localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
       }
     }
   })
 
   const onClick = () => {
-    logout(undefined!)
+    if (refreshToken) {
+      logout.mutate({
+        params: { refresh_token: refreshToken }
+      })
+    }
+
     setIsAuth(false)
   }
 

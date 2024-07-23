@@ -11,7 +11,7 @@ import { App } from './App.tsx'
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 5,
+      retry: 0,
       retryDelay: 1000,
       refetchOnWindowFocus: false
     }

@@ -8,13 +8,13 @@ interface TokenPayload {
   exp: number
   iat: number
   jti: string
-  user_id: number
+  id: number
   role: string
 }
 
 export const useRole = () => {
   const authState = useRecoilValue(authAtom)
-  const accessToken = authState.access_token
+  const accessToken = authState.tokens.access_token
 
   const { decodedToken } = useJwt<TokenPayload>(accessToken)
   const role = decodedToken?.role

@@ -24,7 +24,8 @@ export const LoginForm = () => {
   const loginForm = usePostLoginMutation({
     options: {
       onSuccess: (response) => {
-        localStorage.setItem('access_token', response.data.access_token)
+        localStorage.setItem('access_token', response.data.tokens.access_token)
+        localStorage.setItem('refresh_token', response.data.tokens.refresh_token)
         setAuthState(response.data)
         navigate(URLS.NEWS)
       }

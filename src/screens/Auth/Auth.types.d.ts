@@ -1,6 +1,11 @@
 interface AuthState {
-  access_token: string
+  tokens: Tokens
   user: User
+}
+
+interface Tokens {
+  access_token: string
+  refresh_token: string
 }
 
 interface User {

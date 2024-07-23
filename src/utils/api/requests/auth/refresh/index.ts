@@ -1,7 +1,15 @@
 import axios from 'axios'
 
-export const refresh = async () =>
-  await axios.get<AuthState>(`${import.meta.env.VITE_API_URL}/auth/refresh/`, {
-    withCredentials: true,
-    headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
-  })
+import { RequestConfig } from '@utils'
+
+interface RefreshParams {
+  token: string
+}
+
+export type RefreshConfig = RequestConfig<RefreshParams>
+
+export const refresh = async ({ params, config }: RefreshConfig) =>
+  await axios.get<AuthState>(
+    `${import.meta.env.VITE_API_URL}/auth/refresh/?token=${params.token}`,
+    config
+  )
