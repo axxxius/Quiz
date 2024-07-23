@@ -79,7 +79,7 @@ export const FirstForm = ({ goNext }: FirstFormProps) => {
       />
       <Button
         className={styles.next_btn}
-        type='button'
+        type='submit'
         variant='primary_regular'
         onClick={methods.handleSubmit(goNext)}
       >

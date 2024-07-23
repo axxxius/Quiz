@@ -1,9 +1,9 @@
-import { memo } from 'react'
 import ReactDOM from 'react-dom'
 
 import TooltilArrow from '@assets/icons/tooltipArrow.svg?react'
 import { Typography } from '@shared'
 
+import { memo } from 'react'
 import styles from './Tooltip.module.css'
 
 export const ToolTip = memo(
@@ -30,14 +30,14 @@ export const ToolTip = memo(
       >
         <div className='rounded-sm bg-white p-2'>
           <Typography variant='text_12_m' className={styles.question_question}>
-            {question.description}
+            {question.question_description}
           </Typography>
           <div className='flex justify-between gap-x-2'>
             <Typography variant='text_12_m' className={styles.question_etalon}>
-              {question.correctAnswer}
+              {question.question_correct_answer}
             </Typography>
             <Typography variant='text_12_m' className={styles.question_weight}>
-              Баллы: {question.weight}
+              Баллы: {question.question_weight}
             </Typography>
           </div>
         </div>

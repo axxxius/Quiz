@@ -2,13 +2,15 @@ import DeleteImage from '@assets/icons/deleteGame.svg?react'
 import EditImage from '@assets/icons/editGame.svg?react'
 import { Typography } from '@shared'
 
+import { addTimeOffset, timeZone } from '@utils'
+import { useState } from 'react'
+import { EditGameModal } from '../EditGameModal/EditGameModal'
 import styles from './GameCard.module.css'
 
 interface GameCardProps {
-  game: Game
+  game: GameInSchedule
   role: TRole
   onClick: () => void
-  setGames: React.Dispatch<React.SetStateAction<Game[]>>
 }
 
 export const formatDate = (dateString: string) => {
@@ -34,62 +36,76 @@ export const formatDate = (dateString: string) => {
   return `${formattedDay} ${formattedMonth} ${year}`
 }
 
-export const GameCard = ({ game, role, onClick, setGames }: GameCardProps) => {
-  const initialDate = game.date?.split('T')[0]?.split('-').reverse().join(' ')
+export const GameCard = ({ game, role, onClick }: GameCardProps) => {
+  const initialDate = game.game_date.split('T')[0]?.split('-').reverse().join(' ')
   const date = formatDate(initialDate)
-  const time = game.date?.split('T')[1].split('+')[0].slice(0, 5)
+  const timeZoneOffset = timeZone()
+  const timeParts = game.game_date.split('T')[1]
+  const time = timeParts
+    ? addTimeOffset(timeParts.split('+')[0].slice(0, 5), timeZoneOffset)
+    : '00:00'
 
   const deleteGame = (gameId: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
-    setGames((prev) => prev.filter((game) => game.id !== gameId))
+    console.log(gameId)
+  }
+
+  const [openEditGame, setOpenEditGame] = useState(false)
+
+  const openEditModal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation()
+    setOpenEditGame(true)
   }
 
   return (
-    <div
-      className={[
-        styles.card_container,
-        game.status === 'finished' ? 'border-white' : 'border-lime-200'
-      ].join(' ')}
-      onClick={onClick}
-    >
-      <Typography
-        variant='text_16_r'
+    <>
+      <div
         className={[
-          styles.date_container,
-          game.status === 'finished' ? 'bg-white' : 'bg-lime-200'
+          styles.card_container,
+          game.game_status === 'finished' ? 'border-white' : 'border-lime-200'
         ].join(' ')}
+        onClick={onClick}
       >
-        {date ? date : 'Без даты'}
-      </Typography>
-      <Typography
-        variant='text_16_r'
-        className={[
-          styles.time_container,
-          game.status === 'finished'
-            ? 'border-white bg-white text-white'
-            : 'border-lime-200 bg-lime-200 text-lime-200'
-        ].join(' ')}
-      >
-        {time ? time : 'Без времени'}
-      </Typography>
-      <Typography variant='text_16_r' className={styles.name_container}>
-        {game.name ? game.name : 'Без названия'}
-      </Typography>
-      <Typography variant='text_16_r' className={styles.description_container}>
-        {game.description ? game.description : 'Без описания'}
-      </Typography>
-      {role === 'admin' && game.status !== 'finished' ? (
-        <div className={[styles.btn_container, 'py-[19px]'].join(' ')}>
-          <button className={styles.delete_btn} onClick={(e) => e.stopPropagation()}>
-            <EditImage />
-          </button>
-          <button className={styles.edit_btn} onClick={(e) => deleteGame(game.id, e)}>
-            <DeleteImage />
-          </button>
-        </div>
-      ) : (
-        <div className={[styles.btn_container, 'py-[35px]'].join(' ')} />
-      )}
-    </div>
+        <Typography
+          variant='text_16_r'
+          className={[
+            styles.date_container,
+            game.game_status === 'finished' ? 'bg-white' : 'bg-lime-200'
+          ].join(' ')}
+        >
+          {date ? date : 'Без даты'}
+        </Typography>
+        <Typography
+          variant='text_16_r'
+          className={[
+            styles.time_container,
+            game.game_status === 'finished'
+              ? 'border-white bg-white text-white'
+              : 'border-lime-200 bg-lime-200 text-lime-200'
+          ].join(' ')}
+        >
+          {time ? time : 'Без времени'}
+        </Typography>
+        <Typography variant='text_16_r' className={styles.name_container}>
+          {game.game_name ? game.game_name : 'Без названия'}
+        </Typography>
+        <Typography variant='text_16_r' className={styles.description_container}>
+          {game.game_description ? game.game_description : 'Без описания'}
+        </Typography>
+        {role === 'admin' && game.game_status !== 'finished' ? (
+          <div className={[styles.btn_container, 'py-[19px]'].join(' ')}>
+            <button className={styles.delete_btn} onClick={(e) => openEditModal(e)}>
+              <EditImage />
+            </button>
+            <button className={styles.edit_btn} onClick={(e) => deleteGame(game.id, e)}>
+              <DeleteImage />
+            </button>
+          </div>
+        ) : (
+          <div className={[styles.btn_container, 'py-[35px]'].join(' ')} />
+        )}
+      </div>
+      <EditGameModal visible={openEditGame} onClose={() => setOpenEditGame(false)} game={game} />
+    </>
   )
 }

@@ -17,13 +17,14 @@ export const SecondForm = ({ goBack, onSubmitGame, questions, setQuestions }: Se
 
   const onSubmit: SubmitHandler<QuestionForm> = (data) => {
     const newQuestion: Question = {
-      id: Date.now(),
-      ...data
+      id: Math.random(),
+      question_name: data.name,
+      question_description: data.description,
+      question_correct_answer: data.correctAnswer,
+      question_weight: data.weight
     }
     setQuestions((prevQuestions) => {
       const updatedQuestions = [...prevQuestions, newQuestion]
-      // Обновите состояние в useFormContext только после обновления состояния questions
-      methods.setValue('questions', updatedQuestions)
       return updatedQuestions
     })
   }
@@ -35,7 +36,6 @@ export const SecondForm = ({ goBack, onSubmitGame, questions, setQuestions }: Se
   const onDeleteQuestion = (id: number) => {
     setQuestions((prevQuestions) => {
       const updatedQuestions = prevQuestions.filter((question) => question.id !== id)
-      methods.setValue('questions', updatedQuestions)
       return updatedQuestions
     })
   }

@@ -1,67 +1,74 @@
+import { useEffect, useState } from 'react'
 import { SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import CrossIcon from '@assets/icons/modalCross.svg?react'
 import { QuestionsForm } from '@screens/GameSсhedule/components'
 import { Button, Modal2, Typography } from '@shared'
+import { useDeleteQuestionMutation, useGetGameQuery, usePostAddQuestionMutation } from '@utils'
 
+import { useQueryClient } from '@tanstack/react-query'
 import styles from './QuestionModal.module.css'
+
+const initialQuestion: Question[] = [
+  {
+    id: 1,
+    question_name: '1.1',
+    question_description: 'Что за вопросы?',
+    question_correct_answer: 'а вот, нехер пиздеть',
+    question_weight: 10
+  }
+]
 
 interface QuestionModalProps {
   gameId: number
   isVisible: boolean
   onClose: () => void
   goBack: () => void
-  questions: Question[]
-  setGames: React.Dispatch<React.SetStateAction<Game[]>>
 }
 
-export const QuestionModal = ({
-  gameId,
-  isVisible,
-  onClose,
-  goBack,
-  questions,
-  setGames
-}: QuestionModalProps) => {
-  const onSubmit: SubmitHandler<QuestionForm> = (data) => {
-    const newQuestion: Question = {
-      id: Date.now(),
-      ...data
-    }
+export const QuestionModal = ({ gameId, isVisible, onClose, goBack }: QuestionModalProps) => {
+  const { data } = useGetGameQuery(gameId)
+  const [questions, SetQuestions] = useState(initialQuestion)
 
-    setGames((prev) =>
-      prev.map((game) => {
-        if (game.id === gameId) {
-          return { ...game, questions: [...game.questions, newQuestion] }
-        }
-        return game
-      })
-    )
+  useEffect(() => {
+    if (data !== undefined) {
+      SetQuestions(data.game_questions)
+    }
+  }, [data])
+
+  const { mutate } = usePostAddQuestionMutation()
+  const queryClient = useQueryClient()
+  const onSubmit: SubmitHandler<QuestionForm> = async (data) => {
+    const newQuestion: Omit<Question, 'id'>[] = [
+      {
+        question_name: data.name,
+        question_description: data.description,
+        question_correct_answer: data.correctAnswer,
+        question_weight: data.weight
+      }
+    ]
+
+    mutate({
+      gameId: gameId,
+      question: newQuestion
+    })
+    queryClient.invalidateQueries({ queryKey: ['games'] })
+    queryClient.invalidateQueries({ queryKey: ['game', gameId] })
   }
 
+  const { deleteQuestion } = useDeleteQuestionMutation()
   const onDeleteQuestion = (id: number) => {
-    setGames((prev) =>
-      prev.map((game) => {
-        if (game.id === gameId) {
-          return { ...game, questions: game.questions.filter((question) => question.id !== id) }
-        }
-        return game
-      })
-    )
+    deleteQuestion({
+      gameId: gameId,
+      quesId: { ques_id: id }
+    })
   }
 
   const navigate = useNavigate()
 
   const handleNavigate = () => {
-    setGames((prev) =>
-      prev.map((game) => {
-        if (game.id === 1) {
-          return { ...game, status: 'active' }
-        }
-        return game
-      })
-    )
+    //сделать игру активной
     onClose()
     navigate(`/activegame/${gameId}`)
   }

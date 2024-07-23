@@ -14,7 +14,7 @@
 }
 
 .checkbox_btn {
-  @apply flex items-center gap-x-4;
+  @apply flex items-center gap-x-4 outline-none;
 }
 
 .next_btn {

@@ -4,5 +4,4 @@ interface GameForm {
   time: string
   description: string
   createAnnouncement: boolean
-  questions: Question[]
 }

@@ -1,34 +1,61 @@
+import { memo, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import CrossIcon from '@assets/icons/modalCross.svg?react'
 import TrashIcon from '@assets/icons/trash.svg?react'
 import { Button, Modal2, Typography } from '@shared'
+import { addTimeOffset, timeZone, useGetGameQuery } from '@utils'
 
-import { useNavigate } from 'react-router-dom'
 import { formatDate } from '../GameCard/GameCard'
+
 import styles from './GameModal.module.css'
 
+export const initialGame: Game = {
+  id: 1,
+  game_name: 'game_name',
+  game_description: 'game_description',
+  game_date: '2024-07-23T22:48:00+05:00',
+  game_status: 'planned',
+  game_creator: '',
+  game_questions: [
+    {
+      id: 1,
+      question_name: '1.1',
+      question_description: 'question',
+      question_correct_answer: 'answer',
+      question_weight: 100
+    }
+  ]
+}
+
 interface GameModalProps {
-  game: Game
+  gameId: number
   visible: boolean
   onClose: () => void
   goNext: () => void
-  setGames: React.Dispatch<React.SetStateAction<Game[]>>
   role: TRole
 }
 
-export const GameModal = ({ game, visible, onClose, goNext, setGames, role }: GameModalProps) => {
-  const initialDate = game.date?.split('T')[0]?.split('-').reverse().join(' ')
-  const time = game.date?.split('T')[1].split('+')[0].slice(0, 5)
+export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameModalProps) => {
+  const { data } = useGetGameQuery(gameId)
 
+  const [game, setGame] = useState<Game>(initialGame)
+
+  useEffect(() => {
+    if (data !== undefined) {
+      setGame(data)
+    }
+  }, [data])
+
+  const initialDate = game.game_date.split('T')[0]?.split('-').reverse().join(' ')
+  const date = formatDate(initialDate)
+  const timeZoneOffset = timeZone()
+  const timeParts = game.game_date.split('T')[1]
+  const time = timeParts
+    ? addTimeOffset(timeParts.split('+')[0].slice(0, 5), timeZoneOffset)
+    : '00:00'
   const deleteTeam = (teamId: number) => {
-    const newTeams = game.teams?.filter((team) => team.id !== teamId) ?? []
-    setGames((prev) =>
-      prev.map((g) => {
-        if (g.id === game.id) {
-          return { ...g, teams: newTeams }
-        }
-        return g
-      })
-    )
+    console.log('delete team', teamId)
   }
 
   const navigate = useNavigate()
@@ -46,7 +73,7 @@ export const GameModal = ({ game, visible, onClose, goNext, setGames, role }: Ga
             variant='text_32_b'
             className='max-h-[44px] max-w-[30vw] overflow-hidden text-ellipsis'
           >
-            {game.name}
+            {game.game_name}
           </Typography>
           <button onClick={onClose}>
             <CrossIcon />
@@ -55,16 +82,14 @@ export const GameModal = ({ game, visible, onClose, goNext, setGames, role }: Ga
         <div className={styles.cards_container}>
           <div className={styles.green_card}>
             <Typography variant='text_20_b'>Начало игры</Typography>
-            <Typography variant='text_32_b'>
-              {formatDate(initialDate).split(' ')[0]} {formatDate(initialDate).split(' ')[1]}
-            </Typography>
+            <Typography variant='text_32_b'>{date}</Typography>
             <Typography variant='text_20_b'>{time}</Typography>
           </div>
           <div className={styles.orange_card}>
             <Typography variant='text_20_b' className='max-w-[120px] whitespace-normal'>
               Количество вопросов
             </Typography>
-            <Typography variant='text_36_b'>{game.questions.length}</Typography>
+            <Typography variant='text_36_b'>{game.game_questions.length}</Typography>
           </div>
         </div>
         <div className={styles.main_container}>
@@ -74,24 +99,22 @@ export const GameModal = ({ game, visible, onClose, goNext, setGames, role }: Ga
               variant='text_16_m'
               className='max-h-[88px] max-w-[450px] overflow-hidden text-ellipsis'
             >
-              {game.description ? game.description : 'Нет описания'}
+              {game.game_description ? game.game_description : 'Нет описания'}
             </Typography>
           </div>
           <div className={styles.leading_container}>
             <Typography variant='text_20_b'>Ведущий</Typography>
-            <Typography variant='text_16_m'>
-              {game.leading ? game.leading : 'Ведущий не указан'}
-            </Typography>
+            <Typography variant='text_16_m'>{'Ведущий не указан'}</Typography>
           </div>
           <div className={styles.teams_container}>
             <Typography variant='text_20_b'>Команды</Typography>
             <ul className={[styles.teams_list, 'min-w-[300px]'].join(' ')}>
-              {(game?.teams?.length ?? 0 > 0) && game.teams ? (
-                game.teams.map((team) => (
-                  <div className={styles.team_card} key={team.id}>
-                    <Typography variant='text_12_m'>{team.name}</Typography>
+              {(game?.game_teams?.length ?? 0 > 0) && game.game_teams ? (
+                game.game_teams.map((team) => (
+                  <div className={styles.team_card} key={team.team_id}>
+                    <Typography variant='text_12_m'>{team.team_name}</Typography>
                     {role === 'admin' && (
-                      <button onClick={() => deleteTeam(team.id)}>
+                      <button onClick={() => deleteTeam(team.team_id)}>
                         <TrashIcon />
                       </button>
                     )}
@@ -105,23 +128,23 @@ export const GameModal = ({ game, visible, onClose, goNext, setGames, role }: Ga
             </ul>
           </div>
         </div>
-        {role === 'admin' && game.status === 'planned' && (
+        {role === 'admin' && game.game_status === 'planned' && (
           <Button className={styles.next_btn} variant='primary' onClick={goNext}>
             Далее
           </Button>
         )}
-        {role === 'capitan' && game.status === 'planned' && (
+        {role === 'capitan' && game.game_status === 'planned' && (
           // <--- This is a bug (надо добавить проверку есть ли команда пользователя в игре)
           <Button className={styles.join_btn} variant='primary'>
             Вступить в игру
           </Button>
         )}
-        {role === 'capitan' && game.status === 'planned' && (
+        {role === 'capitan' && game.game_status === 'planned' && (
           <Typography variant='text_16_b' className='ml-auto'>
             Вы&nbsp;уже состоите в&nbsp;этой игре
           </Typography>
         )}
-        {role === 'admin' && game.status === 'active' && (
+        {role === 'admin' && game.game_status === 'active' && (
           <Button
             className='max-w-[200px] self-end whitespace-nowrap'
             variant='primary'
@@ -131,7 +154,7 @@ export const GameModal = ({ game, visible, onClose, goNext, setGames, role }: Ga
           </Button>
         )}
         {role === 'user' ||
-          (role === 'capitan' && game.status === 'active' && (
+          (role === 'capitan' && game.game_status === 'active' && (
             <Typography variant='text_20_b' className='self-end'>
               Игра уже началась
             </Typography>
@@ -139,4 +162,4 @@ export const GameModal = ({ game, visible, onClose, goNext, setGames, role }: Ga
       </div>
     </Modal2>
   )
-}
+})

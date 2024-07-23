@@ -1,19 +1,16 @@
 import React, { memo, useState } from 'react'
-
-import { GameCard, GameModal } from '@screens/GameSсhedule/components'
-
-import { QuestionModal } from '../QuestionModal/QuestionModal'
-
 import { useNavigate } from 'react-router-dom'
+
+import { GameCard, GameModal, QuestionModal } from '@screens/GameSсhedule/components'
+
 import styles from './GameTable.module.css'
 
 interface GameTableProps {
-  games: Game[]
+  games: GameInSchedule[]
   role: TRole
-  setGames: React.Dispatch<React.SetStateAction<Game[]>>
 }
 
-export const GameTable = memo(({ games, role, setGames }: GameTableProps) => {
+export const GameTable = memo(({ games, role }: GameTableProps) => {
   // Инициализация состояния modals с учетом идентификаторов игр
   const [modals, setModals] = useState(
     games.reduce(
@@ -45,11 +42,10 @@ export const GameTable = memo(({ games, role, setGames }: GameTableProps) => {
           <GameCard
             game={game}
             role={role}
-            onClick={() => handleClick(game.status, game.id)}
-            setGames={setGames}
+            onClick={() => handleClick(game.game_status, game.id)}
           />
           <GameModal
-            game={game}
+            gameId={game.id}
             visible={modals[game.id]?.gameInfo || false}
             onClose={() =>
               setModals((prev) => ({
@@ -64,10 +60,8 @@ export const GameTable = memo(({ games, role, setGames }: GameTableProps) => {
                 [game.id]: { gameInfo: false, gameQuestions: true }
               }))
             }
-            setGames={setGames}
           />
           <QuestionModal
-            questions={game.questions}
             isVisible={modals[game.id]?.gameQuestions || false}
             onClose={() =>
               setModals((prev) => ({
@@ -81,7 +75,6 @@ export const GameTable = memo(({ games, role, setGames }: GameTableProps) => {
                 [game.id]: { gameInfo: true, gameQuestions: false }
               }))
             }
-            setGames={setGames}
             gameId={game.id}
           />
         </React.Fragment>

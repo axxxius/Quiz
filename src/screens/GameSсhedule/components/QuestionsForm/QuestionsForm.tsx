@@ -1,7 +1,11 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import TrashIcon from '@assets/icons/trash.svg?react'
-import { descrQuestionSchema, requiredSchema, weightSchema } from '@screens/GameSсhedule/constants'
+import {
+  descrQuestionSchema,
+  patternQuestionName,
+  weightSchema
+} from '@screens/GameSсhedule/constants'
 import { Button, Input, Typography } from '@shared'
 
 import styles from './QuestionsForm.module.css'
@@ -30,7 +34,7 @@ export const QuestionsForm = ({ onSubmit, questions, onDeleteQuestion }: Questio
           <div title='Формат названия вопроса: 1.1'>
             <Input
               label='Название вопроса'
-              {...register('name', requiredSchema)}
+              {...register('name', patternQuestionName)}
               isError={!!formState.errors.name}
               helperText={formState.errors.name?.message}
             />
@@ -76,7 +80,7 @@ export const QuestionsForm = ({ onSubmit, questions, onDeleteQuestion }: Questio
             questions.map((question) => (
               <div key={question.id} className={styles.question_card}>
                 <span className='font-vela-regular text-[12px]'>
-                  {question.name}: {question.description}
+                  {question.question_name}: {question.question_description}
                 </span>
                 <button
                   type='button'

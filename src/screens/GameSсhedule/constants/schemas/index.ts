@@ -1,5 +1,6 @@
 export * from './dateSchema'
 export * from './descrGameSchema'
 export * from './descrQuestionSchema'
+export * from './questionNameSchema'
 export * from './requiredSchema'
 export * from './weightSchema'
