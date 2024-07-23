@@ -8,7 +8,7 @@ interface AuthProviderProps {
   children: ReactNode
 }
 
-const AuthProvider = ({ children }: AuthProviderProps) => {
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const refreshToken = localStorage.getItem('refresh_token')
   const { data, isSuccess } = useGetRefreshQuery(refreshToken!)
 
@@ -28,5 +28,3 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   return <>{children}</>
 }
-
-export default AuthProvider

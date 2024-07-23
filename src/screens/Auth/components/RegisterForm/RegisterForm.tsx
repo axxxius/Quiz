@@ -2,9 +2,9 @@ import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import { URLS } from '@navigation'
-import { AuthButtonGroup, Select } from '@screens/Auth/components'
+import { Select } from '@screens/Auth/components'
 import { GENDER, ROLE, schema } from '@screens/Auth/constants'
-import { Input, Loader, Typography } from '@shared'
+import { Button, Input, Loader, Typography } from '@shared'
 import { usePostRegisterMutation } from '@utils'
 
 import styles from '../../Auth.module.css'
@@ -98,7 +98,9 @@ export const RegisterForm = () => {
             />
           )}
         />
-        <AuthButtonGroup isLogin={false} />
+        <Button style={{ marginTop: '20px' }} type='submit' variant='primary_regular'>
+          Зарегистрироваться
+        </Button>
       </form>
     </div>
   )

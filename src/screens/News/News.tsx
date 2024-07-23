@@ -40,7 +40,7 @@ const news = [
 
 const News = () => {
   const authState = useRecoilValue(authAtom)
-  console.log('@@@authState', authState)
+  console.log('@@@newsAuth', authState)
 
   const { role } = useRole()
   console.log('@@@decode', role)

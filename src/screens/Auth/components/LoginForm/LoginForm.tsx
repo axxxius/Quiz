@@ -1,12 +1,11 @@
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 
 import { URLS } from '@navigation'
 import { authAtom } from '@screens/Auth/Auth.atom.ts'
-import { AuthButtonGroup } from '@screens/Auth/components'
 import { schema } from '@screens/Auth/constants'
-import { Input, Loader, Typography } from '@shared'
+import { Button, Input, Loader, Typography } from '@shared'
 import { usePostLoginMutation } from '@utils'
 
 import styles from '../../Auth.module.css'
@@ -31,6 +30,9 @@ export const LoginForm = () => {
       }
     }
   })
+
+  const authState = useRecoilValue(authAtom)
+  console.log('auth', authState)
 
   const { errors, isSubmitting } = formState
   const loading = isSubmitting || loginForm.isPending
@@ -64,7 +66,9 @@ export const LoginForm = () => {
           disabled={loading}
           {...register('password', schema.passwordSchema)}
         />
-        <AuthButtonGroup isLogin={true} />
+        <Button style={{ marginTop: '20px' }} type='submit' variant='primary_regular'>
+          Войти
+        </Button>
       </form>
     </div>
   )

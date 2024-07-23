@@ -1,7 +1,8 @@
 import { RouterProvider } from 'react-router-dom'
 
+import { AuthProvider } from '@utils'
+
 import { appRouter } from './navigation/app.router.tsx'
-import AuthProvider from './utils/context/AuthProvider.tsx'
 
 export const App = () => (
   <AuthProvider>
