@@ -1,53 +1,74 @@
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 
-import { emailSchema, passwordSchema } from '@screens/Auth/constants'
-import { Button, Input, Typography } from '@shared'
+import { URLS } from '@navigation'
+import { authAtom } from '@screens/Auth/Auth.atom.ts'
+import { schema } from '@screens/Auth/constants'
+import { Button, Input, Loader, Typography } from '@shared'
+import { usePostLoginMutation } from '@utils'
 
 import styles from '../../Auth.module.css'
 
-interface LoginFormValues {
+export interface LoginFormValues {
   email: string
   password: string
 }
 
 export const LoginForm = () => {
+  const navigate = useNavigate()
+  const setAuthState = useSetRecoilState(authAtom)
   const { register, handleSubmit, formState } = useForm<LoginFormValues>({ mode: 'onSubmit' })
-  const { errors } = formState
 
-  const onSubmit = (data: LoginFormValues) => {
-    console.log('@@@Login', data)
-  }
+  const loginForm = usePostLoginMutation({
+    options: {
+      onSuccess: (response) => {
+        localStorage.setItem('access_token', response.data.tokens.access_token)
+        localStorage.setItem('refresh_token', response.data.tokens.refresh_token)
+        setAuthState(response.data)
+        navigate(URLS.NEWS)
+      }
+    }
+  })
+
+  const authState = useRecoilValue(authAtom)
+  console.log('auth', authState)
+
+  const { errors, isSubmitting } = formState
+  const loading = isSubmitting || loginForm.isPending
+  if (loading) return <Loader />
 
   return (
     <div className={styles.page}>
       <Typography className={styles.header} variant='text_36_b'>
         Авторизация
       </Typography>
-      <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={styles.container}
+        onSubmit={handleSubmit(async (formValues) => {
+          loginForm.mutate({
+            params: formValues
+          })
+        })}
+      >
         <Input
           label='Email'
           isError={!!errors.email}
           helperText={errors.email?.message}
-          {...register('email', emailSchema)}
+          disabled={loading}
+          {...register('email', schema.emailSchema)}
         />
         <Input
           label='Пароль'
           type='password'
           isError={!!errors.password}
           helperText={errors.password?.message}
-          {...register('password', passwordSchema)}
+          disabled={loading}
+          {...register('password', schema.passwordSchema)}
         />
-        <div className={styles.button_container}>
-          <Link to='/register'>
-            <Button type='button' variant='secondary_regular'>
-              Зарегистрироваться
-            </Button>
-          </Link>
-          <Button type='submit' variant='primary_regular'>
-            Войти
-          </Button>
-        </div>
+        <Button style={{ marginTop: '20px' }} type='submit' variant='primary_regular'>
+          Войти
+        </Button>
       </form>
     </div>
   )
