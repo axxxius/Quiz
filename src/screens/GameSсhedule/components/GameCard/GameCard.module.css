@@ -1,0 +1,38 @@
+.card_container {
+  @apply grid cursor-pointer items-center rounded-lg border-[1px];
+
+  grid-template-columns: 120px 70px 270px 1fr 100px;
+  width: calc(88vw - 128px);
+}
+
+.btn_container {
+  @apply flex items-center gap-x-4 pr-6;
+}
+
+.date_container {
+  @apply px-[16px] py-[13px] text-center text-purple-400;
+  border-radius: 6px 0 0 6px;
+}
+
+.time_container {
+  @apply border-[1px] bg-opacity-20 px-[12px] py-[23px] text-center;
+}
+
+.name_container {
+  @apply max-h-[70px] overflow-hidden text-ellipsis whitespace-nowrap px-[16px] py-[24px];
+}
+
+.description_container {
+  @apply max-h-[70px] overflow-hidden text-ellipsis whitespace-nowrap px-[16px] py-[24px];
+}
+
+.delete_btn,
+.edit_btn {
+  @apply rounded-md p-1 hover:outline hover:outline-1 hover:outline-lime-200;
+}
+
+.card_container:hover .name_container,
+.card_container:hover .description_container,
+.card_container:hover .btn_container {
+  @apply bg-white bg-opacity-10;
+}

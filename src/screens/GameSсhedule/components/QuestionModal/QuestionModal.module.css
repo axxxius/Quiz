@@ -1,0 +1,11 @@
+.container {
+  @apply flex flex-col gap-y-4;
+}
+
+.modal_title {
+  @apply flex w-full items-center justify-between;
+}
+
+.btn_container {
+  @apply mt-4 flex gap-x-6 self-end;
+}

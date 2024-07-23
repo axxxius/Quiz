@@ -1,0 +1,22 @@
+.container {
+  @apply flex flex-col gap-[16px];
+}
+
+.general_info,
+.date_and_time {
+  @apply flex flex-col gap-[16px];
+}
+
+.input_container {
+  @apply grid items-start gap-x-8;
+
+  grid-template-columns: 1fr 1fr;
+}
+
+.checkbox_btn {
+  @apply flex items-center gap-x-4 outline-none;
+}
+
+.next_btn {
+  @apply mt-5 max-w-[150px] self-end;
+}

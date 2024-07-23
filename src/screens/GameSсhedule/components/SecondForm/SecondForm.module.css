@@ -1,0 +1,15 @@
+.container {
+  @apply flex flex-col gap-[16px];
+}
+
+.buttons_container {
+  @apply ml-auto flex gap-x-6;
+}
+
+.back_btn {
+  @apply w-[100px];
+}
+
+.create_btn {
+  @apply w-[115px];
+}
