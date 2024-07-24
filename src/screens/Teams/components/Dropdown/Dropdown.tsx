@@ -1,19 +1,21 @@
-import { useRef, useState } from 'react'
+import { Dispatch, SetStateAction, useRef, useState } from 'react'
 
 import styles from '@screens/Teams/components/Dropdown/Dropdown.module.css'
-import { Option } from '@screens/Teams/types'
+import { OptionSort } from '@screens/Teams/types'
 import { classnames } from '@utils'
 
 import { useOnClickOutside } from '../../../../hooks/useOnClickOutside'
 
 interface DropdownProps {
-  options: Option[]
+  options: OptionSort[]
+  setSelectedValue?: Dispatch<SetStateAction<OptionSort>>
+  selectedValue?: OptionSort
 }
 
-export const Dropdown = ({ options }: DropdownProps) => {
+export const Dropdown = ({ options, setSelectedValue, selectedValue }: DropdownProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null)
-  const [selectedValue, setSelectedValue] = useState(options[0].label)
   const [isOpen, setIsOpen] = useState(false)
+
   const stylesButton = classnames(styles.dropbtn, {
     [styles.dropbtn_open]: isOpen
   })
@@ -22,8 +24,8 @@ export const Dropdown = ({ options }: DropdownProps) => {
     setIsOpen(!isOpen)
   }
 
-  const handleClickSelectedSort = (sortItem: string) => {
-    setSelectedValue(sortItem)
+  const handleClickSelectedSort = (sortItem: OptionSort) => {
+    if (setSelectedValue) setSelectedValue(sortItem)
     setIsOpen(!isOpen)
   }
 
@@ -33,7 +35,7 @@ export const Dropdown = ({ options }: DropdownProps) => {
     <>
       <div className={styles.dropdown} ref={dropdownRef}>
         <button className={stylesButton} type='button' onClick={handleClickToggleDropdown}>
-          {selectedValue}
+          {selectedValue?.label}
         </button>
         {isOpen && (
           <div className={styles.dropdown_content}>
@@ -42,7 +44,7 @@ export const Dropdown = ({ options }: DropdownProps) => {
                 <li
                   key={option.value}
                   className={styles.item}
-                  onClick={() => handleClickSelectedSort(option.label)}
+                  onClick={() => handleClickSelectedSort(option)}
                 >
                   {option.label}
                 </li>
