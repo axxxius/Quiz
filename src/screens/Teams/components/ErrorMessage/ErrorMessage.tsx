@@ -1,8 +1,9 @@
 import { AxiosError } from 'axios'
 
+import { AxiosErrorData } from '@screens/Teams'
 import styles from '@screens/Teams/components/ErrorMessage/ErrorMessage.module.css'
 import { Typography } from '@shared'
-import { AxiosErrorData, classnames } from '@utils'
+import { classnames } from '@utils'
 
 interface ErrorMessageProps {
   error?: AxiosError<AxiosErrorData, any> | null

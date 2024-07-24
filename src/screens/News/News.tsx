@@ -45,7 +45,7 @@ const News = () => {
           Создать анонс
         </Button>
       </div>
-      <Search isLead={true} />
+      <Search />
       <CardList news={news} />
     </div>
   )

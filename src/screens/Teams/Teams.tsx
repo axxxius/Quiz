@@ -1,26 +1,39 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
-import { useOnClickOutside } from '@hooks'
+import { useDebounce, useOnClickOutside } from '@hooks'
 import { Button, Search, Typography } from '@shared'
 import { classnames, useGetTeamsQuery } from '@utils'
 
 import { modalAtom, ShowModal } from './components/Modals/Modal.atom'
+import { teamAtom } from './components/Modals/TeamModal/Team.atom'
 import { teamsTableAtom } from './components/Table/Table.atom'
-import { CreatingTeamModal, Dropdown, Table } from './components'
+import { Dropdown, EditTeamModal, Table } from './components'
 import { SORT_TEAMS } from './const'
 import { roleAtom } from './Teams.atom'
 import styles from './Teams.module.css'
+import { OptionSort } from './types'
 
 const Teams = () => {
   const setTeams = useSetRecoilState(teamsTableAtom)
-  const { data, isSuccess, isLoading } = useGetTeamsQuery()
+  const team = useRecoilValue(teamAtom)
   const [showModal, setShowModal] = useRecoilState<ShowModal>(modalAtom)
   const modalRef = useRef<HTMLDivElement>(null)
   const role = useRecoilValue(roleAtom)
+  const [selectedValue, setSelectedValue] = useState<OptionSort>(SORT_TEAMS[0])
+  const [search, setSearch] = useState<string>('')
+  const debouncedSearch = useDebounce(search, 500)
+  const { data, isSuccess, isLoading, isError } = useGetTeamsQuery(
+    {
+      params: { ordering: selectedValue.value, search: debouncedSearch }
+    },
+    selectedValue.value,
+    team.team_name,
+    debouncedSearch
+  )
 
   const stylesCreatingTeam = classnames(styles.creating_team, {
-    [styles.creating_team_lead]: role.isMember
+    [styles.creating_team_lead]: !role.isCaptain && role.role === 'player'
   })
 
   const handleClick = () => {
@@ -39,7 +52,7 @@ const Teams = () => {
 
   useEffect(() => {
     if (isSuccess) setTeams(data.data.teams)
-  }, [isLoading])
+  }, [isLoading, selectedValue, debouncedSearch])
 
   return (
     <>
@@ -49,8 +62,8 @@ const Teams = () => {
         </Typography>
         <div className={styles.main}>
           <div className={stylesCreatingTeam}>
-            <Search isLead={role.isMember} />
-            {role.isMember && (
+            <Search setSearch={setSearch} />
+            {role.role === 'player' && !role.isCaptain && (
               <Button className={styles.button} onClick={handleClick}>
                 Создать команду
               </Button>
@@ -60,11 +73,17 @@ const Teams = () => {
             <Typography tag='h4' variant='text_16_r'>
               Сортировать по
             </Typography>
-            <Dropdown options={SORT_TEAMS} />
+            <Dropdown
+              options={SORT_TEAMS}
+              setSelectedValue={setSelectedValue}
+              selectedValue={selectedValue}
+            />
           </div>
-          <Table ref={modalRef} />
+          <Table ref={modalRef} isError={isError} />
         </div>
-        {showModal.showCreatingTeam && <CreatingTeamModal ref={modalRef} />}
+        {showModal.showCreatingTeam && (
+          <EditTeamModal head='Создать команду' mode='create' ref={modalRef} />
+        )}
       </div>
     </>
   )

@@ -1,19 +1,19 @@
 export const SORT_TEAMS = [
   {
-    label: 'Очкам',
+    label: 'Баллам',
     value: 'points'
   },
   {
     label: 'Играм',
-    value: 'games'
+    value: 'played_games'
   },
   {
     label: 'Дате создания',
-    value: 'creating_date'
+    value: 'creation_date'
   },
   {
     label: 'Названию',
-    value: 'name'
+    value: 'team_name'
   }
 ]
 

@@ -1,67 +1,45 @@
 import { useForm } from 'react-hook-form'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 
-import styles from '@screens/Teams/components/TeamForm/TeamForm.module.css'
+import { CreatingTeamFormValues } from '@screens/Teams'
+import styles from '@screens/Teams/components/Forms/CreatingTeamForm/CreatingTeamForm.module.css'
 import { Textarea } from '@screens/Teams/components/Textarea/Textarea'
 import { descriptionSchema, nameSchema } from '@screens/Teams/const/schemas'
 import { roleAtom } from '@screens/Teams/Teams.atom'
-import { TeamFormValues } from '@screens/Teams/types'
 import { Button, Input } from '@shared'
 import { usePostTeamMutation } from '@utils'
 
-import { ErrorMessage } from '../ErrorMessage/ErrorMessage'
-import { teamsTableAtom } from '../Table/Table.atom'
+import { ErrorMessage } from '../../ErrorMessage/ErrorMessage'
+import { teamsTableAtom } from '../../Table/Table.atom'
 
-import { teamFormAtom } from './TeamForm.atom'
+import { creatingTeamFormAtom } from './CreatingTeamForm.atom'
 
-interface TeamFormProps {
+interface CreatingTeamFormProps {
   handleClose: () => void
 }
 
-export const TeamForm = ({ handleClose }: TeamFormProps) => {
-  const [teamFormValues, setTeamFormValues] = useRecoilState(teamFormAtom)
-  const resetForm = useResetRecoilState(teamFormAtom)
+export const CreatingTeamForm = ({ handleClose }: CreatingTeamFormProps) => {
+  const [teamFormValues, setTeamFormValues] = useRecoilState(creatingTeamFormAtom)
+  const resetForm = useResetRecoilState(creatingTeamFormAtom)
   const {
     register,
     handleSubmit,
     formState: { errors },
     getValues
-  } = useForm<TeamFormValues>({ mode: 'onSubmit', defaultValues: teamFormValues })
+  } = useForm<CreatingTeamFormValues>({ mode: 'onSubmit', defaultValues: teamFormValues })
   const { mutateAsync, error } = usePostTeamMutation()
   const setTeams = useSetRecoilState(teamsTableAtom)
-  const setRole = useSetRecoilState(roleAtom)
+  const [role, setRole] = useRecoilState(roleAtom)
 
-  const onSubmit = async (values: TeamFormValues) => {
+  const onSubmit = async (values: CreatingTeamFormValues) => {
     const { data } = await mutateAsync({
       ...values,
-      captain_id: 4
+      captain_id: role.id
     })
-    setTeams((prev) => [
-      ...prev,
-      {
-        team_id: data.team_id,
-        team_name: data.team_name,
-        creation_date: '2024-07-19',
-        played_games: 0,
-        points: 0,
-        rating: 0
-      }
-    ])
-    setTeams((prev) => [
-      ...prev,
-      {
-        team_id: data.team_id,
-        team_name: data.team_name,
-        creation_date: '2024-07-19',
-        played_games: 0,
-        points: 0,
-        rating: 0
-      }
-    ])
+    setTeams((prev) => [...prev, { ...data }])
     setRole((prev) => ({
       ...prev,
-      isCaptain: true,
-      isMember: false
+      isCaptain: true
     }))
     resetForm()
     handleClose()
