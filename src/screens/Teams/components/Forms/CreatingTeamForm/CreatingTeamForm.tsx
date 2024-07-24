@@ -6,6 +6,7 @@ import { CreatingTeamFormValues } from '@screens/Teams'
 import styles from '@screens/Teams/components/Forms/CreatingTeamForm/CreatingTeamForm.module.css'
 import { Textarea } from '@screens/Teams/components/Textarea/Textarea'
 import { nameSchema } from '@screens/Teams/const/schemas'
+import { captainAtom } from '@screens/Teams/Teams.atom'
 import { Button, Input } from '@shared'
 import { usePostTeamMutation } from '@utils'
 
@@ -30,7 +31,7 @@ export const CreatingTeamForm = ({ handleClose }: CreatingTeamFormProps) => {
   const { mutateAsync, error } = usePostTeamMutation()
   const setTeams = useSetRecoilState(teamsTableAtom)
   const authState = useRecoilValue(authAtom)
-  // const setIsCaptain = useSetRecoilState(captainAtom)
+  const setIsCaptain = useSetRecoilState(captainAtom)
 
   const onSubmit = async (values: CreatingTeamFormValues) => {
     const { data } = await mutateAsync({
@@ -38,10 +39,9 @@ export const CreatingTeamForm = ({ handleClose }: CreatingTeamFormProps) => {
       captain_id: authState.user.id
     })
     setTeams((prev) => ({
-      user_teams: [...prev.user_teams, { ...data, team_place: prev.teams.length + 1 }],
       teams: [...prev.teams, { ...data, team_place: prev.teams.length + 1 }]
     }))
-    // if (setIsCaptain) setIsCaptain(false)
+    setIsCaptain('capitan')
     resetForm()
     handleClose()
   }

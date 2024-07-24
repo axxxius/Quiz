@@ -1,6 +1,6 @@
 import { FullTeam } from '@screens/Teams/types'
-import axios from 'axios'
+import { api } from '@utils'
 
 export const getTeamById = async (id: number) => {
-  return await axios.get<FullTeam>(`${import.meta.env.VITE_API_URL}/teams/${id}/`)
+  return await api.get<FullTeam>(`/teams/${id}/`)
 }
