@@ -1,12 +1,14 @@
+import { TeamScore } from '@screens/ActiveGame/ActiveGame'
 import { Typography } from '@shared'
 
 import styles from './TeamList.module.css'
 
 interface TeamListProps {
   teamList: TeamInGame[]
+  teamScore: TeamScore
 }
 
-export const TeamList = ({ teamList }: TeamListProps) => {
+export const TeamList = ({ teamList, teamScore }: TeamListProps) => {
   return (
     <div className={styles.container}>
       <ul className={styles.game_header}>
@@ -21,7 +23,7 @@ export const TeamList = ({ teamList }: TeamListProps) => {
         </Typography>
       </ul>
       <div className={styles.teams_list}>
-        {teamList.length > 1 ? (
+        {teamList.length > 0 ? (
           teamList.map((team, index) => (
             <div key={team.team_id} className={styles.team_entry}>
               <Typography tag='div' variant='text_16_m'>
@@ -35,7 +37,7 @@ export const TeamList = ({ teamList }: TeamListProps) => {
                 {team.team_name}
               </Typography>
               <Typography tag='div' variant='text_16_m'>
-                {/* {team.points} */} 0 баллов
+                {teamScore.scores[team.team_id]}
               </Typography>
             </div>
           ))

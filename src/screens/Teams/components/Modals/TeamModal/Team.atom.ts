@@ -8,7 +8,7 @@ const initialState: FullTeam = {
   team_creation_date: '',
   team_played_games: 0,
   team_points: 0,
-  team_rating: 0,
+  team_place: 0,
   team_captain_name: '',
   team_members: []
 }

@@ -28,14 +28,14 @@ interface QuestionModalProps {
 }
 
 export const QuestionModal = ({ gameId, isVisible, onClose, goBack }: QuestionModalProps) => {
-  const { data } = useGetGameQuery(gameId, isVisible)
+  const { gameData } = useGetGameQuery(gameId, isVisible)
   const [questions, SetQuestions] = useState(initialQuestion)
 
   useEffect(() => {
-    if (data !== undefined) {
-      SetQuestions(data.game_questions)
+    if (gameData !== undefined) {
+      SetQuestions(gameData.game_questions)
     }
-  }, [data])
+  }, [gameData])
 
   const { mutate } = usePostAddQuestionMutation()
   const queryClient = useQueryClient()

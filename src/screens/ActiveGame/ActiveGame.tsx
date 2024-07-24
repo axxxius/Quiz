@@ -4,8 +4,9 @@ import { useParams } from 'react-router-dom'
 import { AnswerModal, AnswersList, GameInfo, TeamList } from '@screens/ActiveGame/components'
 import { initialGame } from '@screens/GameSсhedule/components'
 import { Typography } from '@shared'
-import { useGetGameQuery } from '@utils'
+import { useGetAnswerQuery, useGetGameQuery, usePostAnswersMutation } from '@utils'
 
+import { useQueryClient } from '@tanstack/react-query'
 import styles from './ActiveGame.module.css'
 
 const initialTeam: TeamInGame[] = [
@@ -15,80 +16,121 @@ const initialTeam: TeamInGame[] = [
   }
 ]
 
+export interface TeamScore {
+  scores: {
+    [key: number]: number
+  }
+}
+
+export const initialAnswer: TeamAnswer[] = [
+  {
+    id: 0,
+    answer_team_answer: '',
+    answer_is_correct: false,
+    answer_score: 0,
+    game_id: 0,
+    team_id: 0,
+    question_id: 0
+  }
+]
+
+const initialScore: TeamScore = {
+  scores: {
+    5: 0
+  }
+}
+
 const ActiveGame = () => {
   const params = useParams()
   const gameId = params.id
 
   const gameIdNumber = gameId ? parseInt(gameId, 10) : 0
 
-  const { data } = useGetGameQuery(gameIdNumber, !!gameId)
+  const { gameData } = useGetGameQuery(gameIdNumber, !!gameId)
 
   const [game, setGame] = useState<Game>(initialGame)
   const [teamList, setTeamList] = useState<TeamInGame[]>(initialTeam)
 
   useEffect(() => {
+    if (gameData !== undefined) {
+      setGame(gameData)
+      if (gameData.game_teams !== undefined) {
+        setTeamList(gameData.game_teams)
+      }
+    }
+  }, [gameData])
+
+  const { data } = useGetAnswerQuery(gameIdNumber)
+
+  const [answers, setAnswers] = useState<TeamAnswer[]>(initialAnswer)
+  const [score, setScore] = useState<TeamScore>(initialScore)
+  useEffect(() => {
     if (data !== undefined) {
-      setGame(data)
-      if (Array.isArray(data.game_teams)) setTeamList(data.game_teams)
+      if (data.length === 1) {
+        setScore(data[0])
+      } else if (data.length >= 2) {
+        setAnswers(data.slice(0, data.length - 1))
+        setScore(data[data.length - 1])
+      }
     }
   }, [data])
-
-  const changeGameStatus = () => {
+  console.log(answers)
+  console.log(score)
+  const completeGame = () => {
     //изменение статуса при завершении игры
   }
 
-  const changeTeamAnswer = () => {
-    // setTeamList((prevTeamList) =>
-    //   prevTeamList.map((team) => {
-    //     if (team.id === teamId) {
-    //       // Проверяем, есть ли уже ответ на этот вопрос
-    //       const existingAnswerIndex = team.answers?.findIndex(
-    //         (answer) => answer.questionId === questionId
-    //       )
-    //       if (existingAnswerIndex !== undefined && existingAnswerIndex >= 0) {
-    //         // Если ответ существует, обновляем его
-    //         const updatedAnswers = [...(team.answers ?? [])]
-    //         updatedAnswers[existingAnswerIndex] = {
-    //           ...updatedAnswers[existingAnswerIndex],
-    //           answer: newAnswer,
-    //           weight: weight ?? 0
-    //         }
-    //         return { ...team, answers: updatedAnswers }
-    //       } else {
-    //         // Если ответа нет, добавляем новый
-    //         const newAnswerObj: TeamAnswer = {
-    //           id: Math.random(),
-    //           questionId,
-    //           answer: newAnswer,
-    //           weight: weight ?? 0
-    //         } // Пример генерации ID
-    //         return { ...team, answers: [...(team.answers ?? []), newAnswerObj] }
-    //       }
-    //     }
-    //     return team
-    //   })
-    // )
+  const { addAnswer, isPending } = usePostAnswersMutation()
 
-    //изменить ответ команды
-    console.log(teamList)
+  const queryClient = useQueryClient()
+  const changeTeamAnswer = (
+    teamId: number,
+    questionId: number,
+    newAnswer: string,
+    weight: number | undefined
+  ) => {
+    addAnswer(
+      {
+        gameId: game.id,
+        answer: {
+          game_id: game.id,
+          team_id: teamId,
+          question_id: questionId,
+          answer_team_answer: newAnswer,
+          answer_score: weight || 0,
+          answer_is_correct: !!(newAnswer || weight)
+        }
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['get-answers', game.id] })
+        }
+      }
+    )
   }
 
   const [openModal, setOpenModal] = useState(false)
-  const [currentValues, setCurrentValues] = useState<{ teamId: number; answer: TeamAnswer }>()
+  const [currentValues, setCurrentValues] = useState<{
+    teamId: number
+    answer: Omit<TeamAnswer, 'id'>
+    question: Question
+  }>()
 
   return (
     <>
       <div className={styles.container}>
-        <GameInfo game={game} changeGameStatus={changeGameStatus} />
+        <GameInfo game={game} changeGameStatus={completeGame} />
         <div className={styles.game_container}>
           <Typography tag='p' variant='text_24_b'>
             Игра
           </Typography>
           <div className={styles.table_container}>
-            <TeamList teamList={teamList} />
+            <TeamList teamList={teamList} teamScore={score} />
             <AnswersList
               gameId={game.id}
+              answers={answers}
               teamList={teamList}
+              isPending={isPending}
               questions={game.game_questions}
               gameStatus={game.game_status}
               changeTeamAnswer={changeTeamAnswer}

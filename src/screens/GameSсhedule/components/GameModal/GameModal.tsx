@@ -9,11 +9,13 @@ import {
   timeZone,
   useDeleteTeamInGameMutation,
   useGetGameQuery,
+  useGetUserInTeamQuery,
   usePostAddTeamMutation
 } from '@utils'
 
 import { formatDate } from '../GameCard/GameCard'
 
+import { useQueryClient } from '@tanstack/react-query'
 import styles from './GameModal.module.css'
 
 export const initialGame: Game = {
@@ -55,13 +57,23 @@ interface GameModalProps {
 export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameModalProps) => {
   const [game, setGame] = useState<Game>(initialGame)
 
-  const { data } = useGetGameQuery(gameId, visible)
+  const { userTeam } = useGetUserInTeamQuery(game.id)
+  const [currentTeamId, setCurrentTeamId] = useState(0)
+
+  const [teamInGame, setTeamInGame] = useState(false)
+
+  const { gameData } = useGetGameQuery(gameId, visible)
 
   useEffect(() => {
-    if (data !== undefined) {
-      setGame(data)
+    if (gameData !== undefined) {
+      setGame(gameData)
+      setTeamInGame(!!gameData.game_teams?.find((team) => team.team_id === userTeam?.data))
+      setCurrentTeamId(
+        gameData.game_teams?.find((team) => team.team_id === userTeam?.data)?.team_id || 0
+      )
     }
-  }, [data])
+  }, [gameData, userTeam])
+  console.log(currentTeamId)
 
   const initialDate = game.game_date.split('T')[0]?.split('-').reverse().join(' ')
   const date = formatDate(initialDate)
@@ -73,7 +85,14 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
 
   const { deleteTeam } = useDeleteTeamInGameMutation()
   const deleteTeamInGame = () => {
-    deleteTeam(game.id)
+    deleteTeam(game.id, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['game', game.id] })
+      },
+      onError: () => {
+        alert('Не получилось удалить игру!')
+      }
+    })
   }
 
   const navigate = useNavigate()
@@ -85,8 +104,17 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
 
   const { addTeam } = usePostAddTeamMutation()
 
+  const queryClient = useQueryClient()
+
   const joinGame = () => {
-    addTeam(game.id)
+    addTeam(game.id, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['game', game.id] })
+      },
+      onError: () => {
+        alert('Не получилось зарегистрироваться на игру!')
+      }
+    })
   }
 
   return (
@@ -134,7 +162,7 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
                 game.game_teams.map((team) => (
                   <div className={styles.team_card} key={team.team_id}>
                     <Typography variant='text_12_m'>{team.team_name}</Typography>
-                    {role === 'leading' && (
+                    {game.game_status !== 'active' && (
                       <button onClick={() => deleteTeamInGame()}>
                         <TrashIcon />
                       </button>
@@ -155,12 +183,14 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
           </Button>
         )}
         {role === 'player' &&
+          teamInGame &&
           game.game_status === 'planned' && ( // <---- добавить сравнение на капитана
             <Button className={styles.join_btn} variant='primary' onClick={() => joinGame()}>
               Вступить в игру
             </Button>
           )}
         {role === 'player' &&
+          !teamInGame &&
           game.game_status === 'planned' && ( // <---- добавить сравнение на капитана
             <Typography variant='text_16_b' className='ml-auto'>
               Вы&nbsp;уже состоите в&nbsp;этой игре

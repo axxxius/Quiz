@@ -6,4 +6,4 @@ export const postAnswer = async ({
 }: {
   gameId: number
   teamAnswer: Omit<TeamAnswer, 'id'>
-}) => await api.post(`/games/${gameId}/play/`, { data: teamAnswer })
+}) => await api.post<TeamAnswer>(`/games/${gameId}/play/`, teamAnswer)

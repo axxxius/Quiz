@@ -5,6 +5,6 @@ export const URLS = {
     REGISTER: '/register'
   },
   ACTIVEGAME: '/activegame/:id',
-  GAMESHEDULE: '/gameshedule',
+  GAMESHEDULE: '/gameschedule',
   TEAMS: '/teams'
 }

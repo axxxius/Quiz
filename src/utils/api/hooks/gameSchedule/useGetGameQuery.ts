@@ -3,7 +3,7 @@ import { getGame } from '@utils'
 
 export const useGetGameQuery = (id: number, enabled: boolean) => {
   const { data, error, status } = useQuery<Game, Error>({
-    queryKey: ['games', id],
+    queryKey: ['game', id],
     queryFn: async () => {
       try {
         const response = await getGame({ params: { game_id: id } })
@@ -16,5 +16,5 @@ export const useGetGameQuery = (id: number, enabled: boolean) => {
     enabled
   })
 
-  return { data, error, status }
+  return { gameData: data, error, status }
 }

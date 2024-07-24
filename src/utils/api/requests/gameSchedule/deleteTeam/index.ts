@@ -6,4 +6,4 @@ export const deleteTeam = async ({
 }: {
   gameId: number
   userId: { user_id: number }
-}) => await api.delete(`/games/${gameId}/teams`, { data: userId })
+}) => await api.delete(`/games/${gameId}/teams/`, { data: userId })

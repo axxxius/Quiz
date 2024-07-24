@@ -19,7 +19,7 @@ interface TableProps {
 
 export const Table = forwardRef<HTMLDivElement, TableProps>(({ isError }, ref) => {
   const [activeTeam, setActiveTeam] = useState<number>(-1)
-  const teams = useRecoilValue(teamsTableAtom)
+  const teamsTable = useRecoilValue(teamsTableAtom)
   const [showModal, setShowModal] = useRecoilState(modalAtom)
 
   const handleClick = (team: Team) => {
@@ -41,9 +41,18 @@ export const Table = forwardRef<HTMLDivElement, TableProps>(({ isError }, ref) =
           ))}
         </div>
         <ErrorMessage isError={isError} className={styles.error} />
-        {teams.map((team: Team) => (
+        {teamsTable.user_teams.map((team: Team) => (
           <div className={styles.row} key={team.team_id} onClick={() => handleClick(team)}>
-            <div className={styles.col}>{team.team_rating}</div>
+            <div className={styles.col}>{team.team_place}</div>
+            <div className={styles.col}>{team.team_name}</div>
+            <div className={styles.col}>{getDate(team.team_creation_date)}</div>
+            <div className={styles.col}>{team.team_played_games}</div>
+            <div className={styles.col}>{team.team_points}</div>
+          </div>
+        ))}
+        {teamsTable.teams.map((team: Team) => (
+          <div className={styles.row} key={team.team_id} onClick={() => handleClick(team)}>
+            <div className={styles.col}>{team.team_place}</div>
             <div className={styles.col}>{team.team_name}</div>
             <div className={styles.col}>{getDate(team.team_creation_date)}</div>
             <div className={styles.col}>{team.team_played_games}</div>

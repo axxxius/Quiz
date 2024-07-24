@@ -6,4 +6,4 @@ export const addTeam = async ({
 }: {
   gameId: number
   userId: { user_id: number }
-}) => await api.post(`/games/${gameId}/teams/`, { data: userId })
+}) => await api.post(`/games/${gameId}/teams/`, userId)

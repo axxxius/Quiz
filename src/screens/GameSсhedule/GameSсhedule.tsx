@@ -17,7 +17,6 @@ const GameShedule = () => {
       setRole(userRole.role)
     }
   }, [userRole])
-  console.log(userRole)
 
   const [page, setPage] = useState<number>(1)
   const { data } = useGetGamesQuery()
@@ -89,7 +88,7 @@ const GameShedule = () => {
           <button
             className={styles.pagination_btns}
             onClick={() => setPage(page + 1)}
-            disabled={games.length < 10}
+            disabled={true} //games.length < 10
           >
             Следующая -&gt;
           </button>

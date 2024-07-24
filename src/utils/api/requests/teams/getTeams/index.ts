@@ -1,9 +1,7 @@
-import { AxiosRequestConfig } from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 
-import { Team } from '@screens/Teams/types'
-import { api } from '@utils'
+import { TeamsTable } from '@screens/Teams/components/Table/Table.atom'
 
 export const getTeams = async ({ params }: AxiosRequestConfig<{ ordering: string }>) => {
-  console.log(params, 'params')
-  return await api.get<{ teams: Team[] }>('/teams/', { params })
+  return await axios.get<TeamsTable>(`${import.meta.env.VITE_API_URL}/teams/`, { params })
 }
