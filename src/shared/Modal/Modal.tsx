@@ -18,7 +18,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
 
     return (
       <div className={styles.modal_backdrop}>
-        <LoaderTeam isLoading={isLoading} className={styles.loader}/>
+        <LoaderTeam isLoading={isLoading} className={styles.loader} />
         {!isLoading && (
           <div className={stylesModalContent} ref={ref}>
             {children}

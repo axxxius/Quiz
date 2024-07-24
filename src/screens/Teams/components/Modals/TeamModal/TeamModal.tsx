@@ -26,7 +26,7 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
   const [team, setTeam] = useRecoilState<FullTeam>(teamAtom)
   const [teamsTable, setTeamsTable] = useRecoilState<TeamsTable>(teamsTableAtom)
   const setShowModal = useSetRecoilState<ShowModal>(modalAtom)
-  const setIsCaptain = useSetRecoilState(captainAtom);
+  const setIsCaptain = useSetRecoilState(captainAtom)
   const [edit, setEdit] = useState(false)
   const { data, isLoading, isSuccess, isError } = useGetTeamQuery(id, team)
   const authState = useRecoilValue(authAtom)
@@ -42,7 +42,7 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
   const handleClickDelete = async (id: number) => {
     await mutateAsync(id)
     setTeamsTable({
-      teams: teamsTable.teams.filter((elem) => elem.team_id !== id),
+      teams: teamsTable.teams.filter((elem) => elem.team_id !== id)
     })
     handleClickClose()
     setIsCaptain('player')

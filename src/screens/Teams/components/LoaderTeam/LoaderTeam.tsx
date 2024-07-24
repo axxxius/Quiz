@@ -3,7 +3,7 @@ import { Typography } from '@shared'
 import { classnames } from '@utils'
 
 interface LoaderProps {
-  isLoading?: boolean,
+  isLoading?: boolean
   className?: string
 }
 

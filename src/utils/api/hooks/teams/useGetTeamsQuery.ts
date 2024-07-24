@@ -17,7 +17,7 @@ export const useGetTeamsQuery = (
     AxiosResponse<TeamsTable, any>,
     AxiosError<AxiosErrorData, any>,
     AxiosResponse<TeamsTable, any>,
-    (string | TeamsTable | number) []
+    (string | TeamsTable | number)[]
   >({
     queryKey: ['getTeams', selectedValue, team_name, search, teamsTable, user_id],
     queryFn: () => getTeams({ params })

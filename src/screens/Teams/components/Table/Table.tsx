@@ -33,13 +33,13 @@ export const Table = forwardRef<HTMLDivElement, TableProps>(({ isError }, ref) =
   return (
     <>
       <div className={styles.table}>
-          <div className={styles.head}>
-            {HEADER_TABLE.map((value) => (
-              <Typography key={value} tag='div' variant='text_16_b' className={styles.col}>
-                {value}
-              </Typography>
-            ))}
-          </div>
+        <div className={styles.head}>
+          {HEADER_TABLE.map((value) => (
+            <Typography key={value} tag='div' variant='text_16_b' className={styles.col}>
+              {value}
+            </Typography>
+          ))}
+        </div>
         {!teamsTable.teams && !isError && (
           <Typography tag='div' variant='text_24_b' className={styles.no_comand}>
             Нет команд

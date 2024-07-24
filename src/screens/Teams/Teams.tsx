@@ -25,7 +25,11 @@ const Teams = () => {
   const authState = useRecoilValue(authAtom)
   const debouncedSearch = useDebounce(search, 500)
   const isCaptain = useRecoilValue(captainAtom)
-  const { data: user, isSuccess: isSuccessUser, isLoading: isLoadingUser } = useGetUserQuery(isCaptain)
+  const {
+    data: user,
+    isSuccess: isSuccessUser,
+    isLoading: isLoadingUser
+  } = useGetUserQuery(isCaptain)
   const { role } = useRole()
   const { data, isSuccess, isLoading, isError } = useGetTeamsQuery(
     {
@@ -68,7 +72,7 @@ const Teams = () => {
         <Typography tag='h1' variant='text_36_b' className={styles.page_name}>
           Рейтинг команд
         </Typography>
-        {isLoadingUser && <LoaderTeam isLoading={isLoading}/>}
+        {isLoadingUser && <LoaderTeam isLoading={isLoading} />}
         {isSuccessUser && (
           <div className={styles.main}>
             <div className={stylesCreatingTeam}>
