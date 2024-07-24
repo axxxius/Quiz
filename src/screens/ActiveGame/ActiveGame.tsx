@@ -21,7 +21,7 @@ const ActiveGame = () => {
 
   const gameIdNumber = gameId ? parseInt(gameId, 10) : 0
 
-  const { data } = useGetGameQuery(gameIdNumber)
+  const { data } = useGetGameQuery(gameIdNumber, !!gameId)
 
   const [game, setGame] = useState<Game>(initialGame)
   const [teamList, setTeamList] = useState<TeamInGame[]>(initialTeam)

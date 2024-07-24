@@ -11,8 +11,8 @@ import styles from './GameSсhedule.module.css'
 const GameShedule = () => {
   const role: TRole = 'admin'
 
-  const [page, setPage] = useState(1)
-  const { data } = useGetGamesQuery({ page: page })
+  const [page, setPage] = useState<number>(1)
+  const { data } = useGetGamesQuery(page)
   const [games, setGames] = useRecoilState(gameScheduleState)
   useEffect(() => {
     if (data !== undefined) {
@@ -64,12 +64,18 @@ const GameShedule = () => {
             role={role}
           />
         </div>
-        <div>
-          <button onClick={() => setPage(page - 1)} disabled={page === 1}>
-            Предыдущая страница
+        <div className={styles.pagination_container}>
+          <button
+            className={styles.pagination_btns}
+            onClick={() => setPage(page - 1)}
+            disabled={page === 1}
+          >
+            &lt;- Предыдущая
           </button>
           <Typography variant='text_20_b'>Страница {page}</Typography>
-          <button onClick={() => setPage(page + 1)}>Следующая страница</button>
+          <button className={styles.pagination_btns} onClick={() => setPage(page + 1)}>
+            Следующая -&gt;
+          </button>
         </div>
       </div>
       <NewGameModal visible={newGameModalOpen} onClose={() => setNewGameModalOpen(false)} />

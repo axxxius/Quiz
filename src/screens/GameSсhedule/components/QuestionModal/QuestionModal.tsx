@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import CrossIcon from '@assets/icons/modalCross.svg?react'
 import { QuestionsForm } from '@screens/GameSсhedule/components'
 import { Button, Modal2, Typography } from '@shared'
+import { useQueryClient } from '@tanstack/react-query'
 import { useDeleteQuestionMutation, useGetGameQuery, usePostAddQuestionMutation } from '@utils'
 
-import { useQueryClient } from '@tanstack/react-query'
 import styles from './QuestionModal.module.css'
 
 const initialQuestion: Question[] = [
@@ -28,7 +28,7 @@ interface QuestionModalProps {
 }
 
 export const QuestionModal = ({ gameId, isVisible, onClose, goBack }: QuestionModalProps) => {
-  const { data } = useGetGameQuery(gameId)
+  const { data } = useGetGameQuery(gameId, isVisible)
   const [questions, SetQuestions] = useState(initialQuestion)
 
   useEffect(() => {

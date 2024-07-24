@@ -37,9 +37,9 @@ interface GameModalProps {
 }
 
 export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameModalProps) => {
-  const { data } = useGetGameQuery(gameId)
-
   const [game, setGame] = useState<Game>(initialGame)
+
+  const { data } = useGetGameQuery(gameId, visible)
 
   useEffect(() => {
     if (data !== undefined) {
