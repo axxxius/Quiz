@@ -33,7 +33,6 @@ const Teams = () => {
     debouncedSearch
   )
 
-
   const stylesCreatingTeam = classnames(styles.creating_team, {
     // [styles.creating_team_lead]: !isCaptain && role === 'player'
     [styles.creating_team_lead]: role === 'player'
@@ -90,7 +89,7 @@ const Teams = () => {
           <Table ref={modalRef} isError={isError} />
         </div>
         {showModal.showCreatingTeam && (
-          <EditTeamModal head='Создать команду' mode='create' ref={modalRef}/>
+          <EditTeamModal head='Создать команду' mode='create' ref={modalRef} />
         )}
       </div>
     </>
