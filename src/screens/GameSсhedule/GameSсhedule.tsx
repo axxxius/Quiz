@@ -12,7 +12,7 @@ const GameShedule = () => {
   const role: TRole = 'admin'
 
   const [page, setPage] = useState<number>(1)
-  const { data } = useGetGamesQuery(page)
+  const { data } = useGetGamesQuery()
   const [games, setGames] = useRecoilState(gameScheduleState)
   useEffect(() => {
     if (data !== undefined) {
@@ -73,7 +73,11 @@ const GameShedule = () => {
             &lt;- Предыдущая
           </button>
           <Typography variant='text_20_b'>Страница {page}</Typography>
-          <button className={styles.pagination_btns} onClick={() => setPage(page + 1)}>
+          <button
+            className={styles.pagination_btns}
+            onClick={() => setPage(page + 1)}
+            disabled={games.length < 10}
+          >
             Следующая -&gt;
           </button>
         </div>

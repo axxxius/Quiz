@@ -8,6 +8,7 @@ import {
 } from '@screens/GameSсhedule/constants'
 import { Button, Input, Typography } from '@shared'
 
+import { useEffect, useState } from 'react'
 import styles from './QuestionsForm.module.css'
 
 interface QuestionsFormProps {
@@ -17,14 +18,25 @@ interface QuestionsFormProps {
 }
 
 export const QuestionsForm = ({ onSubmit, questions, onDeleteQuestion }: QuestionsFormProps) => {
-  const { register, handleSubmit, reset, formState } = useForm<QuestionForm>({
+  const { register, handleSubmit, formState, setValue, getValues } = useForm<QuestionForm>({
     mode: 'onChange'
   })
 
   const onClickCreateQuestion = handleSubmit((data) => {
     onSubmit(data)
-    reset()
+    setValue('name', '')
+    setValue('description', '')
+    setValue('weight', 1)
+    if (getValues('correctAnswer') !== currentEtalon) {
+      setValue('correctAnswer', '')
+    }
   })
+
+  const [currentEtalon, setCurrentEtalon] = useState('')
+
+  useEffect(() => {
+    setValue('correctAnswer', currentEtalon)
+  }, [currentEtalon, setValue])
 
   return (
     <div className={styles.container}>
@@ -50,15 +62,35 @@ export const QuestionsForm = ({ onSubmit, questions, onDeleteQuestion }: Questio
           <div>
             <Input
               label='Эталон ответа'
+              defaultValue={currentEtalon}
               {...register('correctAnswer', descrQuestionSchema)}
               isError={!!formState.errors.correctAnswer}
               helperText={formState.errors.correctAnswer?.message}
             />
+            <div>
+              Выбрать готовое -&gt;{' '}
+              <button
+                className={styles.etalon_btns}
+                type='button'
+                onClick={() => setCurrentEtalon('Да')}
+              >
+                Да
+              </button>
+              /
+              <button
+                className={styles.etalon_btns}
+                type='button'
+                onClick={() => setCurrentEtalon('Нет')}
+              >
+                Нет
+              </button>
+            </div>
           </div>
           <div>
             <Input
               label='Баллы'
               type='number'
+              defaultValue={1}
               {...register('weight', weightSchema)}
               isError={!!formState.errors.weight}
               helperText={formState.errors.weight?.message}

@@ -1,4 +1,4 @@
-import { api } from '@utils'
+import { api, RequestConfig } from '@utils'
 
 export type PostGameConfig = RequestConfig<
   Pick<GameInSchedule, 'game_name' | 'game_date' | 'game_description' | 'game_status'>

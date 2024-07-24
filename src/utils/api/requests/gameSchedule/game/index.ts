@@ -1,4 +1,4 @@
-import { api } from '@utils'
+import { api, RequestConfig } from '@utils'
 
 export type fetchGameConfig = RequestConfig<{ game_id: number }>
 
