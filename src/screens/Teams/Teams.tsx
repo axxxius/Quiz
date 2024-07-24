@@ -1,27 +1,49 @@
-import { useEffect, useRef } from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useEffect, useRef, useState } from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
-import { useOnClickOutside } from '@hooks'
-import { CreatingTeamModal, Dropdown, Table } from '@screens/Teams/components'
+import { useDebounce, useOnClickOutside, useRole } from '@hooks'
+import { authAtom } from '@screens/Auth/Auth.atom'
 import { Button, Search, Typography } from '@shared'
-import { classnames } from '@utils'
+import { classnames, useGetTeamsQuery, useGetUserQuery } from '@utils'
 
 import { modalAtom, ShowModal } from './components/Modals/Modal.atom'
+import { teamAtom } from './components/Modals/TeamModal/Team.atom'
 import { teamsTableAtom } from './components/Table/Table.atom'
-import { useGetTeamsQuery } from './utils/api/hooks'
+import { Dropdown, EditTeamModal, LoaderTeam, Table } from './components'
 import { SORT_TEAMS } from './const'
-import { roleAtom } from './Teams.atom'
+import { captainAtom } from './Teams.atom'
 import styles from './Teams.module.css'
+import { OptionSort } from './types'
 
 const Teams = () => {
-  const setTeams = useSetRecoilState(teamsTableAtom)
-  const { data, isSuccess, isLoading, isError } = useGetTeamsQuery()
+  const [teamsTable, setTeamsTable] = useRecoilState(teamsTableAtom)
+  const team = useRecoilValue(teamAtom)
   const [showModal, setShowModal] = useRecoilState<ShowModal>(modalAtom)
   const modalRef = useRef<HTMLDivElement>(null)
-  const role = useRecoilValue(roleAtom)
+  const [selectedValue, setSelectedValue] = useState<OptionSort>(SORT_TEAMS[0])
+  const [search, setSearch] = useState<string>('')
+  const authState = useRecoilValue(authAtom)
+  const debouncedSearch = useDebounce(search, 500)
+  const isCaptain = useRecoilValue(captainAtom)
+  const {
+    data: user,
+    isSuccess: isSuccessUser,
+    isLoading: isLoadingUser
+  } = useGetUserQuery(isCaptain)
+  const { role } = useRole()
+  const { data, isSuccess, isLoading, isError } = useGetTeamsQuery(
+    {
+      params: { ordering: selectedValue.value, search: debouncedSearch }
+    },
+    selectedValue.value,
+    team.team_name,
+    debouncedSearch,
+    teamsTable,
+    authState.user.id
+  )
 
   const stylesCreatingTeam = classnames(styles.creating_team, {
-    [styles.creating_team_lead]: role.isMember
+    [styles.creating_team_lead]: !user?.data.is_captain && role === 'player'
   })
 
   const handleClick = () => {
@@ -39,20 +61,23 @@ const Teams = () => {
   )
 
   useEffect(() => {
-    if (isSuccess) setTeams(data.data.teams)
-  }, [isLoading])
+    if (isSuccess) {
+      setTeamsTable(data.data)
+    }
+  }, [isLoading, selectedValue, debouncedSearch])
 
   return (
     <>
-      {isSuccess && (
-        <div>
-          <Typography tag='h1' variant='text_36_b' className={styles.page_name}>
-            Рейтинг команд
-          </Typography>
+      <div className={styles.container}>
+        <Typography tag='h1' variant='text_36_b' className={styles.page_name}>
+          Рейтинг команд
+        </Typography>
+        {isLoadingUser && <LoaderTeam isLoading={isLoading} />}
+        {isSuccessUser && (
           <div className={styles.main}>
             <div className={stylesCreatingTeam}>
-              <Search isLead={role.isMember} />
-              {role.isMember && (
+              <Search setSearch={setSearch} />
+              {role === 'player' && !user?.data.is_captain && (
                 <Button className={styles.button} onClick={handleClick}>
                   Создать команду
                 </Button>
@@ -62,18 +87,19 @@ const Teams = () => {
               <Typography tag='h4' variant='text_16_r'>
                 Сортировать по
               </Typography>
-              <Dropdown options={SORT_TEAMS} />
+              <Dropdown
+                options={SORT_TEAMS}
+                setSelectedValue={setSelectedValue}
+                selectedValue={selectedValue}
+              />
             </div>
-            <Table ref={modalRef} />
+            <Table ref={modalRef} isError={isError} />
           </div>
-          {showModal.showCreatingTeam && <CreatingTeamModal ref={modalRef} />}
-        </div>
-      )}
-      {isError && (
-        <Typography tag='h4' variant='text_16_r'>
-          Ошибка загрузки страницы
-        </Typography>
-      )}
+        )}
+        {showModal.showCreatingTeam && (
+          <EditTeamModal head='Создать команду' mode='create' ref={modalRef} />
+        )}
+      </div>
     </>
   )
 }

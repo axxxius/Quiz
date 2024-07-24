@@ -1,3 +1,7 @@
+import { useRecoilValue } from 'recoil'
+
+import { useRole } from '@hooks'
+import { authAtom } from '@screens/Auth/Auth.atom.ts'
 import { CardList } from '@screens/News/components/CardList/CardList.tsx'
 import { Button, Search, Typography } from '@shared'
 
@@ -35,6 +39,12 @@ const news = [
 ]
 
 const News = () => {
+  const authState = useRecoilValue(authAtom)
+  console.log('@@@newsAuth', authState)
+
+  const { role } = useRole()
+  console.log('@@@decode', role)
+
   return (
     <div className={styles.container}>
       <div className='mb-[26px] flex justify-between'>
@@ -45,7 +55,7 @@ const News = () => {
           Создать анонс
         </Button>
       </div>
-      <Search isLead={true} />
+      <Search />
       <CardList news={news} />
     </div>
   )

@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { ToolTip } from '@screens/ActiveGame/components'
 
@@ -8,16 +8,12 @@ export const QuestionNumber = ({ question }: { question: Question }) => {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false)
   const questionRef = useRef<HTMLDivElement>(null)
 
-  const tooltipPosition = useMemo(() => {
-    if (!isTooltipVisible || !questionRef.current) {
-      return { top: -100, left: -500 }
-    }
-    const rect = questionRef.current.getBoundingClientRect()
-    return {
-      top: -rect.top * 1.82 - window.scrollY * 1.82,
-      left: rect.left + window.scrollX
-    }
-  }, [isTooltipVisible])
+  const tooltipPosition = {
+    top: !isTooltipVisible || !questionRef.current ? -160 : -160,
+    left: questionRef.current
+      ? questionRef.current.getBoundingClientRect().left + window.scrollX
+      : -500
+  }
 
   return (
     <div className={styles.question_container}>
@@ -27,7 +23,7 @@ export const QuestionNumber = ({ question }: { question: Question }) => {
         onMouseEnter={() => setIsTooltipVisible(true)}
         onMouseLeave={() => setIsTooltipVisible(false)}
       >
-        {question.name}
+        {question.question_name}
       </div>
       <ToolTip question={question} isTooltipVisible={isTooltipVisible} position={tooltipPosition} />
     </div>

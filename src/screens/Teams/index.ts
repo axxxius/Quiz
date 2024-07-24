@@ -1,2 +1,3 @@
+export * from './components'
+export * from './types'
 export * from '@screens/Teams/Teams'
-export * from '@screens/Teams/types'

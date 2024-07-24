@@ -24,3 +24,11 @@
   @apply flex items-center;
   margin-top: 16px;
 }
+
+.container {
+  margin-top: 24px;
+}
+
+.error {
+  text-align: center;
+}

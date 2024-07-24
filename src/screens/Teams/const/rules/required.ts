@@ -1,4 +1,4 @@
-export const required = (field: string) => ({
+export const required = {
   value: true,
-  message: `Поле ${field} обязательно для заполнения`
-})
+  message: `Поле обязательно для заполнения`
+}

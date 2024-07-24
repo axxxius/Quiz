@@ -28,10 +28,11 @@
 .invitation {
   @apply flex flex-col gap-[8px];
   margin-top: 16px;
+  word-wrap: break-word;
 }
 
 .members_list ul {
-  height: 100px;
+  max-height: 100px;
   width: 100%;
   font-size: 12px;
   overflow: hidden;
@@ -81,8 +82,23 @@
 
 .desc {
   line-height: 1.5;
+  word-wrap: break-word;
 }
 
 .close {
   cursor: pointer;
+}
+
+.buttons .button:first-child {
+  width: 115px;
+}
+
+.buttons .button:last-child {
+  width: 170px;
+  margin-left: 24px;
+}
+
+.head {
+  width: 320px;
+  word-wrap: break-word;
 }

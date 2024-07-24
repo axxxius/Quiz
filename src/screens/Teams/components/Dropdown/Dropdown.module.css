@@ -19,7 +19,7 @@
 
   &:hover,
   &:active {
-    border: 2px solid rgb(193, 182, 182);
+    border: 2px solid white;
   }
 }
 
@@ -56,8 +56,4 @@
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
   }
-}
-
-.dropdown_content > ul {
-  padding: 4px;
 }

@@ -4,7 +4,7 @@ import { URLS } from './app.urls.ts'
 
 const Auth = lazy(() => import('@screens/Auth/Auth.tsx'))
 const ActiveGame = lazy(() => import('@screens/ActiveGame/ActiveGame.tsx'))
-const GameShedule = lazy(() => import('@screens/GameShedule/GameShedule.tsx'))
+const GameShedule = lazy(() => import('@screens/GameSсhedule/GameSсhedule.tsx'))
 const Teams = lazy(() => import('@screens/Teams/Teams.tsx'))
 const News = lazy(() => import('@screens/News/News.tsx'))
 const Profile = lazy(() => import('@screens/Profile/Profile.tsx'))
