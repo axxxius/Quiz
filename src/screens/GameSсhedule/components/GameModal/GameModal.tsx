@@ -4,7 +4,13 @@ import { useNavigate } from 'react-router-dom'
 import CrossIcon from '@assets/icons/modalCross.svg?react'
 import TrashIcon from '@assets/icons/trash.svg?react'
 import { Button, Modal2, Typography } from '@shared'
-import { addTimeOffset, timeZone, useGetGameQuery } from '@utils'
+import {
+  addTimeOffset,
+  timeZone,
+  useDeleteTeamInGameMutation,
+  useGetGameQuery,
+  usePostAddTeamMutation
+} from '@utils'
 
 import { formatDate } from '../GameCard/GameCard'
 
@@ -25,6 +31,16 @@ export const initialGame: Game = {
       question_correct_answer: 'answer',
       question_weight: 100
     }
+  ],
+  game_teams: [
+    {
+      team_id: 1,
+      team_name: 'Типочки'
+    },
+    {
+      team_id: 2,
+      team_name: 'Клоуны'
+    }
   ]
 }
 
@@ -33,7 +49,7 @@ interface GameModalProps {
   visible: boolean
   onClose: () => void
   goNext: () => void
-  role: TRole
+  role: string
 }
 
 export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameModalProps) => {
@@ -54,8 +70,10 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
   const time = timeParts
     ? addTimeOffset(timeParts.split('+')[0].slice(0, 5), timeZoneOffset)
     : '00:00'
-  const deleteTeam = (teamId: number) => {
-    console.log('delete team', teamId)
+
+  const { deleteTeam } = useDeleteTeamInGameMutation()
+  const deleteTeamInGame = () => {
+    deleteTeam(game.id)
   }
 
   const navigate = useNavigate()
@@ -63,6 +81,12 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
   const continueGame = (gameId: number) => {
     navigate(`/activegame/${gameId}`)
     onClose()
+  }
+
+  const { addTeam } = usePostAddTeamMutation()
+
+  const joinGame = () => {
+    addTeam(game.id)
   }
 
   return (
@@ -110,8 +134,8 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
                 game.game_teams.map((team) => (
                   <div className={styles.team_card} key={team.team_id}>
                     <Typography variant='text_12_m'>{team.team_name}</Typography>
-                    {role === 'admin' && (
-                      <button onClick={() => deleteTeam(team.team_id)}>
+                    {role === 'leading' && (
+                      <button onClick={() => deleteTeamInGame()}>
                         <TrashIcon />
                       </button>
                     )}
@@ -125,23 +149,24 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
             </ul>
           </div>
         </div>
-        {role === 'admin' && game.game_status === 'planned' && (
+        {role === 'leading' && game.game_status === 'planned' && (
           <Button className={styles.next_btn} variant='primary' onClick={goNext}>
             Далее
           </Button>
         )}
-        {role === 'capitan' && game.game_status === 'planned' && (
-          // <--- This is a bug (надо добавить проверку есть ли команда пользователя в игре)
-          <Button className={styles.join_btn} variant='primary'>
-            Вступить в игру
-          </Button>
-        )}
-        {role === 'capitan' && game.game_status === 'planned' && (
-          <Typography variant='text_16_b' className='ml-auto'>
-            Вы&nbsp;уже состоите в&nbsp;этой игре
-          </Typography>
-        )}
-        {role === 'admin' && game.game_status === 'active' && (
+        {role === 'player' &&
+          game.game_status === 'planned' && ( // <---- добавить сравнение на капитана
+            <Button className={styles.join_btn} variant='primary' onClick={() => joinGame()}>
+              Вступить в игру
+            </Button>
+          )}
+        {role === 'player' &&
+          game.game_status === 'planned' && ( // <---- добавить сравнение на капитана
+            <Typography variant='text_16_b' className='ml-auto'>
+              Вы&nbsp;уже состоите в&nbsp;этой игре
+            </Typography>
+          )}
+        {role === 'leading' && game.game_status === 'active' && (
           <Button
             className='max-w-[200px] self-end whitespace-nowrap'
             variant='primary'
@@ -150,12 +175,12 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
             Продолжить игру
           </Button>
         )}
-        {role === 'user' ||
-          (role === 'capitan' && game.game_status === 'active' && (
+        {role === 'player' &&
+          game.game_status === 'active' && ( // <---- добавить сравнение на капитана
             <Typography variant='text_20_b' className='self-end'>
               Игра уже началась
             </Typography>
-          ))}
+          )}
       </div>
     </Modal2>
   )

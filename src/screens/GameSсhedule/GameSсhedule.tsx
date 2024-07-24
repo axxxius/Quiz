@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 
+import { useRole } from '@hooks'
 import { Typography } from '@shared'
 import { useGetGamesQuery } from '@utils'
 
@@ -9,7 +10,14 @@ import { gameScheduleState } from './GameSchedule.atom'
 import styles from './GameSсhedule.module.css'
 
 const GameShedule = () => {
-  const role: TRole = 'admin'
+  const userRole = useRole()
+  const [role, setRole] = useState('player')
+  useEffect(() => {
+    if (userRole.role !== undefined) {
+      setRole(userRole.role)
+    }
+  }, [userRole])
+  console.log(userRole)
 
   const [page, setPage] = useState<number>(1)
   const { data } = useGetGamesQuery()
@@ -19,7 +27,6 @@ const GameShedule = () => {
       setGames(data)
     }
   }, [data])
-  console.log(games)
 
   const [currentStatus, setCurrentStatus] = useState(false) // true - finished, false - planned and active
 
@@ -34,9 +41,15 @@ const GameShedule = () => {
         <div className={styles.main_container}>
           <div className={styles.filter_container}>
             <input type='text' placeholder='Поиск...' className={styles.filter_input} />
-            <button className={styles.new_game_btn} onClick={() => setNewGameModalOpen(true)}>
-              Добавить игру
-            </button>
+            {role === 'leading' ? (
+              <button className={styles.new_game_btn} onClick={() => setNewGameModalOpen(true)}>
+                Добавить игру
+              </button>
+            ) : (
+              <Typography variant='text_20_b' className='text-center'>
+                Вы не можете создавать игры
+              </Typography>
+            )}
           </div>
           <div className={styles.second_filter_container}>
             <Typography tag='div' variant='text_16_r'>
