@@ -55,3 +55,18 @@ export interface AxiosResponseData {
 export interface AxiosErrorData {
   detail: string
 }
+
+export interface UserTeams {
+  team_id: number,
+  team_name: string
+}
+
+export type UserType = {
+  user_id: number
+  user_name: string,
+  user_email: string,
+  user_role: string,
+  user_gender: string,
+  is_captain: boolean,
+  user_teams: UserTeams
+}

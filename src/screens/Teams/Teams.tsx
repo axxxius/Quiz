@@ -1,28 +1,31 @@
 import { useEffect, useRef, useState } from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
 import { useDebounce, useOnClickOutside, useRole } from '@hooks'
+import { authAtom } from '@screens/Auth/Auth.atom'
 import { Button, Search, Typography } from '@shared'
-import { classnames, useGetTeamsQuery } from '@utils'
+import { classnames, useGetTeamsQuery, useGetUserQuery } from '@utils'
 
 import { modalAtom, ShowModal } from './components/Modals/Modal.atom'
 import { teamAtom } from './components/Modals/TeamModal/Team.atom'
 import { teamsTableAtom } from './components/Table/Table.atom'
-import { Dropdown, EditTeamModal, Table } from './components'
+import { Dropdown, EditTeamModal, LoaderTeam, Table } from './components'
 import { SORT_TEAMS } from './const'
+import { captainAtom } from './Teams.atom'
 import styles from './Teams.module.css'
 import { OptionSort } from './types'
 
 const Teams = () => {
-  const setTeamsTable = useSetRecoilState(teamsTableAtom)
+  const [teamsTable, setTeamsTable] = useRecoilState(teamsTableAtom)
   const team = useRecoilValue(teamAtom)
   const [showModal, setShowModal] = useRecoilState<ShowModal>(modalAtom)
   const modalRef = useRef<HTMLDivElement>(null)
   const [selectedValue, setSelectedValue] = useState<OptionSort>(SORT_TEAMS[0])
   const [search, setSearch] = useState<string>('')
+  const authState = useRecoilValue(authAtom)
   const debouncedSearch = useDebounce(search, 500)
-  // const [isCaptain, setIsCaptain] = useRecoilState(captainAtom)
-  // const [isCaptain, setIsCaptain] = useState(!!teams.find((team) => team.captain_id === authState.user.id))
+  const isCaptain = useRecoilValue(captainAtom)
+  const { data: user, isSuccess: isSuccessUser, isLoading: isLoadingUser } = useGetUserQuery(isCaptain)
   const { role } = useRole()
   const { data, isSuccess, isLoading, isError } = useGetTeamsQuery(
     {
@@ -30,12 +33,13 @@ const Teams = () => {
     },
     selectedValue.value,
     team.team_name,
-    debouncedSearch
+    debouncedSearch,
+    teamsTable,
+    authState.user.id
   )
 
   const stylesCreatingTeam = classnames(styles.creating_team, {
-    // [styles.creating_team_lead]: !isCaptain && role === 'player'
-    [styles.creating_team_lead]: role === 'player'
+    [styles.creating_team_lead]: !user?.data.is_captain && role === 'player'
   })
 
   const handleClick = () => {
@@ -58,36 +62,36 @@ const Teams = () => {
     }
   }, [isLoading, selectedValue, debouncedSearch])
 
-  // console.log(teamsTable)
-
   return (
     <>
       <div className={styles.container}>
         <Typography tag='h1' variant='text_36_b' className={styles.page_name}>
           Рейтинг команд
         </Typography>
-        <div className={styles.main}>
-          <div className={stylesCreatingTeam}>
-            <Search setSearch={setSearch} />
-            {/* {role === 'player' && !isCaptain && ( */}
-            {role === 'player' && (
-              <Button className={styles.button} onClick={handleClick}>
-                Создать команду
-              </Button>
-            )}
+        {isLoadingUser && <LoaderTeam isLoading={isLoading}/>}
+        {isSuccessUser && (
+          <div className={styles.main}>
+            <div className={stylesCreatingTeam}>
+              <Search setSearch={setSearch} />
+              {role === 'player' && !user?.data.is_captain && (
+                <Button className={styles.button} onClick={handleClick}>
+                  Создать команду
+                </Button>
+              )}
+            </div>
+            <div className={styles.sorting}>
+              <Typography tag='h4' variant='text_16_r'>
+                Сортировать по
+              </Typography>
+              <Dropdown
+                options={SORT_TEAMS}
+                setSelectedValue={setSelectedValue}
+                selectedValue={selectedValue}
+              />
+            </div>
+            <Table ref={modalRef} isError={isError} />
           </div>
-          <div className={styles.sorting}>
-            <Typography tag='h4' variant='text_16_r'>
-              Сортировать по
-            </Typography>
-            <Dropdown
-              options={SORT_TEAMS}
-              setSelectedValue={setSelectedValue}
-              selectedValue={selectedValue}
-            />
-          </div>
-          <Table ref={modalRef} isError={isError} />
-        </div>
+        )}
         {showModal.showCreatingTeam && (
           <EditTeamModal head='Создать команду' mode='create' ref={modalRef} />
         )}

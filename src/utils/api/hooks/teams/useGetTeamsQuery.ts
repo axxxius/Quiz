@@ -9,15 +9,17 @@ export const useGetTeamsQuery = (
   { params }: AxiosRequestConfig<any>,
   selectedValue: string,
   team_name: string,
-  search: string
+  search: string,
+  teamsTable: TeamsTable,
+  user_id: number
 ) => {
   return useQuery<
     AxiosResponse<TeamsTable, any>,
     AxiosError<AxiosErrorData, any>,
     AxiosResponse<TeamsTable, any>,
-    string[]
+    (string | TeamsTable | number) []
   >({
-    queryKey: ['getTeams', selectedValue, team_name, search],
+    queryKey: ['getTeams', selectedValue, team_name, search, teamsTable, user_id],
     queryFn: () => getTeams({ params })
   })
 }

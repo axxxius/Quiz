@@ -6,6 +6,7 @@ import { useRole } from '@hooks'
 import { authAtom } from '@screens/Auth/Auth.atom'
 import { EditTeamModal, NumericData } from '@screens/Teams/components'
 import styles from '@screens/Teams/components/Modals/TeamModal/TeamModal.module.css'
+import { captainAtom } from '@screens/Teams/Teams.atom'
 import { FullTeam } from '@screens/Teams/types'
 import { Button, Modal, Typography } from '@shared'
 import { useDeleteTeamMutation, useGetTeamQuery, useJoinTeamMutation } from '@utils'
@@ -25,6 +26,7 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
   const [team, setTeam] = useRecoilState<FullTeam>(teamAtom)
   const [teamsTable, setTeamsTable] = useRecoilState<TeamsTable>(teamsTableAtom)
   const setShowModal = useSetRecoilState<ShowModal>(modalAtom)
+  const setIsCaptain = useSetRecoilState(captainAtom);
   const [edit, setEdit] = useState(false)
   const { data, isLoading, isSuccess, isError } = useGetTeamQuery(id, team)
   const authState = useRecoilValue(authAtom)
@@ -41,9 +43,9 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
     await mutateAsync(id)
     setTeamsTable({
       teams: teamsTable.teams.filter((elem) => elem.team_id !== id),
-      user_teams: teamsTable.user_teams.filter((elem) => elem.team_id !== id)
     })
     handleClickClose()
+    setIsCaptain('player')
   }
 
   const handleClickJoin = async (user_id: number, team_id: number) => {
