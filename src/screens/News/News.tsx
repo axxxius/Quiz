@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { useRecoilValue } from 'recoil'
 
 import { useRole } from '@hooks'
 import { authAtom } from '@screens/Auth/Auth.atom.ts'
+import { NewsForm } from '@screens/News/components'
 import { CardList } from '@screens/News/components/CardList/CardList.tsx'
 import { Button, Search, Typography } from '@shared'
 
@@ -39,6 +41,7 @@ const news = [
 ]
 
 const News = () => {
+  const [visible, setVisible] = useState(false)
   const authState = useRecoilValue(authAtom)
   console.log('@@@newsAuth', authState)
 
@@ -51,12 +54,17 @@ const News = () => {
         <Typography tag='h1' variant='text_36_b'>
           Анонсы и новости
         </Typography>
-        <Button variant='secondary_regular' className={styles.button}>
+        <Button
+          onClick={() => setVisible(true)}
+          variant='secondary_regular'
+          className={styles.button}
+        >
           Создать анонс
         </Button>
       </div>
       <Search />
       <CardList news={news} />
+      <NewsForm visible={visible} onClose={() => setVisible(false)} />
     </div>
   )
 }

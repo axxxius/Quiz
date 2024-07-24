@@ -2,11 +2,11 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { dateSchema, descrGameSchema, requiredSchema } from '@screens/GameSсhedule/constants'
 import { Button, Input, Modal2, Typography } from '@shared'
+import { useQueryClient } from '@tanstack/react-query'
 import { usePutGameMutation } from '@utils'
 
 import { formatDate } from '../GameCard/GameCard'
 
-import { useQueryClient } from '@tanstack/react-query'
 import styles from './EditGameModal.module.css'
 
 function formatGameDate(dateString: string) {

@@ -1,10 +1,12 @@
+import { useState } from 'react'
+
 import DeleteImage from '@assets/icons/deleteGame.svg?react'
 import EditImage from '@assets/icons/editGame.svg?react'
 import { Typography } from '@shared'
-
 import { addTimeOffset, timeZone } from '@utils'
-import { useState } from 'react'
+
 import { EditGameModal } from '../EditGameModal/EditGameModal'
+
 import styles from './GameCard.module.css'
 
 interface GameCardProps {
