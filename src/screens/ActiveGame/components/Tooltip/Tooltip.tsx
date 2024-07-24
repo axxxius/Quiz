@@ -1,9 +1,9 @@
+import { memo } from 'react'
 import ReactDOM from 'react-dom'
 
 import TooltilArrow from '@assets/icons/tooltipArrow.svg?react'
 import { Typography } from '@shared'
 
-import { memo } from 'react'
 import styles from './Tooltip.module.css'
 
 export const ToolTip = memo(

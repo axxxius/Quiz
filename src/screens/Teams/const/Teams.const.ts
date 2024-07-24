@@ -1,5 +1,9 @@
 export const SORT_TEAMS = [
   {
+    label: 'Местам',
+    value: 'place'
+  },
+  {
     label: 'Баллам',
     value: 'points'
   },

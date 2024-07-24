@@ -1,15 +1,16 @@
 import { forwardRef, useEffect, useState } from 'react'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
 import Close from '@assets/icons/close.svg?react'
+import { useRole } from '@hooks'
+import { authAtom } from '@screens/Auth/Auth.atom'
 import { EditTeamModal, NumericData } from '@screens/Teams/components'
 import styles from '@screens/Teams/components/Modals/TeamModal/TeamModal.module.css'
-import { roleAtom } from '@screens/Teams/Teams.atom'
-import { FullTeam, Team } from '@screens/Teams/types'
+import { FullTeam } from '@screens/Teams/types'
 import { Button, Modal, Typography } from '@shared'
 import { useDeleteTeamMutation, useGetTeamQuery, useJoinTeamMutation } from '@utils'
 
-import { teamsTableAtom } from '../../Table/Table.atom'
+import { TeamsTable, teamsTableAtom } from '../../Table/Table.atom'
 import { modalAtom, ShowModal } from '../Modal.atom'
 
 import { teamAtom } from './Team.atom'
@@ -20,13 +21,14 @@ interface TeamModalProps {
 
 export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref) => {
   const { mutateAsync } = useDeleteTeamMutation(id)
-  const [role, setRole] = useRecoilState(roleAtom)
   const { mutateAsync: mutateAsyncPatch } = useJoinTeamMutation(id)
   const [team, setTeam] = useRecoilState<FullTeam>(teamAtom)
-  const [teams, setTeams] = useRecoilState<Team[]>(teamsTableAtom)
+  const [teamsTable, setTeamsTable] = useRecoilState<TeamsTable>(teamsTableAtom)
   const setShowModal = useSetRecoilState<ShowModal>(modalAtom)
   const [edit, setEdit] = useState(false)
   const { data, isLoading, isSuccess, isError } = useGetTeamQuery(id, team)
+  const authState = useRecoilValue(authAtom)
+  const { role } = useRole()
 
   const handleClickClose = () => {
     setShowModal((prev) => ({
@@ -37,15 +39,16 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
 
   const handleClickDelete = async (id: number) => {
     await mutateAsync(id)
-    setTeams(teams.filter((elem) => elem.team_id !== id))
-    setRole((prev) => ({ ...prev, isCaptain: false }))
+    setTeamsTable({
+      teams: teamsTable.teams.filter((elem) => elem.team_id !== id),
+      user_teams: teamsTable.user_teams.filter((elem) => elem.team_id !== id)
+    })
     handleClickClose()
   }
 
   const handleClickJoin = async (user_id: number, team_id: number) => {
     const { data } = await mutateAsyncPatch({ user_id, team_id })
     setTeam((prev) => ({ ...prev, team_members: data.team_members }))
-    setRole((prev) => ({ ...prev, isCaptain: true }))
   }
 
   useEffect(() => {
@@ -69,8 +72,8 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
               <div className={styles.modal_body}>
                 <div className={styles.numeric_data}>
                   <NumericData
-                    numberData={team.team_rating}
-                    name='Рейтинг'
+                    numberData={team.team_place}
+                    name='Место'
                     className={styles.rating}
                   />
                   <NumericData
@@ -84,7 +87,7 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
                     Описание
                   </Typography>
                   <Typography tag='p' variant='text_16_r' className={styles.desc}>
-                    {team.team_desc}
+                    {team.team_desc || 'Нет описания'}
                   </Typography>
                 </div>
                 <div className={styles.captain}>
@@ -107,7 +110,7 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
                     </ul>
                   </div>
                 </div>
-                {role.role === 'player' && team.team_captain_id === role.id && (
+                {role === 'player' && team.team_captain_id === authState.user.id && (
                   <div className={styles.invitation}>
                     <Typography tag='p' variant='text_20_b'>
                       Ссылка-приглашение
@@ -116,7 +119,7 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
                 )}
               </div>
               <div className={styles.modal_footer}>
-                {role.role === 'player' && team.team_captain_id === role.id && (
+                {role === 'player' && team.team_captain_id === authState.user.id && (
                   <div className={styles.buttons}>
                     <Button
                       className={styles.button}
@@ -130,18 +133,18 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
                     </Button>
                   </div>
                 )}
-                {role.role === 'player' &&
-                  !team.team_members.filter((member) => member.id === role.id)[0] && (
+                {role === 'player' &&
+                  !team.team_members.filter((member) => member.id === authState.user.id)[0] && (
                     <Button
                       className={styles.button}
-                      onClick={() => handleClickJoin(role.id, team.team_id as number)}
+                      onClick={() => handleClickJoin(authState.user.id, team.team_id as number)}
                     >
                       Вступить в команду
                     </Button>
                   )}
-                {role.role === 'player' &&
-                  team.team_members.filter((member) => member.id === role.id)[0] &&
-                  team.team_captain_id !== role.id && (
+                {role === 'player' &&
+                  team.team_members.filter((member) => member.id === authState.user.id)[0] &&
+                  team.team_captain_id !== authState.user.id && (
                     <Typography tag='h2' variant='text_16_b'>
                       Вы уже состоите в команде
                     </Typography>

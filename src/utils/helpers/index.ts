@@ -1,5 +1,5 @@
 export * from './addTimeOffset'
 export * from './classnames'
-export * from './timeZone'
 export * from './getDate'
 export * from './localPersist'
+export * from './timeZone'
