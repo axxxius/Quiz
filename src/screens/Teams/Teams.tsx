@@ -1,27 +1,39 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
-import { useOnClickOutside } from '@hooks'
-import { CreatingTeamModal, Dropdown, Table } from '@screens/Teams/components'
+import { useDebounce, useOnClickOutside } from '@hooks'
 import { Button, Search, Typography } from '@shared'
-import { classnames } from '@utils'
+import { classnames, useGetTeamsQuery } from '@utils'
 
 import { modalAtom, ShowModal } from './components/Modals/Modal.atom'
+import { teamAtom } from './components/Modals/TeamModal/Team.atom'
 import { teamsTableAtom } from './components/Table/Table.atom'
-import { useGetTeamsQuery } from './utils/api/hooks'
+import { Dropdown, EditTeamModal, Table } from './components'
 import { SORT_TEAMS } from './const'
 import { roleAtom } from './Teams.atom'
 import styles from './Teams.module.css'
+import { OptionSort } from './types'
 
 const Teams = () => {
   const setTeams = useSetRecoilState(teamsTableAtom)
-  const { data, isSuccess, isLoading, isError } = useGetTeamsQuery()
+  const team = useRecoilValue(teamAtom)
   const [showModal, setShowModal] = useRecoilState<ShowModal>(modalAtom)
   const modalRef = useRef<HTMLDivElement>(null)
   const role = useRecoilValue(roleAtom)
+  const [selectedValue, setSelectedValue] = useState<OptionSort>(SORT_TEAMS[0])
+  const [search, setSearch] = useState<string>('')
+  const debouncedSearch = useDebounce(search, 500)
+  const { data, isSuccess, isLoading, isError } = useGetTeamsQuery(
+    {
+      params: { ordering: selectedValue.value, search: debouncedSearch }
+    },
+    selectedValue.value,
+    team.team_name,
+    debouncedSearch
+  )
 
   const stylesCreatingTeam = classnames(styles.creating_team, {
-    [styles.creating_team_lead]: role.isMember
+    [styles.creating_team_lead]: !role.isCaptain && role.role === 'player'
   })
 
   const handleClick = () => {
@@ -40,40 +52,39 @@ const Teams = () => {
 
   useEffect(() => {
     if (isSuccess) setTeams(data.data.teams)
-  }, [isLoading])
+  }, [isLoading, selectedValue, debouncedSearch])
 
   return (
     <>
-      {isSuccess && (
-        <div>
-          <Typography tag='h1' variant='text_36_b' className={styles.page_name}>
-            Рейтинг команд
-          </Typography>
-          <div className={styles.main}>
-            <div className={stylesCreatingTeam}>
-              <Search isLead={role.isMember} />
-              {role.isMember && (
-                <Button className={styles.button} onClick={handleClick}>
-                  Создать команду
-                </Button>
-              )}
-            </div>
-            <div className={styles.sorting}>
-              <Typography tag='h4' variant='text_16_r'>
-                Сортировать по
-              </Typography>
-              <Dropdown options={SORT_TEAMS} />
-            </div>
-            <Table ref={modalRef} />
-          </div>
-          {showModal.showCreatingTeam && <CreatingTeamModal ref={modalRef} />}
-        </div>
-      )}
-      {isError && (
-        <Typography tag='h4' variant='text_16_r'>
-          Ошибка загрузки страницы
+      <div className={styles.container}>
+        <Typography tag='h1' variant='text_36_b' className={styles.page_name}>
+          Рейтинг команд
         </Typography>
-      )}
+        <div className={styles.main}>
+          <div className={stylesCreatingTeam}>
+            <Search setSearch={setSearch} />
+            {role.role === 'player' && !role.isCaptain && (
+              <Button className={styles.button} onClick={handleClick}>
+                Создать команду
+              </Button>
+            )}
+          </div>
+          <div className={styles.sorting}>
+            <Typography tag='h4' variant='text_16_r'>
+              Сортировать по
+            </Typography>
+            <Dropdown
+              options={SORT_TEAMS}
+              setSelectedValue={setSelectedValue}
+              selectedValue={selectedValue}
+            />
+          </div>
+          <Table ref={modalRef} isError={isError} />
+        </div>
+        {showModal.showCreatingTeam && (
+          <EditTeamModal head='Создать команду' mode='create' ref={modalRef} />
+        )}
+      </div>
     </>
   )
 }

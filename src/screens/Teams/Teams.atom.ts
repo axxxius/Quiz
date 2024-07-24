@@ -2,14 +2,14 @@ import { atom } from 'recoil'
 
 interface Role {
   isCaptain: boolean
-  isMember: boolean
-  isMemberInTeam: boolean
+  role: 'player' | 'leading'
+  id: number
 }
 
 const initialState: Role = {
   isCaptain: false,
-  isMember: true,
-  isMemberInTeam: false
+  role: 'player',
+  id: 8
 }
 
 export const roleAtom = atom<Role>({

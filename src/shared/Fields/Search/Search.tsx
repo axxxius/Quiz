@@ -1,19 +1,25 @@
-import { classnames } from '@utils'
+import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 
 import styles from './Search.module.css'
 
 interface SearchProps {
-  isLead: boolean
+  setSearch?: Dispatch<SetStateAction<string>>
 }
 
-export const Search = ({ isLead }: SearchProps) => {
-  const stylesInput = classnames({
-    [styles.input_lead]: isLead
-  })
+export const Search = ({ setSearch }: SearchProps) => {
+  const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    if (setSearch) setSearch(evt.target.value)
+  }
 
   return (
-    <div className={stylesInput}>
-      <input className={styles.input} type='seacrh' name='search_teams' placeholder='Поиск...' />
+    <div className={styles.input_container}>
+      <input
+        className={styles.input}
+        type='seacrh'
+        name='search_teams'
+        placeholder='Поиск...'
+        onChange={handleChange}
+      />
     </div>
   )
 }

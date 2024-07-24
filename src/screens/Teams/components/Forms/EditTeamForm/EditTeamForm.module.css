@@ -1,0 +1,25 @@
+.input {
+  width: 454px;
+}
+
+.form {
+  @apply flex flex-col gap-[16px];
+}
+
+.button_container {
+  @apply flex justify-end;
+}
+
+.button {
+  align-self: flex-end;
+  margin-top: 32px;
+}
+
+.button:first-child {
+  width: 97px;
+}
+
+.button:last-child {
+  width: 135px;
+  margin-left: 24px;
+}
