@@ -1,6 +1,7 @@
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 
-import { AxiosErrorData, AxiosResponseData } from '@screens/Teams'
+import { AxiosErrorData } from '@screens/Teams'
+import { TeamsTable } from '@screens/Teams/components/Table/Table.atom'
 import { useQuery } from '@tanstack/react-query'
 import { getTeams } from '@utils'
 
@@ -11,9 +12,9 @@ export const useGetTeamsQuery = (
   search: string
 ) => {
   return useQuery<
-    AxiosResponse<AxiosResponseData, any>,
+    AxiosResponse<TeamsTable, any>,
     AxiosError<AxiosErrorData, any>,
-    AxiosResponse<AxiosResponseData, any>,
+    AxiosResponse<TeamsTable, any>,
     string[]
   >({
     queryKey: ['getTeams', selectedValue, team_name, search],

@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form'
 import { useRecoilState } from 'recoil'
 
+import { Textarea } from '@screens/Teams'
 import styles from '@screens/Teams/components/Forms/EditTeamForm/EditTeamForm.module.css'
-import { Textarea } from '@screens/Teams/components/Textarea/Textarea'
-import { descriptionSchema, nameSchema } from '@screens/Teams/const/schemas'
+import { editNameSchema } from '@screens/Teams/const'
 import { Button, Input } from '@shared'
 import { useEditTeamMutation } from '@utils'
 
@@ -45,13 +45,13 @@ export const EditTeamForm = ({ setEdit, formValues }: EditTeamFormProps) => {
         isError={!!errors.team_name}
         helperText={errors.team_name?.message}
         label='Название'
-        {...register('team_name', nameSchema)}
+        {...register('team_name', editNameSchema)}
       />
       <Textarea
         isError={!!errors.team_desc}
         helperText={errors.team_desc?.message}
         label='Описание'
-        {...register('team_desc', descriptionSchema)}
+        {...register('team_desc')}
       />
       <ErrorMessage error={error} />
       <div className={styles.button_container}>
