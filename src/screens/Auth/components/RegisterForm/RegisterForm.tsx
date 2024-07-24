@@ -1,55 +1,64 @@
 import { Controller, useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
+import { URLS } from '@navigation'
 import { Select } from '@screens/Auth/components'
-import {
-  emailSchema,
-  genderSchema,
-  nameSchema,
-  passwordSchema,
-  roleSchema
-} from '@screens/Auth/constants'
-import { GENDER, ROLE } from '@screens/Auth/constants/const.ts'
-import { Button, Input, Typography } from '@shared'
+import { GENDER, ROLE, schema } from '@screens/Auth/constants'
+import { Button, Input, Loader, Typography } from '@shared'
+import { usePostRegisterMutation } from '@utils'
 
 import styles from '../../Auth.module.css'
 
-interface RegisterFormValues {
-  name: string
+export interface RegisterFormValues {
+  username: string
   role: string
   email: string
   password: string
-  confirmedPassword: string
   gender: string
-  link: string
 }
 
 export const RegisterForm = () => {
+  const navigate = useNavigate()
   const { control, register, handleSubmit, formState } = useForm<RegisterFormValues>({
     mode: 'onSubmit'
   })
-  const { errors } = formState
 
-  const onSubmit = (data: RegisterFormValues) => {
-    console.log('@@@Register', data)
-  }
+  const registerForm = usePostRegisterMutation({
+    options: {
+      onSuccess: () => {
+        navigate(URLS.AUTH.LOGIN)
+      }
+    }
+  })
+
+  const { errors, isSubmitting } = formState
+  const loading = isSubmitting || registerForm.isPending
+  if (loading) return <Loader />
 
   return (
     <div className={styles.page}>
       <Typography className={styles.header} variant='text_36_b'>
         Регистрация
       </Typography>
-      <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={styles.container}
+        onSubmit={handleSubmit(async (formValues) =>
+          registerForm.mutate({
+            params: formValues
+          })
+        )}
+      >
         <Input
           label='Имя'
-          isError={!!errors.name}
-          helperText={errors.name?.message}
-          {...register('name', nameSchema)}
+          isError={!!errors.username}
+          helperText={errors.username?.message}
+          disabled={loading}
+          {...register('username', schema.nameSchema)}
         />
         <Controller
           name='role'
           control={control}
-          rules={roleSchema}
+          rules={schema.roleSchema}
           render={({ field }) => (
             <Select
               options={ROLE}
@@ -64,26 +73,21 @@ export const RegisterForm = () => {
           label='Email'
           isError={!!errors.email}
           helperText={errors.email?.message}
-          {...register('email', emailSchema)}
+          disabled={loading}
+          {...register('email', schema.emailSchema)}
         />
         <Input
           label='Пароль'
           type='password'
           isError={!!errors.password}
           helperText={errors.password?.message}
-          {...register('password', passwordSchema)}
-        />
-        <Input
-          label='Подтвердите пароль'
-          type='password'
-          isError={!!errors.confirmedPassword}
-          helperText={errors.confirmedPassword?.message}
-          {...register('confirmedPassword', passwordSchema)}
+          disabled={loading}
+          {...register('password', schema.passwordSchema)}
         />
         <Controller
           name='gender'
           control={control}
-          rules={genderSchema}
+          rules={schema.genderSchema}
           render={({ field }) => (
             <Select
               options={GENDER}
@@ -94,17 +98,9 @@ export const RegisterForm = () => {
             />
           )}
         />
-        <Input label='Присоединитесь к команде, вставив ссылку' {...register('link')} />
-        <div className={styles.button_container}>
-          <Link to='/login'>
-            <Button type='button' variant='secondary_regular'>
-              Войти
-            </Button>
-          </Link>
-          <Button type='submit' variant='primary_regular'>
-            Зарегистрироваться
-          </Button>
-        </div>
+        <Button style={{ marginTop: '20px' }} type='submit' variant='primary_regular'>
+          Зарегистрироваться
+        </Button>
       </form>
     </div>
   )

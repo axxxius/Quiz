@@ -1,5 +1,5 @@
 .loader_container {
-  @apply flex h-screen w-full items-center justify-center gap-x-5;
+  @apply flex h-[80vh] w-full items-center justify-center gap-x-5;
 }
 
 .loader {
