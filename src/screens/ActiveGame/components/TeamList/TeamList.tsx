@@ -21,23 +21,29 @@ export const TeamList = ({ teamList }: TeamListProps) => {
         </Typography>
       </ul>
       <div className={styles.teams_list}>
-        {teamList.map((team, index) => (
-          <div key={team.id} className={styles.team_entry}>
-            <Typography tag='div' variant='text_16_m'>
-              {index + 1}
-            </Typography>
-            <Typography
-              tag='div'
-              variant='text_16_m'
-              className='ml-8 overflow-hidden text-ellipsis text-start'
-            >
-              {team.name}
-            </Typography>
-            <Typography tag='div' variant='text_16_m'>
-              {team.points}
-            </Typography>
+        {teamList.length > 1 ? (
+          teamList.map((team, index) => (
+            <div key={team.team_id} className={styles.team_entry}>
+              <Typography tag='div' variant='text_16_m'>
+                {index + 1}
+              </Typography>
+              <Typography
+                tag='div'
+                variant='text_16_m'
+                className='ml-8 overflow-hidden text-ellipsis text-start'
+              >
+                {team.team_name}
+              </Typography>
+              <Typography tag='div' variant='text_16_m'>
+                {/* {team.points} */} 0 баллов
+              </Typography>
+            </div>
+          ))
+        ) : (
+          <div>
+            <Typography variant='text_24_b'>Нет команд</Typography>
           </div>
-        ))}
+        )}
       </div>
     </div>
   )

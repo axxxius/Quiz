@@ -1,7 +1,10 @@
+import { useEffect, useState } from 'react'
+
 import CheckMark from '@assets/icons/checkmark.svg?react'
 import CrossMark from '@assets/icons/crossmark.svg?react'
 import { QuestionNumber } from '@screens/ActiveGame/components'
 import { Typography } from '@shared'
+import { useGetAnswerQuery } from '@utils'
 
 import styles from './AnswersList.module.css'
 
@@ -25,7 +28,20 @@ interface AnswersListProps {
       | undefined
     >
   >
+  gameId: number
 }
+
+const initialAnswer: TeamAnswer[] = [
+  {
+    id: 0,
+    answer_team_answer: 'string',
+    answer_is_correct: true,
+    answer_score: 0,
+    game_id: 0,
+    team_id: 0,
+    question_id: 0
+  }
+]
 
 export const AnswersList = ({
   teamList,
@@ -33,17 +49,30 @@ export const AnswersList = ({
   gameStatus,
   changeTeamAnswer,
   setOpenModal,
-  setCurrentValues
+  setCurrentValues,
+  gameId
 }: AnswersListProps) => {
+  const { data } = useGetAnswerQuery(gameId)
+  const [answers, setAnswers] = useState<TeamAnswer[]>(initialAnswer)
+
+  useEffect(() => {
+    if (data !== undefined && data.length > 1) {
+      setAnswers(data)
+    }
+  })
+
   const openModal = (answer: TeamAnswer | undefined, teamId: number, questionId: number) => {
     if (!answer) {
       const question = questions.find((q) => q.id === questionId)
       if (question) {
         const newAnswer: TeamAnswer = {
           id: Date.now(),
-          questionId: question.id,
-          answer: '',
-          weight: 0
+          question_id: question.id,
+          answer_team_answer: '',
+          answer_is_correct: false,
+          answer_score: 0,
+          game_id: gameId,
+          team_id: teamId
         }
         setCurrentValues({ teamId, answer: newAnswer })
       }
@@ -66,23 +95,30 @@ export const AnswersList = ({
       <div className={styles.answers_list}>
         {teamList.map((team) => (
           <div
-            key={team.id}
+            key={team.team_id}
             className={styles.team_entry}
             style={{ gridTemplateColumns: `repeat(${questions.length}, 24px)` }}
           >
             {questions.map((question) => {
-              const answer = team.answers?.find((answer) => answer.questionId === question.id)
+              const answer = answers?.find((answer) => answer.question_id === question.id)
               if (gameStatus === 'finished') {
-                if (question.correctAnswer === 'Да' || question.correctAnswer === 'Нет') {
+                if (
+                  question.question_correct_answer === 'Да' ||
+                  question.question_correct_answer === 'Нет'
+                ) {
                   return (
                     <Typography key={question.id}>
-                      {answer?.answer === question.correctAnswer ? <CheckMark /> : <CrossMark />}
+                      {answer?.answer_team_answer === question.question_correct_answer ? (
+                        <CheckMark />
+                      ) : (
+                        <CrossMark />
+                      )}
                     </Typography>
                   )
                 } else {
                   return (
-                    <button onClick={() => openModal(answer, team.id, question.id)}>
-                      {((answer?.answer || answer?.weight) ?? 0) !== 0 ? (
+                    <button onClick={() => openModal(answer, team.team_id, question.id)}>
+                      {((answer?.answer_team_answer || answer?.answer_score) ?? 0) !== 0 ? (
                         <CheckMark />
                       ) : (
                         <CrossMark />
@@ -92,25 +128,32 @@ export const AnswersList = ({
                 }
               }
               if (gameStatus === 'active') {
-                if (question.correctAnswer === 'Да' || question.correctAnswer === 'Нет') {
+                if (
+                  question.question_correct_answer === 'Да' ||
+                  question.question_correct_answer === 'Нет'
+                ) {
                   return (
                     <button
                       className='outline-none'
                       onClick={() => {
-                        if (answer?.answer !== question.correctAnswer) {
+                        if (answer?.answer_team_answer !== question.question_correct_answer) {
                           changeTeamAnswer(
-                            team.id,
+                            team.team_id,
                             question.id,
-                            question.correctAnswer,
-                            question.weight
+                            question.question_correct_answer,
+                            question.question_weight
                           )
                         } else {
-                          changeTeamAnswer(team.id, question.id, '', 0)
+                          changeTeamAnswer(team.team_id, question.id, '', 0)
                         }
                       }}
                       key={question.id}
                     >
-                      {answer?.answer === question.correctAnswer ? <CheckMark /> : <CrossMark />}
+                      {answer?.answer_team_answer === question.question_correct_answer ? (
+                        <CheckMark />
+                      ) : (
+                        <CrossMark />
+                      )}
                     </button>
                   )
                 } else {
@@ -118,9 +161,9 @@ export const AnswersList = ({
                     <button
                       className='outline-none'
                       key={question.id}
-                      onClick={() => openModal(answer, team.id, question.id)}
+                      onClick={() => openModal(answer, team.team_id, question.id)}
                     >
-                      {((answer?.answer || answer?.weight) ?? 0) !== 0 ? (
+                      {((answer?.answer_team_answer || answer?.answer_score) ?? 0) !== 0 ? (
                         <CheckMark />
                       ) : (
                         <CrossMark />
