@@ -1,5 +1,6 @@
 export * from './useDeleteTeamMutation'
 export * from './useEditTeamMutation'
+export * from './useGetMyTeams'
 export * from './useGetTeamQuery'
 export * from './useGetTeamsQuery'
 export * from './useJoinTeamMutation'

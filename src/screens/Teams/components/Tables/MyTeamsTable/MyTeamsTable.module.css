@@ -1,0 +1,14 @@
+.pagination_container {
+  @apply flex gap-x-6;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.pagination_btns {
+  @apply font-vela-bold transition-all hover:scale-105 disabled:cursor-not-allowed disabled:text-grey;
+}
+
+.no_auth {
+  text-align: center;
+  margin-top: 32px;
+}

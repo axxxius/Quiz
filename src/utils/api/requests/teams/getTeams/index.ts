@@ -1,8 +1,8 @@
 import { AxiosRequestConfig } from 'axios'
 
-import { TeamsTable } from '@screens/Teams/components/Table/Table.atom'
+import { AllTeamsTable } from '@screens/Teams/components/Tables/AllTeamsTable/AllTeamsTable.atom'
 import { api } from '@utils'
 
-export const getTeams = async ({ params }: AxiosRequestConfig<{ ordering: string }>) => {
-  return await api.get<TeamsTable>(`/teams/`, { params })
+export const getTeams = async ({ params }: AxiosRequestConfig) => {
+  return await api.get<AllTeamsTable>(`/teams/`, { params })
 }

@@ -1,47 +1,33 @@
-import { useEffect, useRef, useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRef, useState } from 'react'
+import { useRecoilState } from 'recoil'
 
-import { useDebounce, useOnClickOutside, useRole } from '@hooks'
-import { authAtom } from '@screens/Auth/Auth.atom'
+import TeamIcon from '@assets/icons/user-group.svg?react'
+import { useOnClickOutside, useRole } from '@hooks'
 import { Button, Search, Typography } from '@shared'
-import { useGetTeamsQuery } from '@utils'
 
 import { modalAtom, ShowModal } from './components/Modals/Modal.atom'
-import { teamAtom } from './components/Modals/TeamModal/Team.atom'
-import { teamsTableAtom } from './components/Table/Table.atom'
-import { Dropdown, EditTeamModal, Table } from './components'
+import { AllTeamsTable,Dropdown, EditTeamModal, MyTeamsTable } from './components'
 import { SORT_TEAMS } from './const'
 import styles from './Teams.module.css'
 import { OptionSort } from './types'
 
 const Teams = () => {
-  const [teamsTable, setTeamsTable] = useRecoilState(teamsTableAtom)
-  const team = useRecoilValue(teamAtom)
   const [showModal, setShowModal] = useRecoilState<ShowModal>(modalAtom)
   const modalRef = useRef<HTMLDivElement>(null)
   const [selectedValue, setSelectedValue] = useState<OptionSort>(SORT_TEAMS[0])
   const [search, setSearch] = useState<string>('')
-  const authState = useRecoilValue(authAtom)
-  const debouncedSearch = useDebounce(search, 500)
   const { role } = useRole()
-  const [page, setPage] = useState(1)
-  const { data, isSuccess, isLoading, isError } = useGetTeamsQuery(
-    {
-      params: { ordering: selectedValue.value, search: debouncedSearch, page: page }
-    },
-    selectedValue.value,
-    team.team_name,
-    debouncedSearch,
-    teamsTable,
-    authState.user.id,
-    page
-  )
+  const [myTeams, setMyTeams] = useState(false)
 
-  const handleClick = () => {
+  const handleClickModal = () => {
     setShowModal((prev) => ({
       ...prev,
       showCreatingTeam: true
     }))
+  }
+
+  const handleClickTeams = () => {
+    setMyTeams(!myTeams)
   }
 
   useOnClickOutside(modalRef, () =>
@@ -50,12 +36,6 @@ const Teams = () => {
       showTeam: false
     })
   )
-
-  useEffect(() => {
-    if (isSuccess) {
-      setTeamsTable(data.data)
-    }
-  }, [isLoading, selectedValue, debouncedSearch])
 
   return (
     <>
@@ -67,39 +47,43 @@ const Teams = () => {
           <div className={styles.creating_team_lead}>
             <Search setSearch={setSearch} />
             {role === 'player' && (
-              <Button className={styles.button} onClick={handleClick}>
+              <Button className={styles.button} onClick={handleClickModal}>
                 Создать команду
               </Button>
             )}
           </div>
-          <div className={styles.sorting}>
-            <Typography tag='h4' variant='text_16_r'>
-              Сортировать по
-            </Typography>
-            <Dropdown
-              options={SORT_TEAMS}
-              setSelectedValue={setSelectedValue}
+          <div className={styles.sort_teams_container}>
+            <div className={styles.sorting}>
+              <Typography tag='div' variant='text_16_r'>
+                Сортировать по
+              </Typography>
+              <Dropdown
+                options={SORT_TEAMS}
+                setSelectedValue={setSelectedValue}
+                selectedValue={selectedValue}
+              />
+            </div>
+            <div className={styles.teams} onClick={handleClickTeams}>
+              <TeamIcon />
+              <Typography tag='div' variant='text_16_b' className={styles.filter_teams}>
+                {!myTeams ? 'Мои команды' : 'Все команды'}
+              </Typography>
+            </div>
+          </div>
+          {myTeams && (
+            <MyTeamsTable
+              search={search}
               selectedValue={selectedValue}
+              ref={modalRef}
             />
-          </div>
-          <div className={styles.pagination_container}>
-            <button
-              className={styles.pagination_btns}
-              onClick={() => setPage(page - 1)}
-              disabled={page === 1}
-            >
-              &lt;- Предыдущая
-            </button>
-            <Typography variant='text_20_b'>Страница {page}</Typography>
-            <button
-              className={styles.pagination_btns}
-              onClick={() => setPage(page + 1)}
-              disabled={teamsTable.teams.length < 10}
-            >
-              Следующая -&gt;
-            </button>
-          </div>
-          <Table ref={modalRef} isError={isError} />
+          )}
+          {!myTeams && (
+            <AllTeamsTable
+              search={search}
+              selectedValue={selectedValue}
+              ref={modalRef}
+            />
+          )}
         </div>
         {showModal.showCreatingTeam && (
           <EditTeamModal head='Создать команду' mode='create' ref={modalRef} />

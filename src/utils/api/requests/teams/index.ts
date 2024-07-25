@@ -1,5 +1,6 @@
 export * from './deleteTeamById'
 export * from './editTeam'
+export * from './getMyTeams'
 export * from './getTeamById'
 export * from './getTeams'
 export * from './joinTeam'

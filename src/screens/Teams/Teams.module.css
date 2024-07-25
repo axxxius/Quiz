@@ -30,12 +30,23 @@
   text-align: center;
 }
 
-.pagination_container {
-  @apply flex gap-x-6;
-  justify-content: center;
-  margin-top: 16px;
+.filter_teams {
+  cursor: pointer
 }
 
-.pagination_btns {
-  @apply font-vela-bold transition-all hover:scale-105 disabled:cursor-not-allowed disabled:text-grey;
+.sort_teams_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.teams {
+  display: flex;
+  align-items: center;
+}
+
+.teams div {
+  margin-left: 8px;
+}
+
+

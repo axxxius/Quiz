@@ -10,7 +10,7 @@ import { Button, Input } from '@shared'
 import { usePostTeamMutation } from '@utils'
 
 import { ErrorMessage } from '../../ErrorMessage/ErrorMessage'
-import { teamsTableAtom } from '../../Table/Table.atom'
+import { allTeamsTableAtom } from '../../Tables/AllTeamsTable/AllTeamsTable.atom'
 
 import { creatingTeamFormAtom } from './CreatingTeamForm.atom'
 
@@ -28,7 +28,7 @@ export const CreatingTeamForm = ({ handleClose }: CreatingTeamFormProps) => {
     getValues
   } = useForm<CreatingTeamFormValues>({ mode: 'onSubmit', defaultValues: teamFormValues })
   const { mutateAsync, error } = usePostTeamMutation()
-  const setTeams = useSetRecoilState(teamsTableAtom)
+  const setAllTeams = useSetRecoilState(allTeamsTableAtom)
   const authState = useRecoilValue(authAtom)
 
   const onSubmit = async (values: CreatingTeamFormValues) => {
@@ -36,12 +36,12 @@ export const CreatingTeamForm = ({ handleClose }: CreatingTeamFormProps) => {
       ...values,
       captain_id: authState.user.id
     })
-    setTeams((prev) => ({
+    setAllTeams((prev) => ({
       teams: [...prev.teams, { ...data, team_place: prev.teams.length + 1 }]
     }))
     resetForm()
     handleClose()
-  }
+  } 
 
   const handleChange = () => {
     setTeamFormValues(getValues())

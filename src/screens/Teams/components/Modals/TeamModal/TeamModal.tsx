@@ -6,7 +6,7 @@ import { useRole } from '@hooks'
 import { authAtom } from '@screens/Auth/Auth.atom'
 import { EditTeamModal, NumericData } from '@screens/Teams/components'
 import styles from '@screens/Teams/components/Modals/TeamModal/TeamModal.module.css'
-import { FullTeam } from '@screens/Teams/types'
+import { FullTeam, Team } from '@screens/Teams/types'
 import { Button, Modal, Typography } from '@shared'
 import {
   useDeleteTeamMutation,
@@ -15,22 +15,26 @@ import {
   useLeaveTeamMutation
 } from '@utils'
 
-import { TeamsTable, teamsTableAtom } from '../../Table/Table.atom'
+import { allTeamsTableAtom } from '../../Tables/AllTeamsTable/AllTeamsTable.atom'
+import { myTeamsTableAtom } from '../../Tables/MyTeamsTable/MyTeamsTable.atom'
 import { modalAtom, ShowModal } from '../Modal.atom'
 
 import { teamAtom } from './Team.atom'
 
 interface TeamModalProps {
   id: number
+  teams: Team[]
+  mode: 'allTeams' | 'myTeams'
 }
 
-export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref) => {
+export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id, teams, mode }, ref) => {
   const { mutateAsync } = useDeleteTeamMutation(id)
   const { mutateAsync: mutateAsyncPatch } = useJoinTeamMutation(id)
   const [team, setTeam] = useRecoilState<FullTeam>(teamAtom)
-  const [teamsTable, setTeamsTable] = useRecoilState<TeamsTable>(teamsTableAtom)
   const setShowModal = useSetRecoilState<ShowModal>(modalAtom)
   const [edit, setEdit] = useState(false)
+  const setAllTeamsTable = useSetRecoilState(allTeamsTableAtom)
+  const setMyTeamsTable = useSetRecoilState(myTeamsTableAtom)
   const { mutateAsync: mutateAsyncLeave } = useLeaveTeamMutation(id)
   const { data, isLoading, isSuccess, isError } = useGetTeamQuery(id, team)
   const authState = useRecoilValue(authAtom)
@@ -45,9 +49,15 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
 
   const handleClickDelete = async (id: number) => {
     await mutateAsync(id)
-    setTeamsTable({
-      teams: teamsTable.teams.filter((elem) => elem.team_id !== id)
-    })
+    if (mode === 'allTeams')
+      setAllTeamsTable({
+        teams: teams.filter((elem) => elem.team_id !== id)
+      })
+    else {
+      setMyTeamsTable({
+        user_teams: teams.filter((elem) => elem.team_id !== id)
+      })
+    }
     handleClickClose()
   }
 
@@ -84,7 +94,7 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
                 <NumericData numberData={team.team_points} name='Баллы' className={styles.points} />
               </div>
               <div className={styles.desc_container}>
-                <Typography tag='h2' variant='text_20_b'>
+                <Typography tag='h3' variant='text_20_b'>
                   Описание
                 </Typography>
                 <Typography tag='p' variant='text_16_r' className={styles.desc}>
@@ -92,7 +102,7 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
                 </Typography>
               </div>
               <div className={styles.captain}>
-                <Typography tag='h2' variant='text_20_b'>
+                <Typography tag='h3' variant='text_20_b'>
                   Капитан
                 </Typography>
                 <Typography tag='p' variant='text_16_r'>
@@ -140,7 +150,7 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
                 team.team_members.filter((member) => member.id === authState.user.id)[0] &&
                 team.team_captain_id !== authState.user.id && (
                   <div className={styles.in_members}>
-                    <Typography tag='h2' variant='text_16_b'>
+                    <Typography tag='div' variant='text_16_b'>
                       Вы уже состоите в команде
                     </Typography>
                     <Button className={styles.button_exit} onClick={() => handleClickLeave(id)}>
