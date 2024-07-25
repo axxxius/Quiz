@@ -1,1 +1,1 @@
-type TRole = 'admin' | 'capitan' | 'user'
+type TRole = 'player' | 'leading'

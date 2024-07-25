@@ -20,7 +20,7 @@ const navList = [
   },
   {
     name: 'Расписание игр',
-    path: '/gameshedule'
+    path: '/gameschedule'
   }
 ]
 

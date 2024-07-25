@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 
+import { useRole } from '@hooks'
 import { Typography } from '@shared'
 import { useGetGamesQuery } from '@utils'
 
@@ -9,8 +10,15 @@ import { gameScheduleState } from './GameSchedule.atom'
 import styles from './GameSсhedule.module.css'
 
 const GameShedule = () => {
-  const role: TRole = 'admin'
+  const userRole = useRole()
+  const [role, setRole] = useState('player')
+  useEffect(() => {
+    if (userRole.role !== undefined) {
+      setRole(userRole.role)
+    }
+  }, [userRole])
 
+  const [page, setPage] = useState<number>(1)
   const { data } = useGetGamesQuery()
   const [games, setGames] = useRecoilState(gameScheduleState)
   useEffect(() => {
@@ -32,9 +40,15 @@ const GameShedule = () => {
         <div className={styles.main_container}>
           <div className={styles.filter_container}>
             <input type='text' placeholder='Поиск...' className={styles.filter_input} />
-            <button className={styles.new_game_btn} onClick={() => setNewGameModalOpen(true)}>
-              Добавить игру
-            </button>
+            {role === 'leading' ? (
+              <button className={styles.new_game_btn} onClick={() => setNewGameModalOpen(true)}>
+                Добавить игру
+              </button>
+            ) : (
+              <Typography variant='text_20_b' className='text-center'>
+                Вы не можете создавать игры
+              </Typography>
+            )}
           </div>
           <div className={styles.second_filter_container}>
             <Typography tag='div' variant='text_16_r'>
@@ -61,6 +75,23 @@ const GameShedule = () => {
             }
             role={role}
           />
+        </div>
+        <div className={styles.pagination_container}>
+          <button
+            className={styles.pagination_btns}
+            onClick={() => setPage(page - 1)}
+            disabled={page === 1}
+          >
+            &lt;- Предыдущая
+          </button>
+          <Typography variant='text_20_b'>Страница {page}</Typography>
+          <button
+            className={styles.pagination_btns}
+            onClick={() => setPage(page + 1)}
+            disabled={true} //games.length < 10
+          >
+            Следующая -&gt;
+          </button>
         </div>
       </div>
       <NewGameModal visible={newGameModalOpen} onClose={() => setNewGameModalOpen(false)} />

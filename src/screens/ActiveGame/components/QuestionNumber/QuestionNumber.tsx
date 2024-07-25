@@ -9,11 +9,15 @@ export const QuestionNumber = ({ question }: { question: Question }) => {
   const questionRef = useRef<HTMLDivElement>(null)
 
   const tooltipPosition = {
-    top: !isTooltipVisible || !questionRef.current ? -160 : -160,
-    left: questionRef.current
-      ? questionRef.current.getBoundingClientRect().left + window.scrollX
-      : -500
-  }
+    top:
+      isTooltipVisible && questionRef.current
+        ? -questionRef.current.getBoundingClientRect().top * 0.4 - window.scrollY * 0.4
+        : -1000,
+    left:
+      questionRef.current && isTooltipVisible
+        ? questionRef.current.getBoundingClientRect().left + window.scrollX
+        : -1000
+  } //в случае если tooltip не виден, он уходит в лево, где его нельзя проскроллить и увидеть
 
   return (
     <div className={styles.question_container}>
