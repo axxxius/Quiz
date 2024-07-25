@@ -54,3 +54,11 @@
   background-repeat: no-repeat;
   background-position: left center;
 }
+
+.pagination_container {
+  @apply flex gap-x-6;
+}
+
+.pagination_btns {
+  @apply font-vela-bold transition-all hover:scale-105 disabled:cursor-not-allowed disabled:text-grey;
+}

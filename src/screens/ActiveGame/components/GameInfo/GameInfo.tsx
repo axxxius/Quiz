@@ -35,12 +35,11 @@ export const GameInfo = ({ game, changeGameStatus }: GameInfoProps) => {
             {game.game_questions.length}
           </Typography>
         </div>
-        {game.game_status === 'active' ||
-          (game.game_status === 'planned' && (
-            <Button variant='primary' onClick={() => changeGameStatus('finished')}>
-              Завершить игру
-            </Button>
-          ))}
+        {game.game_status === 'active' && (
+          <Button variant='primary' onClick={() => changeGameStatus('finished')}>
+            Завершить игру
+          </Button>
+        )}
         {game.game_status === 'finished' && (
           <div className={styles.finished_container}>
             <Typography tag='p' variant='text_24_b'>

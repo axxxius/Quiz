@@ -28,14 +28,14 @@ interface QuestionModalProps {
 }
 
 export const QuestionModal = ({ gameId, isVisible, onClose, goBack }: QuestionModalProps) => {
-  const { data } = useGetGameQuery(gameId)
+  const { gameData } = useGetGameQuery(gameId, isVisible)
   const [questions, SetQuestions] = useState(initialQuestion)
 
   useEffect(() => {
-    if (data !== undefined) {
-      SetQuestions(data.game_questions)
+    if (gameData !== undefined) {
+      SetQuestions(gameData.game_questions)
     }
-  }, [data])
+  }, [gameData])
 
   const { mutate } = usePostAddQuestionMutation()
   const queryClient = useQueryClient()
@@ -49,26 +49,39 @@ export const QuestionModal = ({ gameId, isVisible, onClose, goBack }: QuestionMo
       }
     ]
 
-    mutate({
-      gameId: gameId,
-      question: newQuestion
-    })
-    queryClient.invalidateQueries({ queryKey: ['games'] })
-    queryClient.invalidateQueries({ queryKey: ['game', gameId] })
+    mutate(
+      {
+        gameId: gameId,
+        question: newQuestion
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['games'] })
+          queryClient.invalidateQueries({ queryKey: ['game', gameId] })
+        }
+      }
+    )
   }
 
   const { deleteQuestion } = useDeleteQuestionMutation()
   const onDeleteQuestion = (id: number) => {
-    deleteQuestion({
-      gameId: gameId,
-      quesId: { ques_id: id }
-    })
+    deleteQuestion(
+      {
+        gameId: gameId,
+        quesId: { ques_id: id }
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['games'] })
+          queryClient.invalidateQueries({ queryKey: ['game', gameId] })
+        }
+      }
+    )
   }
 
   const navigate = useNavigate()
 
   const handleNavigate = () => {
-    //сделать игру активной
     onClose()
     navigate(`/activegame/${gameId}`)
   }

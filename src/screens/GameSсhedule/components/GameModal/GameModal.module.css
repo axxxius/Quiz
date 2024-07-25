@@ -19,7 +19,7 @@
 }
 
 .main_container {
-  @apply flex flex-col gap-y-4;
+  @apply flex w-full flex-col gap-y-4;
 }
 
 .description_container,
