@@ -4,8 +4,10 @@
   margin: 0 auto;
 }
 
-.title {
-  font-size: 26px;
+@media (max-width: 480px) {
+  .title {
+    font-size: 26px;
+  }
 }
 
 .button {
