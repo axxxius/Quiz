@@ -14,7 +14,7 @@ export const LoaderTeam = ({ isLoading, className }: LoaderProps) => {
     <>
       {isLoading && (
         <div className={stylesLoader}>
-          <Typography tag='h2' variant='text_16_b'>
+          <Typography tag='div' variant='text_16_b'>
             Загрузка
           </Typography>
           <span className={styles.loader}></span>

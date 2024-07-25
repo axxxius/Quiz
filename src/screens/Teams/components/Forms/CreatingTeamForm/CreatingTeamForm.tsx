@@ -6,12 +6,11 @@ import { CreatingTeamFormValues } from '@screens/Teams'
 import styles from '@screens/Teams/components/Forms/CreatingTeamForm/CreatingTeamForm.module.css'
 import { Textarea } from '@screens/Teams/components/Textarea/Textarea'
 import { nameSchema } from '@screens/Teams/const/schemas'
-import { captainAtom } from '@screens/Teams/Teams.atom'
 import { Button, Input } from '@shared'
 import { usePostTeamMutation } from '@utils'
 
 import { ErrorMessage } from '../../ErrorMessage/ErrorMessage'
-import { teamsTableAtom } from '../../Table/Table.atom'
+import { allTeamsTableAtom } from '../../Tables/AllTeamsTable/AllTeamsTable.atom'
 
 import { creatingTeamFormAtom } from './CreatingTeamForm.atom'
 
@@ -29,19 +28,17 @@ export const CreatingTeamForm = ({ handleClose }: CreatingTeamFormProps) => {
     getValues
   } = useForm<CreatingTeamFormValues>({ mode: 'onSubmit', defaultValues: teamFormValues })
   const { mutateAsync, error } = usePostTeamMutation()
-  const setTeams = useSetRecoilState(teamsTableAtom)
+  const setAllTeams = useSetRecoilState(allTeamsTableAtom)
   const authState = useRecoilValue(authAtom)
-  const setIsCaptain = useSetRecoilState(captainAtom)
 
   const onSubmit = async (values: CreatingTeamFormValues) => {
     const { data } = await mutateAsync({
       ...values,
       captain_id: authState.user.id
     })
-    setTeams((prev) => ({
+    setAllTeams((prev) => ({
       teams: [...prev.teams, { ...data, team_place: prev.teams.length + 1 }]
     }))
-    setIsCaptain('capitan')
     resetForm()
     handleClose()
   }
@@ -65,7 +62,7 @@ export const CreatingTeamForm = ({ handleClose }: CreatingTeamFormProps) => {
         label='Описание'
         {...register('team_desc')}
       />
-      <ErrorMessage error={error} />
+      <ErrorMessage error={error} className={styles.error} />
       <div className={styles.button_container}>
         <Button className={styles.button} type='submit'>
           Создать команду

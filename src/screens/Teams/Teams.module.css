@@ -8,9 +8,6 @@
   padding-inline: calc(100% / 1200 * 144);
 }
 
-.creating_team {
-}
-
 .creating_team_lead {
   @apply flex justify-between;
 }
@@ -31,4 +28,23 @@
 
 .error {
   text-align: center;
+}
+
+.filter_teams {
+  cursor: pointer;
+}
+
+.sort_teams_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.teams {
+  display: flex;
+  align-items: center;
+}
+
+.teams div {
+  margin-left: 8px;
 }

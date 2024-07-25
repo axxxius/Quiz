@@ -21,7 +21,7 @@ const Profile = () => {
   const [user, setUser] = useRecoilState<UserType>(userAtom)
   const authState = useRecoilValue(authAtom)
   const [edit, setEdit] = useState(false)
-  const { data, isLoading, isSuccess, isError } = useGetUserQuery('default')
+  const { data, isLoading, isSuccess, isError } = useGetUserQuery('default', { gcTime: 5 })
   const { mutateAsync, isSuccess: isSuccessEdit } = useEditUserMutation()
   const {
     register,

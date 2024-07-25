@@ -53,7 +53,7 @@ export interface AxiosResponseData {
 }
 
 export interface AxiosErrorData {
-  detail: string
+  [index: string]: string
 }
 
 export interface UserTeams {
