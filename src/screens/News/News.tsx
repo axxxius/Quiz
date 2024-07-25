@@ -1,8 +1,8 @@
 import { CardList } from '@screens/News/components/CardList/CardList.tsx'
 import { Typography } from '@shared'
+import { useGetScheduledGamesQuery } from '@utils'
 
 import styles from './News.module.css'
-import { useGetScheduledGamesQuery } from '@utils'
 
 const News = () => {
   const { data } = useGetScheduledGamesQuery()
