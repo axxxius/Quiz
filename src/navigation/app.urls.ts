@@ -6,6 +6,7 @@ export const URLS = {
   },
   ACTIVEGAME: '/activegame/:id',
   GAMESHEDULE: '/gameschedule',
+  NEWS_MORE: '/news/:id',
   TEAMS: '/teams',
   PROFILE: '/profile'
 }

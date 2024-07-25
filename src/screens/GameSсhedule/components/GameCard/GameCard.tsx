@@ -49,7 +49,7 @@ export const GameCard = ({ game, role, onClick }: GameCardProps) => {
 
   const deleteGame = (gameId: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
-    console.log(gameId)
+    alert(`Нет возможности удалить игру ${gameId}`)
   }
 
   const [openEditGame, setOpenEditGame] = useState(false)

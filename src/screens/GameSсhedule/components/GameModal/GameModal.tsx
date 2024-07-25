@@ -72,7 +72,6 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
       )
     }
   }, [gameData, userTeam])
-  console.log(userTeam?.data.team_id)
 
   const initialDate = game.game_date.split('T')[0]?.split('-').reverse().join(' ')
   const date = formatDate(initialDate)

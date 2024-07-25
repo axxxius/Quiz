@@ -1,5 +1,6 @@
 export * from './activeGame/index'
 export * from './auth'
 export * from './gameSchedule/index'
+export * from './news'
 export * from './profile'
 export * from './teams'
