@@ -1,2 +1,2 @@
-export * from './useGetUserQuery'
 export * from './useEditUserMutation'
+export * from './useGetUserQuery'

@@ -2,7 +2,7 @@ import { UserType } from '@screens/Teams/types'
 import { api } from '@utils'
 
 export interface UserUpdate {
-  user_name: string,
+  user_name: string
   user_gender: string
 }
 

@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
+import { authAtom } from '@screens/Auth/Auth.atom'
 import { GENDER } from '@screens/Auth/constants/const'
 import styles from '@screens/Profile/Profile.module.css'
+import { LoaderTeam, UserType } from '@screens/Teams'
 import { Button, Input, Select, Typography } from '@shared'
+import { useEditUserMutation, useGetUserQuery } from '@utils'
 
 import { nameSchema } from './const'
-import { useEditUserMutation, useGetUserQuery } from '@utils'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import { userAtom } from './Profile.atom'
-import { LoaderTeam, UserType } from '@screens/Teams'
-import { authAtom } from '@screens/Auth/Auth.atom'
 
 interface ProfileValues {
   username: string

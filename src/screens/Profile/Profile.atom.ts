@@ -1,5 +1,6 @@
-import { UserType } from '@screens/Teams'
 import { atom } from 'recoil'
+
+import { UserType } from '@screens/Teams'
 
 const initialState: UserType = {
   user_id: 0,

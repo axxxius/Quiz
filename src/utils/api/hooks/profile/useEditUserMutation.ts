@@ -1,7 +1,8 @@
+import { AxiosError, AxiosResponse } from 'axios'
+
 import { AxiosErrorData, UserType } from '@screens/Teams'
 import { useMutation } from '@tanstack/react-query'
 import { editUser } from '@utils'
-import { AxiosError, AxiosResponse } from 'axios'
 
 export interface ParamEditUserMutation {
   user_name: string
