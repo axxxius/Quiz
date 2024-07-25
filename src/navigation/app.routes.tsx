@@ -7,6 +7,7 @@ const ActiveGame = lazy(() => import('@screens/ActiveGame/ActiveGame.tsx'))
 const GameSchedule = lazy(() => import('@screens/GameSсhedule/GameSсhedule.tsx'))
 const Teams = lazy(() => import('@screens/Teams/Teams.tsx'))
 const News = lazy(() => import('@screens/News/News.tsx'))
+const Profile = lazy(() => import('@screens/Profile/Profile.tsx'))
 
 export const appRoutes: Route[] = [
   {
@@ -32,5 +33,9 @@ export const appRoutes: Route[] = [
   {
     path: URLS.TEAMS,
     element: <Teams />
+  },
+  {
+    path: URLS.PROFILE,
+    element: <Profile />
   }
 ]

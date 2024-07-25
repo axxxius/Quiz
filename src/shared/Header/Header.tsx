@@ -87,7 +87,9 @@ export const Header = memo(() => {
           )}
           {authState.user.username && (
             <div className={styles.user_container}>
-              <div className={styles.user_name}>{authState.user.username}</div>
+              <Link to='/profile'>
+                <div className={styles.user_name}>{authState.user.username}</div>
+              </Link>
               <Link to='/login'>
                 <Button variant='secondary_regular' onClick={onClick}>
                   Выйти

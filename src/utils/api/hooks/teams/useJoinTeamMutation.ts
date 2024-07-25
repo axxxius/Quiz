@@ -16,7 +16,7 @@ export const useJoinTeamMutation = (team_id: number) => {
     ParamJoinMutation,
     unknown
   >({
-    mutationKey: ['sendTeam', team_id],
+    mutationKey: ['joinTeam', team_id],
     mutationFn: ({ user_id, team_id }: ParamJoinMutation) => joinTeam(user_id, team_id)
   })
 }

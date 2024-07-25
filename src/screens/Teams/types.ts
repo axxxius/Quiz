@@ -68,5 +68,5 @@ export type UserType = {
   user_role: string
   user_gender: string
   is_captain: boolean
-  user_teams: UserTeams
+  user_teams: UserTeams[]
 }

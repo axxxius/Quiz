@@ -12,7 +12,8 @@ export const useGetUserQuery = (isCaptain: string) => {
     AxiosResponse<UserType, any>,
     (string | boolean | TeamsTable)[]
   >({
-    queryKey: ['getTeam', isCaptain],
-    queryFn: () => getUser()
+    queryKey: ['getUser', isCaptain],
+    queryFn: () => getUser(),
+    gcTime: 5
   })
 }

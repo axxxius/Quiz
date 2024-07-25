@@ -1,0 +1,93 @@
+.page_name {
+  @apply text-center leading-snug text-white;
+}
+
+.container {
+  margin-bottom: 64px;
+}
+
+.main {
+  @apply flex items-center;
+  flex-direction: column;
+  margin-top: 32px;
+}
+
+.form,
+.info,
+.buttons {
+  width: 424px;
+}
+
+.info p {
+  margin-top: 16px;
+  word-wrap: break-word;
+}
+
+.input {
+  margin-bottom: 16px;
+}
+
+.buttons {
+  display: flex;
+  gap: 70px;
+  margin-top: 48px;
+}
+
+.button {
+  width: 212px;
+  white-space: nowrap;
+}
+
+.auth {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.edit_success {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.team_list ul {
+  max-height: 100px;
+  width: 100%;
+  font-size: 12px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.team_list ul::-webkit-scrollbar {
+  width: 10px;
+  padding-right: 10px;
+}
+
+.team_list ul::-webkit-scrollbar-track {
+  @apply bg-grey;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  margin-block: 3px;
+  padding-right: 10px;
+}
+
+.team_list ul::-webkit-scrollbar-thumb {
+  @apply bg-white;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+.team_list > ul > li {
+  padding: 8px 16px;
+}
+
+.team_list {
+  margin-top: 8px;
+  border: 2px solid white;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+
+.teams_container {
+  margin-top: 16px;
+}
