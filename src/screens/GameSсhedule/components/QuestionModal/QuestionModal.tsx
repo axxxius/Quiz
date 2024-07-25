@@ -82,6 +82,13 @@ export const QuestionModal = ({ gameId, isVisible, onClose, goBack }: QuestionMo
   const navigate = useNavigate()
 
   const handleNavigate = () => {
+    if (
+      gameData?.game_teams?.length !== undefined ||
+      gameData?.game_questions.length !== undefined
+    ) {
+      alert('невозвожно начать игру без команд и вопросов!')
+      return
+    }
     onClose()
     navigate(`/activegame/${gameId}`)
   }

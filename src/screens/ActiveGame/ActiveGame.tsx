@@ -74,7 +74,6 @@ const ActiveGame = () => {
   }, [gameData])
 
   const { data } = useGetAnswerQuery(gameIdNumber)
-  console.log(data)
 
   const [answers, setAnswers] = useState<TeamAnswer[]>(initialAnswer)
   const [score, setScore] = useState<TeamScore>(initialScore)
