@@ -41,7 +41,7 @@ export const CreatingTeamForm = ({ handleClose }: CreatingTeamFormProps) => {
     }))
     resetForm()
     handleClose()
-  } 
+  }
 
   const handleChange = () => {
     setTeamFormValues(getValues())

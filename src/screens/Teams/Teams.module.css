@@ -31,7 +31,7 @@
 }
 
 .filter_teams {
-  cursor: pointer
+  cursor: pointer;
 }
 
 .sort_teams_container {
@@ -48,5 +48,3 @@
 .teams div {
   margin-left: 8px;
 }
-
-

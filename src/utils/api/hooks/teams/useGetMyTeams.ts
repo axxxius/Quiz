@@ -23,7 +23,17 @@ export const useGetMyTeamsQuery = (
     AxiosResponse<MyTeamsTable, any>,
     (string | MyTeamsTable | number | AllTeamsTable | UserMember[])[]
   >({
-    queryKey: ['getTeams', selectedValue, team_name, search, teamsTable, user_id, page, team_members, allTeams],
+    queryKey: [
+      'getTeams',
+      selectedValue,
+      team_name,
+      search,
+      teamsTable,
+      user_id,
+      page,
+      team_members,
+      allTeams
+    ],
     queryFn: () => getMyTeams({ params }),
     gcTime: 1
   })

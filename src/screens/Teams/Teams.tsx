@@ -6,7 +6,7 @@ import { useOnClickOutside, useRole } from '@hooks'
 import { Button, Search, Typography } from '@shared'
 
 import { modalAtom, ShowModal } from './components/Modals/Modal.atom'
-import { AllTeamsTable,Dropdown, EditTeamModal, MyTeamsTable } from './components'
+import { AllTeamsTable, Dropdown, EditTeamModal, MyTeamsTable } from './components'
 import { SORT_TEAMS } from './const'
 import styles from './Teams.module.css'
 import { OptionSort } from './types'
@@ -70,19 +70,9 @@ const Teams = () => {
               </Typography>
             </div>
           </div>
-          {myTeams && (
-            <MyTeamsTable
-              search={search}
-              selectedValue={selectedValue}
-              ref={modalRef}
-            />
-          )}
+          {myTeams && <MyTeamsTable search={search} selectedValue={selectedValue} ref={modalRef} />}
           {!myTeams && (
-            <AllTeamsTable
-              search={search}
-              selectedValue={selectedValue}
-              ref={modalRef}
-            />
+            <AllTeamsTable search={search} selectedValue={selectedValue} ref={modalRef} />
           )}
         </div>
         {showModal.showCreatingTeam && (
