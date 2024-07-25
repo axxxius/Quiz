@@ -12,14 +12,18 @@ interface ErrorMessageProps {
 }
 
 export const ErrorMessage = ({ error, isError, className }: ErrorMessageProps) => {
-  const data = error?.response?.data
+  const data = error?.response?.data as AxiosErrorData
   const stylesMessage = classnames(styles.message, className)
   return (
     <>
-      {error && data?.detail && (
-        <Typography className={stylesMessage} variant='text_16_b'>
-          {data.detail}
-        </Typography>
+      {error && data && (
+        <>
+          {Object.keys(data).map((error) => (
+            <Typography className={stylesMessage} key={error} variant='text_16_r'>
+              {data[error]}
+            </Typography>
+          ))}
+        </>
       )}
       {isError && (
         <Typography className={stylesMessage} variant='text_16_b'>

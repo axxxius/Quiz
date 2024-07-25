@@ -15,3 +15,7 @@
   align-self: flex-end;
   margin-top: 32px;
 }
+
+.error {
+  text-align: left;
+}

@@ -11,7 +11,8 @@ export const useGetTeamsQuery = (
   team_name: string,
   search: string,
   teamsTable: TeamsTable,
-  user_id: number
+  user_id: number,
+  page: number
 ) => {
   return useQuery<
     AxiosResponse<TeamsTable, any>,
@@ -19,7 +20,7 @@ export const useGetTeamsQuery = (
     AxiosResponse<TeamsTable, any>,
     (string | TeamsTable | number)[]
   >({
-    queryKey: ['getTeams', selectedValue, team_name, search, teamsTable, user_id],
+    queryKey: ['getTeams', selectedValue, team_name, search, teamsTable, user_id, page],
     queryFn: () => getTeams({ params })
   })
 }

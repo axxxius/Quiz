@@ -4,14 +4,13 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { useDebounce, useOnClickOutside, useRole } from '@hooks'
 import { authAtom } from '@screens/Auth/Auth.atom'
 import { Button, Search, Typography } from '@shared'
-import { classnames, useGetTeamsQuery, useGetUserQuery } from '@utils'
+import { useGetTeamsQuery } from '@utils'
 
 import { modalAtom, ShowModal } from './components/Modals/Modal.atom'
 import { teamAtom } from './components/Modals/TeamModal/Team.atom'
 import { teamsTableAtom } from './components/Table/Table.atom'
-import { Dropdown, EditTeamModal, LoaderTeam, Table } from './components'
+import { Dropdown, EditTeamModal, Table } from './components'
 import { SORT_TEAMS } from './const'
-import { captainAtom } from './Teams.atom'
 import styles from './Teams.module.css'
 import { OptionSort } from './types'
 
@@ -24,27 +23,19 @@ const Teams = () => {
   const [search, setSearch] = useState<string>('')
   const authState = useRecoilValue(authAtom)
   const debouncedSearch = useDebounce(search, 500)
-  const isCaptain = useRecoilValue(captainAtom)
-  const {
-    data: user,
-    isSuccess: isSuccessUser,
-    isLoading: isLoadingUser
-  } = useGetUserQuery(isCaptain)
   const { role } = useRole()
+  const [page, setPage] = useState(1)
   const { data, isSuccess, isLoading, isError } = useGetTeamsQuery(
     {
-      params: { ordering: selectedValue.value, search: debouncedSearch }
+      params: { ordering: selectedValue.value, search: debouncedSearch, page: page }
     },
     selectedValue.value,
     team.team_name,
     debouncedSearch,
     teamsTable,
-    authState.user.id
+    authState.user.id,
+    page
   )
-
-  const stylesCreatingTeam = classnames(styles.creating_team, {
-    [styles.creating_team_lead]: !user?.data.is_captain && role === 'player'
-  })
 
   const handleClick = () => {
     setShowModal((prev) => ({
@@ -72,30 +63,45 @@ const Teams = () => {
         <Typography tag='h1' variant='text_36_b' className={styles.page_name}>
           Рейтинг команд
         </Typography>
-        {isLoadingUser && <LoaderTeam isLoading={isLoading} />}
-        {isSuccessUser && (
-          <div className={styles.main}>
-            <div className={stylesCreatingTeam}>
-              <Search setSearch={setSearch} />
-              {role === 'player' && !user?.data.is_captain && (
-                <Button className={styles.button} onClick={handleClick}>
-                  Создать команду
-                </Button>
-              )}
-            </div>
-            <div className={styles.sorting}>
-              <Typography tag='h4' variant='text_16_r'>
-                Сортировать по
-              </Typography>
-              <Dropdown
-                options={SORT_TEAMS}
-                setSelectedValue={setSelectedValue}
-                selectedValue={selectedValue}
-              />
-            </div>
-            <Table ref={modalRef} isError={isError} />
+        <div className={styles.main}>
+          <div className={styles.creating_team_lead}>
+            <Search setSearch={setSearch} />
+            {role === 'player' && (
+              <Button className={styles.button} onClick={handleClick}>
+                Создать команду
+              </Button>
+            )}
           </div>
-        )}
+          <div className={styles.sorting}>
+            <Typography tag='h4' variant='text_16_r'>
+              Сортировать по
+            </Typography>
+            <Dropdown
+              options={SORT_TEAMS}
+              setSelectedValue={setSelectedValue}
+              selectedValue={selectedValue}
+            />
+          </div>
+          <div className={styles.pagination_container}>
+            <button
+              className={styles.pagination_btns}
+              onClick={() => setPage(page - 1)}
+              disabled={page === 1}
+            >
+              &lt;- Предыдущая
+            </button>
+            <Typography variant='text_20_b'>Страница {page}</Typography>
+            <button
+              className={styles.pagination_btns}
+              onClick={() => setPage(page + 1)}
+              disabled={teamsTable.teams.length < 10} //games.length < 10
+            >
+              Следующая -&gt;
+            </button>
+          </div>
+          <Table ref={modalRef} isError={isError} />
+          
+        </div>
         {showModal.showCreatingTeam && (
           <EditTeamModal head='Создать команду' mode='create' ref={modalRef} />
         )}

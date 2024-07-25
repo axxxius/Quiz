@@ -8,9 +8,6 @@
   padding-inline: calc(100% / 1200 * 144);
 }
 
-.creating_team {
-}
-
 .creating_team_lead {
   @apply flex justify-between;
 }
@@ -32,3 +29,14 @@
 .error {
   text-align: center;
 }
+
+.pagination_container {
+  @apply flex gap-x-6;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.pagination_btns {
+  @apply font-vela-bold transition-all hover:scale-105 disabled:cursor-not-allowed disabled:text-grey;
+}
+

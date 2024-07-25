@@ -68,6 +68,10 @@
   text-overflow: ellipsis;
 }
 
+.head .col {
+  overflow: visible;
+}
+
 .no_comand {
   text-align: center;
   margin-top: 32px;
