@@ -11,7 +11,7 @@ const News = () => {
 
   return (
     <div className={styles.container}>
-      <Typography tag='h1' variant='text_36_b'>
+      <Typography className={styles.title} tag='h1' variant='text_36_b'>
         Анонсы игр
       </Typography>
       <CardList news={news} />

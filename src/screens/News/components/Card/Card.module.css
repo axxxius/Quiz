@@ -36,6 +36,18 @@
   color: rgb(71, 43, 131);
 }
 
+@media (max-width: 480px) {
+  .date {
+    font-size: 20px;
+  }
+}
+
 .announcement {
   color: rgb(71, 43, 131);
+}
+
+@media (max-width: 480px) {
+  .announcement {
+    font-size: 20px;
+  }
 }

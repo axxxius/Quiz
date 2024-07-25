@@ -3,6 +3,12 @@
   max-width: 100vw;
 }
 
+@media (max-width: 480px) {
+  .header_container {
+    display: none;
+  }
+}
+
 .nav_li {
   @apply transition-transform duration-100 active:scale-105;
 

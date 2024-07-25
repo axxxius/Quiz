@@ -4,6 +4,10 @@
   margin: 0 auto;
 }
 
+.title {
+  font-size: 26px;
+}
+
 .button {
   width: 170px;
 }
