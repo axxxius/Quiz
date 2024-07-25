@@ -8,7 +8,12 @@ import { EditTeamModal, NumericData } from '@screens/Teams/components'
 import styles from '@screens/Teams/components/Modals/TeamModal/TeamModal.module.css'
 import { FullTeam } from '@screens/Teams/types'
 import { Button, Modal, Typography } from '@shared'
-import { useDeleteTeamMutation, useGetTeamQuery, useJoinTeamMutation, useLeaveTeamMutation } from '@utils'
+import {
+  useDeleteTeamMutation,
+  useGetTeamQuery,
+  useJoinTeamMutation,
+  useLeaveTeamMutation
+} from '@utils'
 
 import { TeamsTable, teamsTableAtom } from '../../Table/Table.atom'
 import { modalAtom, ShowModal } from '../Modal.atom'
@@ -53,8 +58,7 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
 
   const handleClickLeave = async (team_id: number) => {
     const { data } = await mutateAsyncLeave(team_id)
-    console.log(data)
-    setTeam((prev) => ({ ...prev, team_members: data.team_members}))
+    setTeam((prev) => ({ ...prev, team_members: data.team_members }))
   }
 
   useEffect(() => {
@@ -67,96 +71,85 @@ export const TeamModal = forwardRef<HTMLDivElement, TeamModalProps>(({ id }, ref
     <>
       {!edit ? (
         <Modal ref={ref} className={styles.modal_container} isError={isError} isLoading={isLoading}>
-            <>
-              <div className={styles.modal_header}>
-                <Typography tag='h2' variant='text_32_b' className={styles.head}>
-                  {team.team_name}
+          <>
+            <div className={styles.modal_header}>
+              <Typography tag='h2' variant='text_32_b' className={styles.head}>
+                {team.team_name}
+              </Typography>
+              <Close className={styles.close} onClick={handleClickClose} />
+            </div>
+            <div className={styles.modal_body}>
+              <div className={styles.numeric_data}>
+                <NumericData numberData={team.team_place} name='Место' className={styles.rating} />
+                <NumericData numberData={team.team_points} name='Баллы' className={styles.points} />
+              </div>
+              <div className={styles.desc_container}>
+                <Typography tag='h2' variant='text_20_b'>
+                  Описание
                 </Typography>
-                <Close className={styles.close} onClick={handleClickClose} />
+                <Typography tag='p' variant='text_16_r' className={styles.desc}>
+                  {team.team_desc || 'Нет описания'}
+                </Typography>
               </div>
-              <div className={styles.modal_body}>
-                <div className={styles.numeric_data}>
-                  <NumericData
-                    numberData={team.team_place}
-                    name='Место'
-                    className={styles.rating}
-                  />
-                  <NumericData
-                    numberData={team.team_points}
-                    name='Баллы'
-                    className={styles.points}
-                  />
-                </div>
-                <div className={styles.desc_container}>
-                  <Typography tag='h2' variant='text_20_b'>
-                    Описание
-                  </Typography>
-                  <Typography tag='p' variant='text_16_r' className={styles.desc}>
-                    {team.team_desc || 'Нет описания'}
-                  </Typography>
-                </div>
-                <div className={styles.captain}>
-                  <Typography tag='h2' variant='text_20_b'>
-                    Капитан
-                  </Typography>
-                  <Typography tag='p' variant='text_16_r'>
-                    {team.team_captain_name}
-                  </Typography>
-                </div>
-                <div className={styles.members}>
-                  <Typography tag='p' variant='text_20_b'>
-                    Участники
-                  </Typography>
-                  <div className={styles.members_list}>
-                    <ul>
-                      {team.team_members?.map((member) => (
-                        <li key={member.username}>{member.username}</li>
-                      ))}
-                    </ul>
-                  </div>
+              <div className={styles.captain}>
+                <Typography tag='h2' variant='text_20_b'>
+                  Капитан
+                </Typography>
+                <Typography tag='p' variant='text_16_r'>
+                  {team.team_captain_name}
+                </Typography>
+              </div>
+              <div className={styles.members}>
+                <Typography tag='p' variant='text_20_b'>
+                  Участники
+                </Typography>
+                <div className={styles.members_list}>
+                  <ul>
+                    {team.team_members?.map((member) => (
+                      <li key={member.username}>{member.username}</li>
+                    ))}
+                  </ul>
                 </div>
               </div>
-              <div className={styles.modal_footer}>
-                {role === 'player' && team.team_captain_id === authState.user.id && (
-                  <div className={styles.buttons}>
-                    <Button
-                      className={styles.button}
-                      variant='secondary'
-                      onClick={() => handleClickDelete(id)}
-                    >
-                      Удалить
-                    </Button>
-                    <Button className={styles.button} onClick={() => setEdit(true)}>
-                      Редактировать
-                    </Button>
-                  </div>
+            </div>
+            <div className={styles.modal_footer}>
+              {role === 'player' && team.team_captain_id === authState.user.id && (
+                <div className={styles.buttons}>
+                  <Button
+                    className={styles.button}
+                    variant='secondary'
+                    onClick={() => handleClickDelete(id)}
+                  >
+                    Удалить
+                  </Button>
+                  <Button className={styles.button} onClick={() => setEdit(true)}>
+                    Редактировать
+                  </Button>
+                </div>
+              )}
+              {role === 'player' &&
+                !team.team_members.filter((member) => member.id === authState.user.id)[0] && (
+                  <Button
+                    className={styles.button}
+                    onClick={() => handleClickJoin(authState.user.id, team.team_id as number)}
+                  >
+                    Вступить в команду
+                  </Button>
                 )}
-                {role === 'player' &&
-                  !team.team_members.filter((member) => member.id === authState.user.id)[0] && (
-                    <Button
-                      className={styles.button}
-                      onClick={() => handleClickJoin(authState.user.id, team.team_id as number)}
-                    >
-                      Вступить в команду
-                    </Button>
-                  )}
-                {role === 'player' &&
-                  team.team_members.filter((member) => member.id === authState.user.id)[0] &&
-                  team.team_captain_id !== authState.user.id && (
-                    <div className={styles.in_members}>
+              {role === 'player' &&
+                team.team_members.filter((member) => member.id === authState.user.id)[0] &&
+                team.team_captain_id !== authState.user.id && (
+                  <div className={styles.in_members}>
                     <Typography tag='h2' variant='text_16_b'>
                       Вы уже состоите в команде
                     </Typography>
-                    <Button
-                      className={styles.button_exit}
-                      onClick={() => handleClickLeave(id)}
-                    >
+                    <Button className={styles.button_exit} onClick={() => handleClickLeave(id)}>
                       Выйти
                     </Button>
-                    </div>
-                  )}
-              </div>
-            </>
+                  </div>
+                )}
+            </div>
+          </>
         </Modal>
       ) : (
         <EditTeamModal

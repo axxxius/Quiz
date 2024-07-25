@@ -39,4 +39,3 @@
 .pagination_btns {
   @apply font-vela-bold transition-all hover:scale-105 disabled:cursor-not-allowed disabled:text-grey;
 }
-

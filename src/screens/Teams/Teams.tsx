@@ -94,13 +94,12 @@ const Teams = () => {
             <button
               className={styles.pagination_btns}
               onClick={() => setPage(page + 1)}
-              disabled={teamsTable.teams.length < 10} //games.length < 10
+              disabled={teamsTable.teams.length < 10}
             >
               Следующая -&gt;
             </button>
           </div>
           <Table ref={modalRef} isError={isError} />
-          
         </div>
         {showModal.showCreatingTeam && (
           <EditTeamModal head='Создать команду' mode='create' ref={modalRef} />

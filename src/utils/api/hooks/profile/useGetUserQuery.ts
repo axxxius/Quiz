@@ -5,7 +5,7 @@ import { TeamsTable } from '@screens/Teams/components/Table/Table.atom'
 import { useQuery } from '@tanstack/react-query'
 import { getUser } from '@utils'
 
-export const useGetUserQuery = (isCaptain: string, {...options}) => {
+export const useGetUserQuery = (isCaptain: string, { ...options }) => {
   return useQuery<
     AxiosResponse<UserType, any>,
     AxiosError<AxiosErrorData, any>,

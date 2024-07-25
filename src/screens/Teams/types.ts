@@ -53,8 +53,6 @@ export interface AxiosResponseData {
 }
 
 export interface AxiosErrorData {
-  // captain_id?: string,
-  // team_name?: string
   [index: string]: string
 }
 

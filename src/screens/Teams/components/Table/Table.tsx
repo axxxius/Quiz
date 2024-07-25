@@ -14,7 +14,7 @@ import { TeamModal } from '../Modals/TeamModal/TeamModal'
 import { teamsTableAtom } from './Table.atom'
 
 interface TableProps {
-  isError: boolean,
+  isError: boolean
 }
 
 export const Table = forwardRef<HTMLDivElement, TableProps>(({ isError }, ref) => {
@@ -47,15 +47,15 @@ export const Table = forwardRef<HTMLDivElement, TableProps>(({ isError }, ref) =
         )}
         <ErrorMessage isError={isError} className={styles.error} />
         <>
-        {teamsTable.teams.map((team: Team) => (
-          <div className={styles.row} key={team.team_id} onClick={() => handleClick(team)}>
-            <div className={styles.col}>{team.team_place}</div>
-            <div className={styles.col}>{team.team_name}</div>
-            <div className={styles.col}>{getDate(team.team_creation_date)}</div>
-            <div className={styles.col}>{team.team_played_games}</div>
-            <div className={styles.col}>{team.team_points}</div>
-          </div>
-        ))}
+          {teamsTable.teams.map((team: Team) => (
+            <div className={styles.row} key={team.team_id} onClick={() => handleClick(team)}>
+              <div className={styles.col}>{team.team_place}</div>
+              <div className={styles.col}>{team.team_name}</div>
+              <div className={styles.col}>{getDate(team.team_creation_date)}</div>
+              <div className={styles.col}>{team.team_played_games}</div>
+              <div className={styles.col}>{team.team_points}</div>
+            </div>
+          ))}
         </>
       </div>
       {showModal.showTeam && <TeamModal ref={ref} id={activeTeam} />}
