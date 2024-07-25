@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import { useRole } from '@hooks'
 import { Button, Typography } from '@shared'
@@ -22,9 +22,11 @@ const NewsMore = () => {
       </div>
       <Typography>{data?.game_description}</Typography>
       {role === 'leading' && (
-        <Button className={styles.button} variant='primary'>
-          Перейти к игре
-        </Button>
+        <Link to={`/activegame/${gameId}`}>
+          <Button className={styles.button} variant='primary'>
+            Перейти к игре
+          </Button>
+        </Link>
       )}
     </div>
   )

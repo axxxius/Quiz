@@ -16,7 +16,7 @@ interface CardProps {
 
 export const Card = ({ game_name, game_description, game_date, id }: CardProps) => {
   return (
-    <Link to={`announcement/${id}`}>
+    <Link to={`news/${id}`}>
       <div className={styles.container}>
         <div className={styles.date_container}>
           <MegaphoneIcon />
