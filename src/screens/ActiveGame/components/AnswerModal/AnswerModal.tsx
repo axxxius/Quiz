@@ -101,6 +101,7 @@ export const AnswerModal = ({
                 {...register('weight')}
                 id='weight'
                 type='number'
+                step='0.01'
                 defaultValue={modalAnswer?.answer_score}
                 max={modalQuestion?.question_weight}
                 className={styles.form_input}

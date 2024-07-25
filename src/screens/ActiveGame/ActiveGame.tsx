@@ -56,11 +56,25 @@ const ActiveGame = () => {
       setGame(gameData)
       if (gameData.game_teams !== undefined) {
         setTeamList(gameData.game_teams)
+        if (game.game_status === 'planned') {
+          addAnswer({
+            answer: {
+              answer_team_answer: '',
+              answer_is_correct: false,
+              answer_score: 0,
+              game_id: gameIdNumber,
+              question_id: gameData.game_questions[0].id,
+              team_id: gameData.game_teams[0].team_id
+            },
+            gameId: game.id
+          })
+        }
       }
     }
   }, [gameData])
 
   const { data } = useGetAnswerQuery(gameIdNumber)
+  console.log(data)
 
   const [answers, setAnswers] = useState<TeamAnswer[]>(initialAnswer)
   const [score, setScore] = useState<TeamScore>(initialScore)
@@ -74,10 +88,21 @@ const ActiveGame = () => {
       }
     }
   }, [data])
-  console.log(answers)
-  console.log(score)
   const completeGame = () => {
-    //изменение статуса при завершении игры
+    if (game.game_status === 'active') {
+      addAnswer({
+        answer: {
+          answer_team_answer: '',
+          answer_is_correct: false,
+          answer_score: 0,
+          game_id: game.id,
+          question_id: game.game_questions[0].id,
+          team_id: teamList[0].team_id,
+          status: 'finished'
+        },
+        gameId: game.id
+      })
+    }
   }
 
   const { addAnswer, isPending } = usePostAnswersMutation()

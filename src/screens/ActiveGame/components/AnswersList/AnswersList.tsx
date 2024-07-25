@@ -107,13 +107,21 @@ export const AnswersList = ({
                 ) {
                   return (
                     <Typography key={question.id}>
-                      {answer?.answer_is_correct ? <CheckMark /> : <CrossMark />}
+                      {answer?.answer_team_answer === question.question_correct_answer ? (
+                        <CheckMark />
+                      ) : (
+                        <CrossMark />
+                      )}
                     </Typography>
                   )
                 } else {
                   return (
                     <button onClick={() => openModal(answer, team.team_id, question.id)}>
-                      {answer?.answer_is_correct ? <CheckMark /> : <CrossMark />}
+                      {answer?.answer_team_answer || answer.answer_score > 0 ? (
+                        <CheckMark />
+                      ) : (
+                        <CrossMark />
+                      )}
                     </button>
                   )
                 }
@@ -141,7 +149,11 @@ export const AnswersList = ({
                       key={question.id}
                       disabled={isPending}
                     >
-                      {answer?.answer_is_correct ? <CheckMark /> : <CrossMark />}
+                      {answer?.answer_team_answer === question.question_correct_answer ? (
+                        <CheckMark />
+                      ) : (
+                        <CrossMark />
+                      )}
                     </button>
                   )
                 } else {
@@ -152,7 +164,11 @@ export const AnswersList = ({
                       onClick={() => openModal(answer, team.team_id, question.id)}
                       disabled={isPending}
                     >
-                      {answer?.answer_is_correct ? <CheckMark /> : <CrossMark />}
+                      {answer?.answer_team_answer || answer.answer_score > 0 ? (
+                        <CheckMark />
+                      ) : (
+                        <CrossMark />
+                      )}
                     </button>
                   )
                 }

@@ -82,7 +82,6 @@ export const QuestionModal = ({ gameId, isVisible, onClose, goBack }: QuestionMo
   const navigate = useNavigate()
 
   const handleNavigate = () => {
-    //сделать игру активной
     onClose()
     navigate(`/activegame/${gameId}`)
   }

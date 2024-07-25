@@ -58,22 +58,21 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
   const [game, setGame] = useState<Game>(initialGame)
 
   const { userTeam } = useGetUserInTeamQuery(game.id)
-  const [currentTeamId, setCurrentTeamId] = useState(0)
-
-  const [teamInGame, setTeamInGame] = useState(false)
+  const [teamInGame, setTeamInGame] = useState(undefined)
 
   const { gameData } = useGetGameQuery(gameId, visible)
 
   useEffect(() => {
     if (gameData !== undefined) {
       setGame(gameData)
-      setTeamInGame(!!gameData.game_teams?.find((team) => team.team_id === userTeam?.data))
-      setCurrentTeamId(
-        gameData.game_teams?.find((team) => team.team_id === userTeam?.data)?.team_id || 0
+      setTeamInGame(
+        gameData.game_teams?.find((team) => team.team_id === userTeam?.data.team_id)
+          ? userTeam?.data.team_id
+          : undefined
       )
     }
   }, [gameData, userTeam])
-  console.log(currentTeamId)
+  console.log(userTeam?.data.team_id)
 
   const initialDate = game.game_date.split('T')[0]?.split('-').reverse().join(' ')
   const date = formatDate(initialDate)
@@ -84,15 +83,21 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
     : '00:00'
 
   const { deleteTeam } = useDeleteTeamInGameMutation()
-  const deleteTeamInGame = () => {
-    deleteTeam(game.id, {
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['game', game.id] })
+  const deleteTeamInGame = (teamId: number) => {
+    deleteTeam(
+      {
+        game_id: game.id,
+        team_id: teamId
       },
-      onError: () => {
-        alert('Не получилось удалить игру!')
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['game', game.id] })
+        },
+        onError: () => {
+          alert('Не получилось удалить игру!')
+        }
       }
-    })
+    )
   }
 
   const navigate = useNavigate()
@@ -161,9 +166,14 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
               {(game?.game_teams?.length ?? 0 > 0) && game.game_teams ? (
                 game.game_teams.map((team) => (
                   <div className={styles.team_card} key={team.team_id}>
-                    <Typography variant='text_12_m'>{team.team_name}</Typography>
-                    {game.game_status !== 'active' && (
-                      <button onClick={() => deleteTeamInGame()}>
+                    <Typography variant='text_12_m'>
+                      <span className='font-vela-bold text-lime-standart'>
+                        {teamInGame === team.team_id ? 'Ваша команда: ' : ''}
+                      </span>
+                      {team.team_name}
+                    </Typography>
+                    {teamInGame === team.team_id && game.game_status !== 'active' && (
+                      <button onClick={() => deleteTeamInGame(team.team_id)}>
                         <TrashIcon />
                       </button>
                     )}
@@ -183,14 +193,14 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
           </Button>
         )}
         {role === 'player' &&
-          teamInGame &&
+          teamInGame === undefined &&
           game.game_status === 'planned' && ( // <---- добавить сравнение на капитана
             <Button className={styles.join_btn} variant='primary' onClick={() => joinGame()}>
               Вступить в игру
             </Button>
           )}
         {role === 'player' &&
-          !teamInGame &&
+          teamInGame !== undefined &&
           game.game_status === 'planned' && ( // <---- добавить сравнение на капитана
             <Typography variant='text_16_b' className='ml-auto'>
               Вы&nbsp;уже состоите в&nbsp;этой игре

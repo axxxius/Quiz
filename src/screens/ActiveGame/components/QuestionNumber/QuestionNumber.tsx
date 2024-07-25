@@ -11,13 +11,13 @@ export const QuestionNumber = ({ question }: { question: Question }) => {
   const tooltipPosition = {
     top:
       isTooltipVisible && questionRef.current
-        ? -questionRef.current.getBoundingClientRect().top * 0.42 - window.scrollY * 0.42
+        ? -questionRef.current.getBoundingClientRect().top * 0.4 - window.scrollY * 0.4
         : -1000,
     left:
       questionRef.current && isTooltipVisible
         ? questionRef.current.getBoundingClientRect().left + window.scrollX
-        : -500
-  }
+        : -1000
+  } //в случае если tooltip не виден, он уходит в лево, где его нельзя проскроллить и увидеть
 
   return (
     <div className={styles.question_container}>
