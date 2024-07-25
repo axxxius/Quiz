@@ -58,18 +58,12 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
   const [game, setGame] = useState<Game>(initialGame)
 
   const { userTeam } = useGetUserInTeamQuery(game.id)
-  const [teamInGame, setTeamInGame] = useState(undefined)
 
   const { gameData } = useGetGameQuery(gameId, visible)
 
   useEffect(() => {
     if (gameData !== undefined) {
       setGame(gameData)
-      setTeamInGame(
-        gameData.game_teams?.find((team) => team.team_id === userTeam?.data.team_id)
-          ? userTeam?.data.team_id
-          : undefined
-      )
     }
   }, [gameData, userTeam])
 
@@ -121,6 +115,10 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
     })
   }
 
+  const redirectTeams = () => {
+    navigate('/teams')
+  }
+
   return (
     <Modal2 visible={visible} onClose={onClose}>
       <div className={styles.container}>
@@ -167,11 +165,11 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
                   <div className={styles.team_card} key={team.team_id}>
                     <Typography variant='text_12_m'>
                       <span className='font-vela-bold text-lime-standart'>
-                        {teamInGame === team.team_id ? 'Ваша команда: ' : ''}
+                        {userTeam?.data.team_id === team.team_id ? 'Ваша команда: ' : ''}
                       </span>
                       {team.team_name}
                     </Typography>
-                    {teamInGame === team.team_id && game.game_status !== 'active' && (
+                    {userTeam?.data.team_id === team.team_id && game.game_status !== 'active' && (
                       <button onClick={() => deleteTeamInGame(team.team_id)}>
                         <TrashIcon />
                       </button>
@@ -192,14 +190,25 @@ export const GameModal = memo(({ gameId, visible, onClose, goNext, role }: GameM
           </Button>
         )}
         {role === 'player' &&
-          teamInGame === undefined &&
-          game.game_status === 'planned' && ( // <---- добавить сравнение на капитана
+          !game.game_teams?.find((team) => team.team_id === userTeam?.data.team_id) &&
+          userTeam?.data.team_id !== undefined &&
+          game.game_status === 'planned' && (
             <Button className={styles.join_btn} variant='primary' onClick={() => joinGame()}>
               Вступить в игру
             </Button>
           )}
+        {((userTeam?.data.team_id === undefined && role !== 'leading') ||
+          role === 'unAuthorized') && (
+          <Button
+            variant='primary'
+            className='max-w-[300px] self-end'
+            onClick={() => redirectTeams()}
+          >
+            Сначала вступите в команду
+          </Button>
+        )}
         {role === 'player' &&
-          teamInGame !== undefined &&
+          game.game_teams?.find((team) => team.team_id === userTeam?.data.team_id) &&
           game.game_status === 'planned' && ( // <---- добавить сравнение на капитана
             <Typography variant='text_16_b' className='ml-auto'>
               Вы&nbsp;уже состоите в&nbsp;этой игре

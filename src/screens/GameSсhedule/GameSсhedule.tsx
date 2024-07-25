@@ -11,7 +11,7 @@ import styles from './GameSсhedule.module.css'
 
 const GameShedule = () => {
   const userRole = useRole()
-  const [role, setRole] = useState('player')
+  const [role, setRole] = useState('unAuthorized')
   useEffect(() => {
     if (userRole.role !== undefined) {
       setRole(userRole.role)
