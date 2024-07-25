@@ -12,4 +12,12 @@
 
 .button {
   width: 170px;
+  visibility: hidden;
+}
+
+@media (max-width: 480px) {
+  .button {
+    visibility: visible;
+    width: 100px;
+  }
 }
