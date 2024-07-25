@@ -5,7 +5,7 @@ export const URLS = {
     REGISTER: '/register'
   },
   ACTIVEGAME: '/activegame/:id',
-  GAMESHEDULE: '/gameshedule',
+  GAMESHEDULE: '/gameschedule',
   NEWS_MORE: '/news/:id',
   TEAMS: '/teams',
   PROFILE: '/profile'
