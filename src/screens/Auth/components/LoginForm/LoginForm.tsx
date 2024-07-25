@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 
 import { URLS } from '@navigation'
 import { authAtom } from '@screens/Auth/Auth.atom.ts'
@@ -30,9 +30,6 @@ export const LoginForm = () => {
       }
     }
   })
-
-  const authState = useRecoilValue(authAtom)
-  console.log('auth', authState)
 
   const { errors, isSubmitting } = formState
   const loading = isSubmitting || loginForm.isPending

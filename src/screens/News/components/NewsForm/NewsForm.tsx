@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { useForm } from 'react-hook-form'
 
 import CloseIcon from '@assets/icons/close.svg?react'
@@ -18,6 +19,7 @@ interface NewsFormProps {
 
 export const NewsForm = ({ visible, onClose }: NewsFormProps) => {
   const { register, handleSubmit, setValue } = useForm<PostNewsParams>({ mode: 'onSubmit' })
+  const imageInputRef = useRef<HTMLInputElement>(null)
 
   const { mutate: createNews } = usePostNewsMutation({
     options: {
@@ -28,14 +30,18 @@ export const NewsForm = ({ visible, onClose }: NewsFormProps) => {
   })
 
   const onSubmit = (data: PostNewsParams) => {
-    if (data.image && data.image.length > 0) {
-      const formData = new FormData()
-      formData.append('image', data.image[0])
-      formData.append('title', data.title)
-      formData.append('description', data.description)
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      createNews({ params: formData })
+    const formData = new FormData()
+    formData.append('image', data.image[0])
+    formData.append('title', data.title)
+    formData.append('description', data.description)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    createNews({ params: formData })
+  }
+
+  const handleImageChange = () => {
+    if (imageInputRef.current?.files) {
+      setValue('image', imageInputRef.current.files)
     }
   }
 
@@ -50,16 +56,16 @@ export const NewsForm = ({ visible, onClose }: NewsFormProps) => {
           <Input className='mb-[16px] w-[454px]' label='Название' {...register('title')} />
           <Input className='mb-[16px]' label='Описание' {...register('description')} />
           <div className='mb-[34px] flex cursor-pointer gap-[10px]'>
-            <Typography>Выбрать изображение</Typography>
-            <ImageIcon></ImageIcon>
+            <label htmlFor='imageInput' className='flex cursor-pointer items-center gap-[10px]'>
+              <Typography>Выбрать изображение</Typography>
+              <ImageIcon />
+            </label>
             <input
               type='file'
-              {...register('image')}
-              onChange={(e) => {
-                if (e.target.files && e.target.files.length > 0) {
-                  setValue('image', e.target.files)
-                }
-              }}
+              id='imageInput'
+              ref={imageInputRef}
+              style={{ display: 'none' }}
+              onChange={handleImageChange}
             />
           </div>
           <div className='w-[125px]'>

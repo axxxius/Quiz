@@ -11,7 +11,7 @@ import { usePostLogoutMutation } from '@utils'
 
 const navList = [
   {
-    name: 'Анонсы и новости',
+    name: 'Анонсы игр',
     path: '/'
   },
   {
