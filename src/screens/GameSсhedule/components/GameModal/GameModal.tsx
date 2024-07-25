@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import CrossIcon from '@assets/icons/modalCross.svg?react'
 import TrashIcon from '@assets/icons/trash.svg?react'
 import { Button, Modal2, Typography } from '@shared'
+import { useQueryClient } from '@tanstack/react-query'
 import {
   addTimeOffset,
   timeZone,
@@ -15,7 +16,6 @@ import {
 
 import { formatDate } from '../GameCard/GameCard'
 
-import { useQueryClient } from '@tanstack/react-query'
 import styles from './GameModal.module.css'
 
 export const initialGame: Game = {

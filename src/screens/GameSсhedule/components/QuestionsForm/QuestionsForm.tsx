@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import TrashIcon from '@assets/icons/trash.svg?react'
@@ -8,7 +9,6 @@ import {
 } from '@screens/GameSсhedule/constants'
 import { Button, Input, Typography } from '@shared'
 
-import { useEffect, useState } from 'react'
 import styles from './QuestionsForm.module.css'
 
 interface QuestionsFormProps {

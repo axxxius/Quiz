@@ -4,9 +4,9 @@ import { useParams } from 'react-router-dom'
 import { AnswerModal, AnswersList, GameInfo, TeamList } from '@screens/ActiveGame/components'
 import { initialGame } from '@screens/GameSсhedule/components'
 import { Typography } from '@shared'
+import { useQueryClient } from '@tanstack/react-query'
 import { useGetAnswerQuery, useGetGameQuery, usePostAnswersMutation } from '@utils'
 
-import { useQueryClient } from '@tanstack/react-query'
 import styles from './ActiveGame.module.css'
 
 const initialTeam: TeamInGame[] = [
