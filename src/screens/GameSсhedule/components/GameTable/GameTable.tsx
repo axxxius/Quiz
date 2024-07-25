@@ -7,7 +7,7 @@ import styles from './GameTable.module.css'
 
 interface GameTableProps {
   games: GameInSchedule[]
-  role: TRole
+  role: string
 }
 
 export const GameTable = memo(({ games, role }: GameTableProps) => {

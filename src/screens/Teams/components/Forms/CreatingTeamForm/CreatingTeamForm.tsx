@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form'
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 
+import { authAtom } from '@screens/Auth/Auth.atom'
 import { CreatingTeamFormValues } from '@screens/Teams'
 import styles from '@screens/Teams/components/Forms/CreatingTeamForm/CreatingTeamForm.module.css'
 import { Textarea } from '@screens/Teams/components/Textarea/Textarea'
-import { descriptionSchema, nameSchema } from '@screens/Teams/const/schemas'
-import { roleAtom } from '@screens/Teams/Teams.atom'
+import { nameSchema } from '@screens/Teams/const/schemas'
+import { captainAtom } from '@screens/Teams/Teams.atom'
 import { Button, Input } from '@shared'
 import { usePostTeamMutation } from '@utils'
 
@@ -29,18 +30,18 @@ export const CreatingTeamForm = ({ handleClose }: CreatingTeamFormProps) => {
   } = useForm<CreatingTeamFormValues>({ mode: 'onSubmit', defaultValues: teamFormValues })
   const { mutateAsync, error } = usePostTeamMutation()
   const setTeams = useSetRecoilState(teamsTableAtom)
-  const [role, setRole] = useRecoilState(roleAtom)
+  const authState = useRecoilValue(authAtom)
+  const setIsCaptain = useSetRecoilState(captainAtom)
 
   const onSubmit = async (values: CreatingTeamFormValues) => {
     const { data } = await mutateAsync({
       ...values,
-      captain_id: role.id
+      captain_id: authState.user.id
     })
-    setTeams((prev) => [...prev, { ...data }])
-    setRole((prev) => ({
-      ...prev,
-      isCaptain: true
+    setTeams((prev) => ({
+      teams: [...prev.teams, { ...data, team_place: prev.teams.length + 1 }]
     }))
+    setIsCaptain('capitan')
     resetForm()
     handleClose()
   }
@@ -62,7 +63,7 @@ export const CreatingTeamForm = ({ handleClose }: CreatingTeamFormProps) => {
         isError={!!errors.team_desc}
         helperText={errors.team_desc?.message}
         label='Описание'
-        {...register('team_desc', descriptionSchema)}
+        {...register('team_desc')}
       />
       <ErrorMessage error={error} />
       <div className={styles.button_container}>

@@ -16,7 +16,7 @@ export const useEditTeamMutation = (team_id: number) => {
     ParamEditTeamMutation,
     unknown
   >({
-    mutationKey: ['sendTeam', team_id],
+    mutationKey: ['editTeam', team_id],
     mutationFn: ({ team_id, teamUpdateValue }: ParamEditTeamMutation) =>
       editTeam(team_id, teamUpdateValue)
   })

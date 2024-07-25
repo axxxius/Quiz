@@ -1,23 +1,11 @@
-export type MockTeam = {
-  id: number
-  team_name: string
-  creation_date: string
-  played_games: number
-  points: number
-  rating: number
-  team_desc?: string
-  captain_name?: string
-  team_members?: string[]
-}
-
 export type Team = {
-  team_id: number
+  readonly team_id: number
   team_name: string
   team_desc: string
   team_creation_date: string
   team_played_games: number
   team_points: number
-  team_rating: number
+  team_place: number
   captain_id: number
 }
 
@@ -28,7 +16,7 @@ export type FullTeam = {
   team_creation_date: string
   team_played_games: number
   team_points: number
-  team_rating: number
+  team_place: number
   team_captain_id?: number
   team_captain_name: string
   team_members: UserMember[]
@@ -40,7 +28,7 @@ export type OptionSort = {
 }
 
 export type TeamValue = {
-  captain_id: number
+  readonly captain_id: number
   team_name: string
   team_desc: string
 }
@@ -66,4 +54,19 @@ export interface AxiosResponseData {
 
 export interface AxiosErrorData {
   detail: string
+}
+
+export interface UserTeams {
+  team_id: number
+  team_name: string
+}
+
+export type UserType = {
+  user_id: number
+  user_name: string
+  user_email: string
+  user_role: string
+  user_gender: string
+  is_captain: boolean
+  user_teams: UserTeams[]
 }

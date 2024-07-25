@@ -35,3 +35,7 @@
 .question_card {
   @apply flex w-full items-center justify-between gap-x-4;
 }
+
+.etalon_btns {
+  @apply font-vela-bold transition-transform hover:scale-110;
+}

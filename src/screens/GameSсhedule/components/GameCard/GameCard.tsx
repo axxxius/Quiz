@@ -11,7 +11,7 @@ import styles from './GameCard.module.css'
 
 interface GameCardProps {
   game: GameInSchedule
-  role: TRole
+  role: string
   onClick: () => void
 }
 
@@ -49,7 +49,7 @@ export const GameCard = ({ game, role, onClick }: GameCardProps) => {
 
   const deleteGame = (gameId: number, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
-    console.log(gameId)
+    alert(`Нет возможности удалить игру ${gameId}`)
   }
 
   const [openEditGame, setOpenEditGame] = useState(false)
@@ -94,7 +94,7 @@ export const GameCard = ({ game, role, onClick }: GameCardProps) => {
         <Typography variant='text_16_r' className={styles.description_container}>
           {game.game_description ? game.game_description : 'Без описания'}
         </Typography>
-        {role === 'admin' && game.game_status !== 'finished' ? (
+        {role === 'leading' && game.game_status !== 'finished' ? (
           <div className={[styles.btn_container, 'py-[19px]'].join(' ')}>
             <button className={styles.delete_btn} onClick={(e) => openEditModal(e)}>
               <EditImage />

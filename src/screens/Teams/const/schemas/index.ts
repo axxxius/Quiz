@@ -1,2 +1,2 @@
-export * from './descriptionSchema'
+export * from './editNameSchema'
 export * from './nameSchema'

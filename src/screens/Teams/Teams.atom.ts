@@ -1,18 +1,8 @@
 import { atom } from 'recoil'
 
-interface Role {
-  isCaptain: boolean
-  role: 'player' | 'leading'
-  id: number
-}
+type CapitanValue = 'default' | 'capitan' | 'player'
 
-const initialState: Role = {
-  isCaptain: false,
-  role: 'player',
-  id: 8
-}
-
-export const roleAtom = atom<Role>({
-  key: 'roleAtom',
-  default: initialState
+export const captainAtom = atom<CapitanValue>({
+  key: 'captainAtom',
+  default: 'default'
 })
