@@ -1,6 +1,8 @@
 import { atom } from 'recoil'
 
-export const captainAtom = atom<boolean>({
+type CapitanValue = 'default' | 'capitan' | 'player'
+
+export const captainAtom = atom<CapitanValue>({
   key: 'captainAtom',
-  default: false
+  default: 'default'
 })

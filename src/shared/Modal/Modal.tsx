@@ -18,11 +18,13 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
 
     return (
       <div className={styles.modal_backdrop}>
-        <div className={stylesModalContent} ref={ref}>
-          {children}
-          <ErrorMessage isError={isError} />
-          <LoaderTeam isLoading={isLoading} />
-        </div>
+        <LoaderTeam isLoading={isLoading} className={styles.loader} />
+        {!isLoading && (
+          <div className={stylesModalContent} ref={ref}>
+            {children}
+            <ErrorMessage isError={isError} />
+          </div>
+        )}
       </div>
     )
   }
