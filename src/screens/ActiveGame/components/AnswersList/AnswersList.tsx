@@ -64,6 +64,8 @@ export const AnswersList = ({
     setOpenModal(true)
   }
 
+  console.log(answers)
+
   const findAnswer = (answers: TeamAnswer[], question: Question, team_id: number): TeamAnswer => {
     const defaultAnswer: TeamAnswer = {
       id: Math.random(),
@@ -75,7 +77,7 @@ export const AnswersList = ({
       team_id: team_id
     }
     const answer = Array.isArray(answers)
-      ? answers?.find((answer) => answer.question_id === question.id)
+      ? answers?.find((answer) => answer.question_id === question.id && answer.team_id === team_id)
       : defaultAnswer
 
     return answer || defaultAnswer
@@ -106,7 +108,7 @@ export const AnswersList = ({
                   question.question_correct_answer === 'Нет'
                 ) {
                   return (
-                    <Typography key={question.id}>
+                    <Typography key={`${team.team_id}-${question.id}`}>
                       {answer?.answer_team_answer === question.question_correct_answer ? (
                         <CheckMark />
                       ) : (
@@ -116,8 +118,11 @@ export const AnswersList = ({
                   )
                 } else {
                   return (
-                    <button onClick={() => openModal(answer, team.team_id, question.id)}>
-                      {answer?.answer_team_answer || answer.answer_score > 0 ? (
+                    <button
+                      key={`${team.team_id}-${question.id}`}
+                      onClick={() => openModal(answer, team.team_id, question.id)}
+                    >
+                      {answer?.answer_team_answer.length > 0 || answer.answer_score > 0 ? (
                         <CheckMark />
                       ) : (
                         <CrossMark />
@@ -146,7 +151,7 @@ export const AnswersList = ({
                           changeTeamAnswer(team.team_id, question.id, '', 0)
                         }
                       }}
-                      key={question.id}
+                      key={`${team.team_id}-${question.id}`}
                       disabled={isPending}
                     >
                       {answer?.answer_team_answer === question.question_correct_answer ? (
@@ -160,11 +165,11 @@ export const AnswersList = ({
                   return (
                     <button
                       className='outline-none disabled:bg-grey disabled:bg-opacity-45'
-                      key={question.id}
+                      key={`${team.team_id}-${question.id}`}
                       onClick={() => openModal(answer, team.team_id, question.id)}
                       disabled={isPending}
                     >
-                      {answer?.answer_team_answer || answer.answer_score > 0 ? (
+                      {answer?.answer_team_answer.length > 0 || answer.answer_score > 0 ? (
                         <CheckMark />
                       ) : (
                         <CrossMark />
