@@ -66,6 +66,9 @@ export const LoginForm = () => {
         <Button style={{ marginTop: '20px' }} type='submit' variant='primary_regular'>
           Войти
         </Button>
+        <Button onClick={() => navigate('/register')} variant='secondary_regular'>
+          Зарегистрироваться
+        </Button>
       </form>
     </div>
   )

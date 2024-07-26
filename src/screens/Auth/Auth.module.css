@@ -5,6 +5,7 @@
   flex-direction: column;
   margin-top: 32px;
   margin-bottom: 100px;
+  padding: 0;
 }
 
 .container {
@@ -12,6 +13,18 @@
   flex-direction: column;
   gap: 16px;
   width: 424px;
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 360px;
+  }
+}
+
+@media (max-width: 390px) {
+  .container {
+    width: 250px;
+  }
 }
 
 .header {
