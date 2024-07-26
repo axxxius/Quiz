@@ -11,7 +11,7 @@ export const QuestionNumber = ({ question }: { question: Question }) => {
   const tooltipPosition = {
     top:
       isTooltipVisible && questionRef.current
-        ? -questionRef.current.getBoundingClientRect().top * 0.4 - window.scrollY * 0.4
+        ? -questionRef.current.getBoundingClientRect().top * 0.52 - window.scrollY * 0.52
         : -1000,
     left:
       questionRef.current && isTooltipVisible

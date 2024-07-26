@@ -3,11 +3,17 @@ import { SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import CrossIcon from '@assets/icons/modalCross.svg?react'
-import { QuestionsForm } from '@screens/GameSсhedule/components'
+import { initialGame, QuestionsForm } from '@screens/GameSсhedule/components'
 import { Button, Modal2, Typography } from '@shared'
 import { useQueryClient } from '@tanstack/react-query'
-import { useDeleteQuestionMutation, useGetGameQuery, usePostAddQuestionMutation } from '@utils'
+import {
+  useDeleteQuestionMutation,
+  useGetGameQuery,
+  usePostAddQuestionMutation,
+  usePostAnswersMutation
+} from '@utils'
 
+import { initialTeam } from '@screens/ActiveGame/ActiveGame'
 import styles from './QuestionModal.module.css'
 
 const initialQuestion: Question[] = [
@@ -29,11 +35,17 @@ interface QuestionModalProps {
 
 export const QuestionModal = ({ gameId, isVisible, onClose, goBack }: QuestionModalProps) => {
   const { gameData } = useGetGameQuery(gameId, isVisible)
+  const [game, setGame] = useState(initialGame)
+  const [teamList, setTeamList] = useState(initialTeam)
   const [questions, SetQuestions] = useState(initialQuestion)
 
   useEffect(() => {
     if (gameData !== undefined) {
       SetQuestions(gameData.game_questions)
+      setGame(gameData)
+      if (gameData.game_teams !== undefined) {
+        setTeamList(gameData.game_teams)
+      }
     }
   }, [gameData])
 
@@ -80,17 +92,33 @@ export const QuestionModal = ({ gameId, isVisible, onClose, goBack }: QuestionMo
   }
 
   const navigate = useNavigate()
+  const { addAnswer } = usePostAnswersMutation()
 
   const handleNavigate = () => {
-    if (
-      gameData?.game_teams?.length !== undefined ||
-      gameData?.game_questions.length !== undefined
-    ) {
+    if ((gameData?.game_teams?.length ?? 0) < 1 || (questions?.length ?? 0) < 1) {
       alert('невозвожно начать игру без команд и вопросов!')
       return
     }
     onClose()
     navigate(`/activegame/${gameId}`)
+    addAnswer(
+      {
+        answer: {
+          answer_team_answer: '',
+          answer_is_correct: false,
+          answer_score: 0,
+          game_id: game.id,
+          question_id: game.game_questions[0].id,
+          team_id: teamList?.[0].team_id
+        },
+        gameId: game.id
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['game', game.id] })
+        }
+      }
+    )
   }
 
   return (

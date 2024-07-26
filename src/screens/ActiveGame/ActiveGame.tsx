@@ -9,7 +9,7 @@ import { useGetAnswerQuery, useGetGameQuery, usePostAnswersMutation } from '@uti
 
 import styles from './ActiveGame.module.css'
 
-const initialTeam: TeamInGame[] = [
+export const initialTeam: TeamInGame[] = [
   {
     team_id: 0,
     team_name: 'team Name'
@@ -56,19 +56,6 @@ const ActiveGame = () => {
       setGame(gameData)
       if (gameData.game_teams !== undefined) {
         setTeamList(gameData.game_teams)
-        if (game.game_status === 'planned') {
-          addAnswer({
-            answer: {
-              answer_team_answer: '',
-              answer_is_correct: false,
-              answer_score: 0,
-              game_id: gameIdNumber,
-              question_id: gameData.game_questions[0].id,
-              team_id: gameData.game_teams[0]?.team_id
-            },
-            gameId: game.id
-          })
-        }
       }
     }
   }, [gameData])
